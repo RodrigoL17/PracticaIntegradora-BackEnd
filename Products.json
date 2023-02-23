@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "title": "producto 1",
+    "description": "prueba 1",
+    "code": "abc123",
+    "price": 150,
+    "status": true,
+    "stock": 20,
+    "category": "categoria 1",
+    "thumbnail": ["urlImg1", "urlImg2"]
+  },
+  {
+    "id": 2,
+    "title": "producto 2",
+    "description": "prueba 2",
+    "code": "def456",
+    "price": 100,
+    "status": true,
+    "stock": 30,
+    "category": "categoria 2",
+    "thumbnail": ["urlImg1", "urlImg2"]
+  }
+]
