@@ -4,9 +4,11 @@ export default class cartManager {
   async getCart() {
     try {
       const carts = await cartsModel.find();
+      return carts
     } catch (error) {
       console.log(error);
     }
+
   }
 
   async createCart(prod) {
