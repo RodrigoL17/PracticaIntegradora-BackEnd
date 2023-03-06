@@ -11,7 +11,3 @@ socketClient.on("products", (products) => {
   });
   prodList.innerHTML = prods;
 });
-
-
-
-

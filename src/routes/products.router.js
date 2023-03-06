@@ -2,19 +2,32 @@ import { Router } from "express";
 // import ProductManager from "../dao/fileManagers/productManager.js";
 import ProductManager from "../dao/mongoManagers/productManager.js";
 
-
 const productManager = new ProductManager();
 
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const productos = await productManager.getProducts();
-  const { limit } = req.query;
-  if (parseInt(limit) > 0 || limit === undefined) {
-    const mostrarProdcutos = productos.slice(0, limit);
-    res.json(mostrarProdcutos);
+  const { limit = 10, page = 1, sort, ...query } = req.query;
+  const products = await productManager.getProducts(limit, page, sort, query);
+  if (products) {
+    res.json({
+      status: "success",
+      payload: products.docs,
+      totalPages: products.totalPages,
+      prevPage: products.prevPage,
+      nextPage: products.nextPage,
+      page: products.page,
+      hasPrevPage: products.hasPrevPage,
+      hasNextPage: products.hasNextPage,
+      prevLink: products.prevPage
+        ? `http://localhost:3000/api/products?page=${products.prevPage}`
+        : null,
+      nextLink: products.nextPage
+        ? `http://localhost:3000/api/products?page=${products.nextPage}`
+        : null,
+    });
   } else {
-    res.json(productos);
+    res.json({ status: "error" });
   }
 });
 

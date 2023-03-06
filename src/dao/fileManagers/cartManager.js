@@ -39,7 +39,7 @@ export default class cartManager {
   async getCartById(ID) {
     const cartFile = await this.getCart();
     const cartFindByID = cartFile.find((cart) => cart.id === ID);
-    return cartFindByID
+    return cartFindByID;
   }
 
   async addProduct(cid, pid) {
@@ -47,7 +47,9 @@ export default class cartManager {
     if (cid) {
       const searchCart = await this.getCartById(cid);
       if (searchCart) {
-        const cartIndex = cartFile.findIndex((elem) => elem.id === searchCart.id);
+        const cartIndex = cartFile.findIndex(
+          (elem) => elem.id === searchCart.id
+        );
         const searchProd = searchCart.products.find((prod) => prod.pid === pid);
         const prodIndex = searchCart.products.findIndex(
           (prod) => prod.pid === pid
@@ -55,18 +57,12 @@ export default class cartManager {
         if (prodIndex > -1) {
           const newProd = { ...searchProd, quantity: searchProd.quantity + 1 };
           searchCart.products.splice(prodIndex, 1, newProd);
-          cartFile.splice(cartIndex,1,searchCart)
-          await fs.promises.writeFile(
-            this.path,
-            JSON.stringify(cartFile)
-          );
+          cartFile.splice(cartIndex, 1, searchCart);
+          await fs.promises.writeFile(this.path, JSON.stringify(cartFile));
         } else {
           searchCart.products.push({ pid, quantity: 1 });
-          cartFile.splice(cartIndex,1,searchCart)
-          await fs.promises.writeFile(
-            this.path,
-            JSON.stringify(cartFile)
-          );
+          cartFile.splice(cartIndex, 1, searchCart);
+          await fs.promises.writeFile(this.path, JSON.stringify(cartFile));
         }
       } else {
         console.log("El carrito ingresado no existe");

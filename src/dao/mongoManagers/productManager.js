@@ -1,9 +1,14 @@
 import { productsModel } from "../models/products.model.js";
 
 export default class ProductManager {
-  async getProducts() {
+  async getProducts(limit, page, sort, query) {
+    const options = {
+      limit: limit,
+      page: page,
+      sort: !sort ? {} : { price: sort },
+    };
     try {
-      const products = await productsModel.find().lean();
+      const products = await productsModel.paginate(query, options);
       return products;
     } catch (error) {
       console.log(error);
@@ -37,6 +42,6 @@ export default class ProductManager {
   }
 
   async deleteProduct(ID) {
-    const deleteProduct = await productsModel.findByIdAndRemove(ID);
+    await productsModel.findByIdAndRemove(ID);
   }
 }

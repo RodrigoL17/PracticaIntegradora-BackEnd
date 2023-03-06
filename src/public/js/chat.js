@@ -36,10 +36,10 @@ Form.onsubmit = (e) => {
   Message.value = "";
 };
 
-socketClient.on("chat", chatM =>{
-    console.log(chatM)
-   const messages = chatM[0].messages.map(message=> {
-    return `<p><strong>"${message.user}"</strong>  : ${message.message}`
-   })
-   ChatMessages.innerHTML = messages;
-})
+socketClient.on("chat", (chatM) => {
+  console.log(chatM);
+  const messages = chatM[0].messages.map((message) => {
+    return `<p><strong>"${message.user}"</strong>  : ${message.message}`;
+  });
+  ChatMessages.innerHTML = messages;
+});
