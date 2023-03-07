@@ -1,0 +1,18 @@
+<div class="container">
+     {{#each products}}
+        <div class="card">
+          <h3 class="title">{{title}}</h3>
+          <div class="info">
+            <p class="description"><strong>descripcion:</strong> {{description}}</p>
+            <p class="code"><strong>codigo:</strong> {{code}}</p>
+            <p class="stock"><strong>stock:</strong> {{stock}}</p>
+            <p class="category"><strong>categoria:</strong> {{category}}</p>
+            <p class="id"><strong>id:</strong> {{_id}}</p>
+          </div>
+          <form method="post" action="http://localhost:3000/6403c4286e6361044bd5d8ea/product/{{_id}}">
+            <button class="add-to-cart">Agregar al carrito</button>
+          </form>
+          <p class="price">${{price}}</p>
+        </div>
+    {{/each}}
+</div>

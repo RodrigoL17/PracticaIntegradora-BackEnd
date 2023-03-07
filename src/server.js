@@ -5,7 +5,6 @@ import { __dirname } from "./utils.js";
 import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
-// import realtimeproductsRouter from "./routes/realtimeproducts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import chatRouter from "./routes/chat.router.js";
 // import ProductManager from "./dao/fileManagers/productManager.js";

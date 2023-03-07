@@ -23,7 +23,7 @@ export default class cartManager {
 
   async getCartById(cid) {
     try {
-      const findCartById = await cartsModel.findById(cid);
+      const findCartById = await cartsModel.findOne({_id: cid});
       return findCartById;
     } catch (error) {
       console.log(error);
@@ -71,7 +71,6 @@ export default class cartManager {
   async deleteAllProducts(cid) {
     try {
       const cart = await cartsModel.findByIdAndUpdate(cid, { products: [] });
-      console.log("1", cart);
       return cart;
     } catch (error) {
       console.log(error);
@@ -96,6 +95,14 @@ export default class cartManager {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async updateProducts(cid,newProducts){
+    try {
+      await cartsModel.findByIdAndUpdate(cid,{products: newProducts})
+    } catch (error) {
+      console.log(error)
     }
   }
 }

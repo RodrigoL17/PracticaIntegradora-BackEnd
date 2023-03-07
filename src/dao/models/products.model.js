@@ -37,14 +37,6 @@ const productsSchema = new mongoose.Schema(
       required: true,
     },
   },
-  {
-    toObject: {
-      vituals: true,
-    },
-    toJSON: {
-      virtuals: true,
-    },
-  }
 );
 
 productsSchema.plugin(mongoosePaginate);

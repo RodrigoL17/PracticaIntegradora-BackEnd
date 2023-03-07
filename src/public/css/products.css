@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    margin: 20px;
+    align-items: center;
+    gap: 10px;
+    
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    border: 1px red solid;
+    aspect-ratio: 1;
+}
+
+.info{
+    padding: 10px 5px;
+}
+
+.price{
+    font-size: 1.5rem;
+ text-align: center;
+}
