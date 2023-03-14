@@ -1,17 +1,21 @@
 import express from "express";
 import Handlebars from "handlebars";
 import handlebars from "express-handlebars";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import { __dirname } from "./utils.js";
 import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import chatRouter from "./routes/chat.router.js";
+import sessionRouter from "./routes/session.router.js";
 // import ProductManager from "./dao/fileManagers/productManager.js";
 import ProductManager from "./dao/mongoManagers/productManager.js";
 import ChatManager from "./dao/mongoManagers/chatManager.js";
 import "./dao/dbConfig.js";
-import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access"; 
 
 //creamos servidor
 const app = express();
@@ -25,7 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
 //configurar handlebars
-
 app.engine(
   ".hbs",
   handlebars.engine({
@@ -36,11 +39,24 @@ app.engine(
 app.set("views", __dirname + "/views");
 app.set("view engine", ".hbs");
 
+//Cookie
+app.use(cookieParser());
+
+//Configuracion express-session
+app.use(
+  session({ secret: "secretKey", resave: false, saveUninitialized: true, 
+  store: new MongoStore({mongoUrl:"mongodb+srv://cordo17:Graciana17@cluster0.o7ijfat.mongodb.net/E-commerce-backEnd?retryWrites=true&w=majority"})
+ })
+);
+
 //rutas
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/", sessionRouter);
 app.use("/views", viewsRouter);
 app.use("/chat", chatRouter);
+
+
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Escuchando puerto ${PORT}`);
