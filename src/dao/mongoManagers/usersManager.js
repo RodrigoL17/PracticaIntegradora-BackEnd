@@ -1,4 +1,5 @@
 import { userModel } from "../models/users.model.js";
+import { hashPassword, comparePassword } from "../../utils.js";
 
 export default class UserManager {
   async createUser(user) {
@@ -6,18 +7,20 @@ export default class UserManager {
     try {
       const existsUser = await userModel.find({ email });
       if (existsUser.length === 0) {
-        console.log("pedo", email, password)
+        const hashNewPassword = await hashPassword(password);
         if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-            console.log("1", user)
-          const adminUser = { ...user, rol: "admin" };
-          console.log("2", adminUser)
-          const newUSer = await userModel.create(adminUser);
-          return newUSer
+          const adminUser = {
+            ...user,
+            password: hashNewPassword,
+            rol: "admin",
+          };
+          const userCreated = await userModel.create(adminUser);
+          return userCreated;
         } else {
-          const newUSer = await userModel.create(user);
-          return newUSer
+          const newUser = { ...user, password: hashNewPassword };
+          const userCreated = await userModel.create(newUser);
+          return userCreated;
         }
-        ;
       } else {
         return null;
       }
@@ -29,10 +32,12 @@ export default class UserManager {
 
   async userLogIn(user) {
     const { email, password } = user;
-    const existsUser = await userModel.find({ email, password });
-    if (existsUser.length !== 0) {
-      return existsUser;
-    } else {
+    const existsUser = await userModel.findOne({ email });
+    if (existsUser) {
+      const isPassword = await comparePassword(password, existsUser.password);
+      if (isPassword) {
+        return existsUser;
+      }
       return null;
     }
   }

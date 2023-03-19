@@ -15,7 +15,9 @@ import sessionRouter from "./routes/session.router.js";
 import ProductManager from "./dao/mongoManagers/productManager.js";
 import ChatManager from "./dao/mongoManagers/chatManager.js";
 import "./dao/dbConfig.js";
-import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access"; 
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import passport from "passport";
+import "./passport/passportStrategies.js"
 
 //creamos servidor
 const app = express();
@@ -44,10 +46,22 @@ app.use(cookieParser());
 
 //Configuracion express-session
 app.use(
-  session({ secret: "secretKey", resave: false, saveUninitialized: true, 
-  store: new MongoStore({mongoUrl:"mongodb+srv://cordo17:Graciana17@cluster0.o7ijfat.mongodb.net/E-commerce-backEnd?retryWrites=true&w=majority"})
- })
+  session({
+    secret: "secretKey",
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({
+      mongoUrl:
+        "mongodb+srv://cordo17:Graciana17@cluster0.o7ijfat.mongodb.net/E-commerce-backEnd?retryWrites=true&w=majority",
+    }),
+  })
 );
+
+//Passport
+//inicializar
+app.use(passport.initialize())
+//passport va a guardar la informacion de session
+app.use(passport.session())
 
 //rutas
 app.use("/api/products", productsRouter);
@@ -55,8 +69,6 @@ app.use("/api/carts", cartsRouter);
 app.use("/", sessionRouter);
 app.use("/views", viewsRouter);
 app.use("/chat", chatRouter);
-
-
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Escuchando puerto ${PORT}`);

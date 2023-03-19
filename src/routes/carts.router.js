@@ -60,11 +60,11 @@ router.put("/:cid/products/:pid", async (req, res) => {
 });
 
 //actualiza carrito   PREGUNTAR
-router.put("/:cid",async (req, res) => {
-  const {cid} = req.params;
-  const {newProducts}=req.body;
-  const cart = await CartManager.updateProducts(cid,newProducts)
-  res.json({cart})
+router.put("/:cid", async (req, res) => {
+  const { cid } = req.params;
+  const { newProducts } = req.body;
+  const cart = await CartManager.updateProducts(cid, newProducts);
+  res.json({ cart });
 });
 
 export default router;
