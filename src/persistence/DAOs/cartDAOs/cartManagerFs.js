@@ -5,7 +5,7 @@ export default class cartManager {
     this.path = "./Cart.json";
   }
 
-  async getCart() {
+  async getAllCarts() {
     if (fs.existsSync(this.path)) {
       try {
         const cart = await fs.promises.readFile(this.path, "utf-8");
@@ -42,7 +42,7 @@ export default class cartManager {
     return cartFindByID;
   }
 
-  async addProduct(cid, pid) {
+  async addProductToCart(cid, pid) {
     const cartFile = await this.getCart();
     if (cid) {
       const searchCart = await this.getCartById(cid);

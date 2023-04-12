@@ -1,10 +1,9 @@
 //coniguracion de la base de datos mongo
-
+import config from "../../config.js";
 import mongoose from "mongoose";
 
-const URI =
-  "mongodb+srv://cordo17:Graciana17@cluster0.o7ijfat.mongodb.net/E-commerce-backEnd?retryWrites=true&w=majority";
-
+const URI = config.MONGO_URI
+  
 mongoose.connect(URI, (error) => {
   if (error) {
     console.log(error);

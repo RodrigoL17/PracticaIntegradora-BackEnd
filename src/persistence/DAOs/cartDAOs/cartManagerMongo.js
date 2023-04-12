@@ -1,7 +1,7 @@
-import { cartsModel } from "../models/carts.model.js";
+import { cartsModel } from "../../Mongo/models/carts.model.js";
 
 export default class cartManager {
-  async getCart() {
+  async getAllCarts() {
     try {
       const carts = await cartsModel.find();
       return carts;
@@ -30,7 +30,7 @@ export default class cartManager {
     }
   }
 
-  async addProduct(cid, pid) {
+  async addProductToCart(cid, pid) {
     try {
       const cart = await cartsModel.findById(cid);
       const searchProd = cart.products.find(
@@ -51,7 +51,7 @@ export default class cartManager {
     }
   }
 
-  async deleteProductOfCart(cid, pid) {
+  async deleteProductFromCart(cid, pid) {
     try {
       const cart = await cartsModel.findById(cid);
       const index = cart.products.findIndex(

@@ -1,5 +1,5 @@
-import { userModel } from "../models/users.model.js";
-import { hashPassword, comparePassword } from "../../utils.js";
+import { userModel } from "../../Mongo/models/users.model.js";
+import { hashPassword, comparePassword } from "../../../utils.js";
 
 export default class UserManager {
   async createUser(user) {

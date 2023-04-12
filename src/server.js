@@ -5,23 +5,21 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { __dirname } from "./utils.js";
-import { Server } from "socket.io";
+// import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import chatRouter from "./routes/chat.router.js";
 import sessionRouter from "./routes/session.router.js";
-// import ProductManager from "./dao/fileManagers/productManager.js";
-import ProductManager from "./dao/mongoManagers/productManager.js";
-import ChatManager from "./dao/mongoManagers/chatManager.js";
-import "./dao/dbConfig.js";
+import "./persistence/Mongo/configMongo.js";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 import passport from "passport";
 import "./passport/passportStrategies.js"
+import config from "./config.js";
 
 //creamos servidor
 const app = express();
-const PORT = 3000;
+const PORT = config.PORT;
 
 //para que codifique
 app.use(express.json());
@@ -51,8 +49,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: new MongoStore({
-      mongoUrl:
-        "mongodb+srv://cordo17:Graciana17@cluster0.o7ijfat.mongodb.net/E-commerce-backEnd?retryWrites=true&w=majority",
+      mongoUrl: config.MONGO_URI,
     }),
   })
 );
@@ -75,30 +72,30 @@ const httpServer = app.listen(PORT, () => {
 });
 
 //Socket del lado del servidor
-const socketServer = new Server(httpServer);
+// const socketServer = new Server(httpServer);
 
-const productManager = new ProductManager();
-const chatManager = new ChatManager();
+// const productManager = new ProductManager();
+// const chatManager = new ChatManager();
 
-const products = await productManager.getProducts();
-const chat = await chatManager.getChat();
+// const products = await productManager.getProducts();
+// const chat = await chatManager.getChat();
 
-socketServer.on("connection", (socket) => {
-  console.log("Usuario Conectado", socket.id);
+// socketServer.on("connection", (socket) => {
+//   console.log("Usuario Conectado", socket.id);
 
-  socket.emit("products", products);
+//   socket.emit("products", products);
 
-  socket.on("newUser", (usuario) => {});
+//   socket.on("newUser", (usuario) => {});
 
-  socket.on("message", (info) => {
-    if (chat.length === 0) {
-      chatManager.createChat();
-      chatManager.addMessage(info);
-    } else {
-      chatManager.addMessage(info);
-    }
+//   socket.on("message", (info) => {
+//     if (chat.length === 0) {
+//       chatManager.createChat();
+//       chatManager.addMessage(info);
+//     } else {
+//       chatManager.addMessage(info);
+//     }
 
-    const lala = chatManager.getChat();
-    console.log("lala", lala);
-  });
-});
+//     const lala = chatManager.getChat();
+//     console.log("lala", lala);
+//   });
+// });
