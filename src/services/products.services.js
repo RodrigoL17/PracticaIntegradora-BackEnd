@@ -1,12 +1,9 @@
-import ProductsDao from "../persistence/DAOs/productsDAOs/productManagerMongo.js";
-// import ProductsDao from "../persistence/DAOs/productsDAOs/productManagerFS.js";
-
-const productsDao = new ProductsDao();
+import { productsDao } from "../persistence/DAOs/factory.js";
 
 export const getAllProds = async (limit, page, sort, query) => {
   const products = await productsDao.getAllProducts(limit, page, sort, query);
   return products;
-}
+};
 
 export const getProdById = async (id) => {
   const product = await productsDao.getProdutcById(id);

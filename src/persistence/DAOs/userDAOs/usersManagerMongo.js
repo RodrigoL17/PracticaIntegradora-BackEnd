@@ -1,5 +1,6 @@
 import { userModel } from "../../Mongo/models/users.model.js";
 import { hashPassword, comparePassword } from "../../../utils.js";
+import UserRespDTO from "../../DTOs/userResp.DTO.js";
 
 export default class UserManager {
   async createUser(user) {
@@ -43,7 +44,10 @@ export default class UserManager {
   }
 
   async findUser(email) {
+    
     const user = await userModel.findOne({ email });
-    return user;
+    const userDTO = new UserRespDTO(user);
+    return userDTO;
+    console.log("lala",userDTO)
   }
 }

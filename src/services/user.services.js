@@ -1,6 +1,4 @@
-import UserDao from "../persistence/DAOs/userDAOs/usersManagerMongo.js"
-
-const userDao = new UserDao();
+import { userDao } from "../persistence/DAOs/factory.js"
 
 export const createUser =  async (user) => {
     const userC = await userDao.createUser(user);

@@ -1,7 +1,5 @@
 import fs from "fs";
 
-// const fs = require("fs");
-
 export default class ProductManager {
   constructor() {
     this.path = "./Products.json";
@@ -50,14 +48,13 @@ export default class ProductManager {
   }
 
   async deleteProduct(ID) {
-    const productFind = await this.getProdutcById(ID);
     const search = await this.getProducts();
     const index = search.findIndex((prod) => prod.id === ID);
     if (index === -1) {
       console.log("no se encontro producto");
       return;
     }
-    const newSearch = search.splice(index, 1);
+    search.splice(index, 1);
     await fs.promises.writeFile(this.path, JSON.stringify(search));
   }
 }

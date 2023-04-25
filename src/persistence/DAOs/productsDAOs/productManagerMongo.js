@@ -8,7 +8,8 @@ export default class ProductManager {
       sort: !sort ? {} : { price: sort },
     };
     try {
-      const products = await productsModel.find().paginate(query, options);
+      // paginate(query, options) resolver paginado no anda
+      const products = await productsModel.find();
       return products;
     } catch (error) {
       console.log(error);
@@ -43,5 +44,13 @@ export default class ProductManager {
 
   async deleteProduct(id) {
     await productsModel.findByIdAndRemove(id);
+  }
+
+  async updateStock(pid,stock, quantity){
+    try {
+      await productsModel.findByIdAndUpdate(pid, {stock: stock-quantity})
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

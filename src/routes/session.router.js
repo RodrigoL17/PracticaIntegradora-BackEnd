@@ -44,4 +44,5 @@ router.get(
 );
 
 router.get("/api/session/logout", logout);
+
 export default router;

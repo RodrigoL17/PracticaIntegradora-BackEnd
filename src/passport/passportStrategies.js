@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { userModel} from "../persistence/Mongo/models/users.model.js"
+import config from "../config.js";
 
 passport.serializeUser((user, done) => {
   done(null, user._id);
@@ -11,8 +12,8 @@ passport.deserializeUser(async (id, done) => {
   done(null, user);
 });
 
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+const GITHUB_CLIENT_ID = config.GITHUB_CLIENT_ID;
+const GITHUB_CLIENT_SECRET = config.GITHUB_CLIENT_SECRET;
 
 //GitHub Strategy
 

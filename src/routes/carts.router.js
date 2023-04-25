@@ -9,6 +9,9 @@ import {
   updateQuantityOfProductController,
 } from "../controllers/cart.controller.js";
 
+import { purchaseController } from "../controllers/purchase.controller.js";
+import { authUser } from "../middlewares/current.middleware.js";
+
 const router = Router();
 //crear carrito
 router.post("/", createCartController);
@@ -17,7 +20,7 @@ router.post("/", createCartController);
 router.get("/:cid", getCartByIdController);
 
 //agregar producto a un carrito
-router.post("/:cid/product/:pid", addProductToCartController); 
+router.post("/:cid/product/:pid", addProductToCartController);
 
 //eliminar un producto de un carrito
 router.delete("/:cid/products/:pid", deleteProductFromCartController);
@@ -31,4 +34,6 @@ router.put("/:cid/products/:pid", updateQuantityOfProductController);
 //actualiza carrito
 router.put("/:cid", updateProductsController);
 
+//purchase
+router.get("/:cid/purchase", purchaseController);
 export default router;

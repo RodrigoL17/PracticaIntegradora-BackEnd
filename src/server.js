@@ -11,7 +11,7 @@ import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import chatRouter from "./routes/chat.router.js";
 import sessionRouter from "./routes/session.router.js";
-import "./persistence/Mongo/configMongo.js";
+import ticketRouter from "./routes/ticket.router.js";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 import passport from "passport";
 import "./passport/passportStrategies.js"
@@ -66,6 +66,8 @@ app.use("/api/carts", cartsRouter);
 app.use("/", sessionRouter);
 app.use("/views", viewsRouter);
 app.use("/chat", chatRouter);
+app.use("/ticket", ticketRouter);
+
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Escuchando puerto ${PORT}`);

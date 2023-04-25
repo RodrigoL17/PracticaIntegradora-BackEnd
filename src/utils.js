@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 //dirnname
 
@@ -16,3 +17,11 @@ export const hashPassword = async (password) => {
 export const comparePassword = async (password, passwordBD) => {
   return bcrypt.compare(password, passwordBD);
 };
+
+//generar string Random
+
+export const generateRandomString = () => {
+    const code = crypto.randomBytes(6).toString("hex")
+    return code
+}
+

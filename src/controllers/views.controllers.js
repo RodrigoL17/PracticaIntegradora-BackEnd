@@ -1,5 +1,5 @@
 import { getAllProds } from "../services/products.services.js";
-import { getCartById } from "../services/cart.services.js";
+import { getCartByIdService } from "../services/cart.services.js";
 import { findUser } from "../services/user.services.js";
 
 export const renderRealTimeProdcuts = (req, res) => {
@@ -14,7 +14,7 @@ export const getAllProductsViews = async (req, res) => {
 
 export const getCart = async (req, res) => {
   const { cid } = req.params;
-  const cart = await getCartById(cid);
+  const cart = await getCartByIdService(cid);
   res.render("cart", { cart: cart.products });
 };
 

@@ -7,6 +7,8 @@ import {
   updateProduct,
 } from "../controllers/products.controller.js";
 
+import { authAdmin } from "../middlewares/current.middleware.js";
+
 const router = Router();
 
 router.get("/", getAllProducts);

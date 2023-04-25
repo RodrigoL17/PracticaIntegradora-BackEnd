@@ -8,6 +8,6 @@ mongoose.connect(URI, (error) => {
   if (error) {
     console.log(error);
   } else {
-    console.log("Conectado con exito a la base de datos");
+    console.log("Conectado con exito a la base de datos de Mongo");
   }
 });

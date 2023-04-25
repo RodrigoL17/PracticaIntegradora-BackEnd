@@ -31,14 +31,15 @@ export default class cartManager {
   }
 
   async addProductToCart(cid, pid) {
+   
     try {
       const cart = await cartsModel.findById(cid);
       const searchProd = cart.products.find(
-        (prod) => prod.pid.toString() === pid
+        (prod) =>   prod.pid._id.toString() === pid
       );
       if (searchProd) {
         const prodIndex = cart.products.findIndex(
-          (prod) => prod.pid.toString() === pid
+          (prod) => prod.pid._id.toString() === pid
         );
         const newProd = { pid, quantity: searchProd.quantity + 1 };
         cart.products.splice(prodIndex, 1, newProd);
