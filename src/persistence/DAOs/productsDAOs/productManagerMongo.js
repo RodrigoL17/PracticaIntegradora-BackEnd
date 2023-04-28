@@ -8,8 +8,7 @@ export default class ProductManager {
       sort: !sort ? {} : { price: sort },
     };
     try {
-      // paginate(query, options) resolver paginado no anda
-      const products = await productsModel.find();
+      const products = await productsModel.paginate(query, options);
       return products;
     } catch (error) {
       console.log(error);
@@ -18,8 +17,7 @@ export default class ProductManager {
 
   async getProdutcById(ID) {
     try {
-      const productFindByID = await productsModel.findById(ID);
-      return productFindByID;
+      return await productsModel.findById(ID);
     } catch (error) {
       console.log(error);
     }
@@ -43,14 +41,14 @@ export default class ProductManager {
   }
 
   async deleteProduct(id) {
-    await productsModel.findByIdAndRemove(id);
+    return await productsModel.findByIdAndDelete(id);
   }
 
-  async updateStock(pid,stock, quantity){
+  async updateStock(pid, stock, quantity) {
     try {
-      await productsModel.findByIdAndUpdate(pid, {stock: stock-quantity})
+      await productsModel.findByIdAndUpdate(pid, { stock: stock - quantity });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }

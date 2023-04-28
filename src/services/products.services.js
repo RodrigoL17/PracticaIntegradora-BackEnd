@@ -21,5 +21,5 @@ export const updateProd = async (id, product) => {
 };
 
 export const deleteProd = async (id) => {
-  await productsDao.deleteProduct(id);
+  return await productsDao.deleteProduct(id);
 };

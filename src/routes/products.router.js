@@ -15,10 +15,10 @@ router.get("/", getAllProducts);
 
 router.get("/:pid", getProductById);
 
-router.post("/", addProduct);
+router.post("/", authAdmin, addProduct);
 
-router.put("/:pid", updateProduct);
+router.put("/:pid", authAdmin, updateProduct);
 
-router.delete("/:pid", deleteProduct);
+router.delete("/:pid", authAdmin, deleteProduct);
 
 export default router;

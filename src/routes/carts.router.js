@@ -20,7 +20,7 @@ router.post("/", createCartController);
 router.get("/:cid", getCartByIdController);
 
 //agregar producto a un carrito
-router.post("/:cid/product/:pid", addProductToCartController);
+router.post("/:cid/product/:pid", authUser ,addProductToCartController);
 
 //eliminar un producto de un carrito
 router.delete("/:cid/products/:pid", deleteProductFromCartController);

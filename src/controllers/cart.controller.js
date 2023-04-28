@@ -11,15 +11,20 @@ import {
 export const createCartController = async (req, res) => {
   const product = req.body;
   if (Object.keys(product).length === 0 || (!product.id && !product._id)) {
-    res.json({
+    return res.json({
       message:
         "No has ingresado ningun producto o el producto ingresado no tiene Id",
     });
-  } else {
+  }
+  try {
     await createCartService(product);
-    res.json({ message: "creaste un nuevo carrito" });
+    return res.json({ message: "creaste un nuevo carrito" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error al crear el carrito" });
   }
 };
+
 
 export const getCartByIdController = async (req, res) => {
   const { cid } = req.params;

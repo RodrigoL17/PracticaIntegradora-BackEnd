@@ -37,12 +37,13 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      console.log(error);
-      res.json({ message: error });
-    }
-  });
-  res.redirect("/");
+export const logout = async (req, res) => {
+  try {
+    await req.session.destroy();
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+    res.json({ message: error });
+  }
 };
+

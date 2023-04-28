@@ -33,11 +33,11 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   const { pid } = req.params;
-  const productoID = await getProdById(pid);
-  if (productoID) {
-    res.json({ massage: "Producto Encontrado", productoID });
-  } else {
-    res.json({ massage: "Producto no encontrado" });
+  try {
+    const productoID = await getProdById(pid);
+    res.json({ message: "Producto Encontrado", productoID });
+  } catch (error) {
+    res.json({ message: "Producto no encontrado" });
   }
 };
 
@@ -46,16 +46,19 @@ export const addProduct = async (req, res) => {
   await addProd(product);
   res.send({ message: "Producto agregado correctamente", product });
 };
-
 export const updateProduct = async (req, res) => {
   const { pid } = req.params;
   const productoAModificar = req.body;
-  await updateProd(pid, productoAModificar);
-  res.send({ message: "Producto actualizado correctamente" });
+  const productoExistente = await getProdById(pid);
+  if (!productoExistente) {
+    return res.status(404).json({ message: "Producto no encontrado" });
+  }
+  const prod = await updateProd(pid, productoAModificar);
+  res.json({ message: "Producto actualizado correctamente", prod: prod });
 };
 
 export const deleteProduct = async (req, res) => {
   const { pid } = req.params;
-  await deleteProd(pid);
-  res.send({ message: "Producto elimando correctamente" });
+  const prodDeleted = await deleteProd(pid);
+  res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
 };
