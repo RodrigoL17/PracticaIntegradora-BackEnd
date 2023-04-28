@@ -4,17 +4,21 @@ import handlebars from "express-handlebars";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import { __dirname } from "./utils.js";
+import passport from "passport";
 // import { Server } from "socket.io";
+
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import chatRouter from "./routes/chat.router.js";
 import sessionRouter from "./routes/session.router.js";
+import mockingProductsRouter from "./routes/mockingProducts.router.js";
+
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
-import passport from "passport";
+
 import "./passport/passportStrategies.js"
 import config from "./config.js";
+import { __dirname } from "./utils.js";
 
 //creamos servidor
 const app = express();
@@ -65,6 +69,7 @@ app.use("/api/carts", cartsRouter);
 app.use("/", sessionRouter);
 app.use("/views", viewsRouter);
 app.use("/chat", chatRouter);
+app.use("/mockingproducts", mockingProductsRouter);
 
 
 
