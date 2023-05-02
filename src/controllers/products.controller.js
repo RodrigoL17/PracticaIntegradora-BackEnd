@@ -5,6 +5,13 @@ import {
   updateProd,
   deleteProd,
 } from "../services/products.services.js";
+import { checkPID, recivedProdExists } from "../utils/errors/utils.js";
+// import CustomError from "../utils/errors/customErrors.js";
+// import {
+//   errorCause,
+//   errorMessage,
+//   errorName,
+// } from "../utils/errors/EErrors.js";
 
 export const getAllProducts = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;
@@ -33,6 +40,7 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   const { pid } = req.params;
+  checkPID(pid);
   try {
     const productoID = await getProdById(pid);
     res.json({ message: "Producto Encontrado", productoID });
@@ -43,22 +51,42 @@ export const getProductById = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   const product = req.body;
-  await addProd(product);
-  res.send({ message: "Producto agregado correctamente", product });
+  recivedProdExists(product);
+  try {
+    await addProd(product);
+    res.send({ message: "Producto agregado correctamente", product });
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const updateProduct = async (req, res) => {
   const { pid } = req.params;
   const productoAModificar = req.body;
-  const productoExistente = await getProdById(pid);
-  if (!productoExistente) {
-    return res.status(404).json({ message: "Producto no encontrado" });
+  checkPID(pid);
+  recivedProdExists(productoAModificar);
+  try {
+    const productoExistente = await getProdById(pid);
+    if (productoExistente == null) {
+      CustomError.createCustomError({
+        name: errorName.PRODUCT_ERROR,
+        cuase: errorCause.WRONG_ID,
+        message: errorMessage.PRODUCT_DATA_INCOMPLETE,
+      });
+    }
+    const prod = await updateProd(pid, productoAModificar);
+    res.json({ message: "Producto actualizado correctamente", prod: prod });
+  } catch (error) {
+    console.log(error);
   }
-  const prod = await updateProd(pid, productoAModificar);
-  res.json({ message: "Producto actualizado correctamente", prod: prod });
 };
 
 export const deleteProduct = async (req, res) => {
   const { pid } = req.params;
-  const prodDeleted = await deleteProd(pid);
-  res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
+  checkPID(pid);
+  try {
+    const prodDeleted = await deleteProd(pid);
+    res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
+  } catch (error) {
+    console.log(error);
+  }
 };

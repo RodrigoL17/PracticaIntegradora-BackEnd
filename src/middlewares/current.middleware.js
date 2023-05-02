@@ -1,3 +1,5 @@
+import findUser from "../services/user.services.js"
+
 export const authAdmin = async (req, res, next) => {
   const { email } = req.session;
   const user = await findUser(email);

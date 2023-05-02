@@ -19,6 +19,7 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 import "./passport/passportStrategies.js"
 import config from "./config.js";
 import { __dirname } from "./utils.js";
+import { errorMiddleware } from "./utils/errors/error.middleware.js";
 
 //creamos servidor
 const app = express();
@@ -76,6 +77,8 @@ app.use("/mockingproducts", mockingProductsRouter);
 const httpServer = app.listen(PORT, () => {
   console.log(`Escuchando puerto ${PORT}`);
 });
+
+app.use(errorMiddleware)
 
 //Socket del lado del servidor
 // const socketServer = new Server(httpServer);

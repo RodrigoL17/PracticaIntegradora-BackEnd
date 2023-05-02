@@ -7,13 +7,19 @@ import {
   updateQuantityOfProductService,
   updateProductsService,
 } from "../services/cart.services.js";
+import {
+  checkCID,
+  checkPIDforCart,
+  recivedProdExists,
+} from "../utils/errors/utils.js";
 
 export const createCartController = async (req, res) => {
   const product = req.body;
   if (Object.keys(product).length === 0 || (!product.id && !product._id)) {
-    return res.json({
-      message:
-        "No has ingresado ningun producto o el producto ingresado no tiene Id",
+    CustomError.createCustomError({
+      name: errorName.CART_ERROR,
+      cause: `${errorCause.MISSING_PRODUCT} or ${errorCause.MISSING_ID}`,
+      message: errorMessage.PRODUCT_DATA_INCOMPLETE,
     });
   }
   try {
@@ -25,43 +31,78 @@ export const createCartController = async (req, res) => {
   }
 };
 
-
 export const getCartByIdController = async (req, res) => {
   const { cid } = req.params;
-  const cartFound = await getCartByIdService(cid);
-  res.json(cartFound);
+  checkCID(cid);
+  try {
+    const cartFound = await getCartByIdService(cid);
+    res.json(cartFound);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const addProductToCartController = async (req, res) => {
   const { cid, pid } = req.params;
-  const cart = await addProductToCartService(cid, pid);
-  res.json({ message: "producto agregado al carrito", cart });
+  checkCID(cid);
+  checkPIDforCart(pid);
+  try {
+    const cart = await addProductToCartService(cid, pid);
+    res.json({ message: "producto agregado al carrito", cart });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteProductFromCartController = async (req, res) => {
   const { cid, pid } = req.params;
-  const cart = await deleteProductFromCartService(cid, pid);
-  res.json({ cart });
+  checkCID(cid);
+  checkPIDforCart(pid);
+  try {
+    const cart = await deleteProductFromCartService(cid, pid);
+    res.json({ cart });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteAllProductsController = async (req, res) => {
   const { cid } = req.params;
-  const cart = await deleteAllProductsService(cid);
-  res.json({ message: "carrito vaciado con exito", cart });
+  checkCID(cid);
+  try {
+    const cart = await deleteAllProductsService(cid);
+    res.json({ message: "carrito vaciado con exito", cart });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const updateQuantityOfProductController = async (req, res) => {
   const { cid, pid } = req.params;
+  checkCID(cid);
+  checkPIDforCart(pid);
   const newQuantity = req.body;
-  const cart = await updateQuantityOfProductService(cid, pid, newQuantity.quantity);
-  res.json({ message: "cantidad modificada", cart });
+  try {
+    const cart = await updateQuantityOfProductService(
+      cid,
+      pid,
+      newQuantity.quantity
+    );
+    res.json({ message: "cantidad modificada", cart });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const updateProductsController = async (req, res) => {
   const { cid } = req.params;
   const { newProducts } = req.body;
-  const cart = await updateProductsService(cid, newProducts);
-  res.json({ cart });
+  checkCID(cid);
+  recivedProdExists(newProducts);
+  try {
+    const cart = await updateProductsService(cid, newProducts);
+    res.json({ cart });
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-
