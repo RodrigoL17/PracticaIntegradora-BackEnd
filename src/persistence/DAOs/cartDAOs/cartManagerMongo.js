@@ -31,6 +31,7 @@ export default class cartManager {
   async addProductToCart(cid, pid) {
     try {
       const cart = await cartsModel.findById(cid);
+      
       const existingProduct = cart.products.find(
         (product) => product.pid._id.toString() === pid
       );

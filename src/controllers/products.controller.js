@@ -5,7 +5,7 @@ import {
   updateProd,
   deleteProd,
 } from "../services/products.services.js";
-import { checkRequiredProdProperties, ProdByIdNotRecived } from "../utils/errors/utils.js";
+import { checkRequiredProdProperties, prodByIdNotRecived } from "../utils/errors/utils.js";
 
 export const getAllProducts = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;
@@ -36,7 +36,7 @@ export const getProductById = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const prod = await getProdById(pid);
-    ProdByIdNotRecived(prod);
+    prodByIdNotRecived(prod);
     res.json({ message: "Producto Encontrado", product: prod });
   } catch (error) {
     next(error);
@@ -69,7 +69,7 @@ export const deleteProduct = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const prodDeleted = await deleteProd(pid);
-    ProdByIdNotRecived(prodDeleted)
+    prodByIdNotRecived(prodDeleted)
     res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
   } catch (error) {
     next(error)
