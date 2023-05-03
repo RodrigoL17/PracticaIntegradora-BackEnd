@@ -7,12 +7,14 @@ import {
   updateQuantityOfProductService,
   updateProductsService,
 } from "../services/cart.services.js";
-import { cartByIdNotRecived, checkExistsProd } from "../utils/errors/utils.js";
+import { getProdById} from "../services/products.services.js"
+import { cartByIdNotRecived, checkExistsProd, checkQuantityToUpdateCartProducts, checkRequiredProdProperties, prodByIdNotRecived } from "../utils/errors/utils.js";
 
 export const createCartController = async (req, res) => {
   try {
     const product = req.body;
     checkExistsProd(product)
+    checkRequiredProdProperties(product)
     await createCartService(product);
     return res.json({ message: "creaste un nuevo carrito" });
   } catch (error) {
@@ -36,56 +38,75 @@ export const getCartByIdController = async (req, res, next) => {
 export const addProductToCartController = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
-    const cart = await addProductToCartService(cid, pid);
-    res.json({ message: "producto agregado al carrito", cart });
+    const cart = await getCartByIdService(cid);
+    const product = await getProdById(pid);
+    cartByIdNotRecived(cart)
+    prodByIdNotRecived(product)
+    const newCart = await addProductToCartService(cid, pid);
+    res.json({ message: "producto agregado al carrito", cart: newCart });
   } catch (error) {
    next(error)
   }
 };
 //falta cambiar
-export const deleteProductFromCartController = async (req, res) => {
+export const deleteProductFromCartController = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
-    const cart = await deleteProductFromCartService(cid, pid);
-    res.json({ cart });
+    const cart = await getCartByIdService(cid);
+    const product = await getProdById(pid);
+    cartByIdNotRecived(cart)
+    prodByIdNotRecived(product)
+    const newCart = await deleteProductFromCartService(cid, pid);
+    res.json({ newCart });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
 export const deleteAllProductsController = async (req, res, next) => {
   try {
     const { cid } = req.params;
-    const cart = await deleteAllProductsService(cid);
-    cartByIdNotRecived(cid)
-    res.json({ message: "carrito vaciado con exito", cart });
+    const cart = await getCartByIdService(cid)
+    cartByIdNotRecived(cart)
+    const newCart = await deleteAllProductsService(cid);
+    res.json({ message: "carrito vaciado con exito", cart: newCart });
   } catch (error) {
     next(error);
   }
 };
-//falta cambiar
-export const updateQuantityOfProductController = async (req, res) => {
-  const { cid, pid } = req.params;
-  const newQuantity = req.body;
+export const updateQuantityOfProductController = async (req, res, next) => {
   try {
-    const cart = await updateQuantityOfProductService(
+    const { cid, pid } = req.params;
+    const cart = await getCartByIdService(cid);
+    const product = await getProdById(pid);
+    cartByIdNotRecived(cart)
+    prodByIdNotRecived(product)
+    const {quantity} = req.body;
+    checkQuantityToUpdateCartProducts(quantity)
+    const newCart = await updateQuantityOfProductService(
       cid,
       pid,
-      newQuantity.quantity
+      quantity
     );
-    res.json({ message: "cantidad modificada", cart });
+    res.json({ message: "cantidad modificada", cart: newCart});
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 //falta cambiar
 export const updateProductsController = async (req, res, next) => {
   try {
     const { cid } = req.params;
-    const { newProducts } = req.body;
-    const cart = await updateProductsService(cid, newProducts);
+    const cart = await getCartByIdService(cid);
     cartByIdNotRecived(cart)
-    res.json({ cart });
+    const { newProducts } = req.body;
+    newProducts.forEach(prod => {
+      checkExistsProd(prod)
+      checkRequiredProdProperties(prod)
+    });
+    const newCart = await updateProductsService(cid, newProducts);
+    cartByIdNotRecived(cart)
+    res.json({ newCart });
   } catch (error) {
     next(error);
   }

@@ -14,7 +14,7 @@ export const errorMessage = {
 export const errorCause = {
   INVALID_AND_MISSING_PROD_ID: "Invalid or missing ID property of Product",
   INVALID_AND_MISSING_CART_ID: "Invalid or missing ID property of Cart",
-  MISSING_PRODUCT: "Not found Product Data",
+  INVALID_OR_MISSING_QUANTITY: "Invalid or missing quantity property of Product",
 };
 
 const genereateProductMissingInfo = (prod) => {
@@ -30,10 +30,10 @@ const genereateProductMissingInfo = (prod) => {
 };
 
 export const checkExistsProd = (prod) => {
-  if (!prod) {
+  if (Object.entries(prod).length === 0) {
     CustomError.createCustomError({
       name: errorName.CART_ERROR,
-      cause: errorCause.MISSING_PRODUCT,
+      cause: genereateProductMissingInfo(prod),
       message: errorMessage.PRODUCT_DATA_INCOMPLETE,
     });
   }
@@ -74,6 +74,16 @@ export const cartByIdNotRecived = (cart) => {
       name: errorName.CART_ERROR,
       cause: errorCause.INVALID_AND_MISSING_CART_ID,
       message: errorMessage.CART_DATA_INCOMPLETE,
+    });
+  }
+};
+
+export const checkQuantityToUpdateCartProducts = (quantity) => {
+  if (!quantity || typeof quantity !== "number") {
+    CustomError.createCustomError({
+      name: errorName.CART_ERROR,
+      cause: errorCause.INVALID_OR_MISSING_QUANTITY,
+      message: errorMessage.PRODUCT_DATA_INCOMPLETE,
     });
   }
 };
