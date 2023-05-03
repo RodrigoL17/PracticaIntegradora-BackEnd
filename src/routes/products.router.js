@@ -15,7 +15,7 @@ router.get("/", getAllProducts);
 
 router.get("/:pid", getProductById);
 
-router.post("/", authAdmin, addProduct);
+router.post("/", addProduct);
 
 router.put("/:pid", authAdmin, updateProduct);
 

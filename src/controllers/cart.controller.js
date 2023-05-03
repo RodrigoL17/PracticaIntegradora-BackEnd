@@ -33,7 +33,6 @@ export const createCartController = async (req, res) => {
 
 export const getCartByIdController = async (req, res) => {
   const { cid } = req.params;
-  checkCID(cid);
   try {
     const cartFound = await getCartByIdService(cid);
     res.json(cartFound);
@@ -44,20 +43,17 @@ export const getCartByIdController = async (req, res) => {
 
 export const addProductToCartController = async (req, res) => {
   const { cid, pid } = req.params;
-  checkCID(cid);
-  checkPIDforCart(pid);
   try {
     const cart = await addProductToCartService(cid, pid);
     res.json({ message: "producto agregado al carrito", cart });
   } catch (error) {
-    console.log(error);
+    checkCID(cid);
+    checkPIDforCart(pid);
   }
 };
 
 export const deleteProductFromCartController = async (req, res) => {
   const { cid, pid } = req.params;
-  checkCID(cid);
-  checkPIDforCart(pid);
   try {
     const cart = await deleteProductFromCartService(cid, pid);
     res.json({ cart });
@@ -68,7 +64,6 @@ export const deleteProductFromCartController = async (req, res) => {
 
 export const deleteAllProductsController = async (req, res) => {
   const { cid } = req.params;
-  checkCID(cid);
   try {
     const cart = await deleteAllProductsService(cid);
     res.json({ message: "carrito vaciado con exito", cart });
@@ -79,8 +74,6 @@ export const deleteAllProductsController = async (req, res) => {
 
 export const updateQuantityOfProductController = async (req, res) => {
   const { cid, pid } = req.params;
-  checkCID(cid);
-  checkPIDforCart(pid);
   const newQuantity = req.body;
   try {
     const cart = await updateQuantityOfProductService(
@@ -97,7 +90,6 @@ export const updateQuantityOfProductController = async (req, res) => {
 export const updateProductsController = async (req, res) => {
   const { cid } = req.params;
   const { newProducts } = req.body;
-  checkCID(cid);
   recivedProdExists(newProducts);
   try {
     const cart = await updateProductsService(cid, newProducts);

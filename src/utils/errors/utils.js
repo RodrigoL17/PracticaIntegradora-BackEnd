@@ -12,7 +12,7 @@ export const checkPID = (pid) => {
 }
 
 export const recivedProdExists = (prod) => {
-    if (!prod) {
+    if (prod == null) {
         CustomError.createCustomError({
           name: errorName.PRODUCT_ERROR,
           cuase: errorCause.MISSING_PRODUCT,
@@ -32,7 +32,9 @@ export const checkCID = (cid) => {
 };
 
 export const checkPIDforCart = (pid) => {
+  console.log("pedo", pid);
   if (!pid) {
+    console.log("1")
     CustomError.createCustomError({
       name: errorName.CART_ERROR,
       cause: errorCause.ERROR_ID,

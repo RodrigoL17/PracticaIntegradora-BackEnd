@@ -20,6 +20,8 @@ import "./passport/passportStrategies.js"
 import config from "./config.js";
 import { __dirname } from "./utils.js";
 import { errorMiddleware } from "./utils/errors/error.middleware.js";
+import CustomError from "./utils/errors/customErrors.js";
+import { errorCause, errorMessage, errorName } from "./utils/errors/EErrors.js";
 
 //creamos servidor
 const app = express();
@@ -71,6 +73,14 @@ app.use("/", sessionRouter);
 app.use("/views", viewsRouter);
 app.use("/chat", chatRouter);
 app.use("/mockingproducts", mockingProductsRouter);
+
+app.get("/error", (req,res) => {
+  CustomError.createCustomError({
+    name: errorName.PRODUCT_ERROR,
+    cause: errorCause.MISSING_PRODUCT,
+    message: errorMessage.PRODUCT_DATA_INCOMPLETE
+  })
+})
 
 
 

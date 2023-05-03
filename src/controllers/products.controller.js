@@ -5,13 +5,8 @@ import {
   updateProd,
   deleteProd,
 } from "../services/products.services.js";
-import { checkPID, recivedProdExists } from "../utils/errors/utils.js";
-// import CustomError from "../utils/errors/customErrors.js";
-// import {
-//   errorCause,
-//   errorMessage,
-//   errorName,
-// } from "../utils/errors/EErrors.js";
+import { recivedProdExists } from "../utils/errors/utils.js";
+
 
 export const getAllProducts = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;
@@ -40,12 +35,11 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   const { pid } = req.params;
-  checkPID(pid);
   try {
-    const productoID = await getProdById(pid);
-    res.json({ message: "Producto Encontrado", productoID });
+    const prod = await getProdById(pid);
+    res.json({ message: "Producto Encontrado", product: prod });
   } catch (error) {
-    res.json({ message: "Producto no encontrado" });
+    
   }
 };
 
@@ -62,8 +56,6 @@ export const addProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   const { pid } = req.params;
   const productoAModificar = req.body;
-  checkPID(pid);
-  recivedProdExists(productoAModificar);
   try {
     const productoExistente = await getProdById(pid);
     if (productoExistente == null) {
@@ -82,7 +74,6 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   const { pid } = req.params;
-  checkPID(pid);
   try {
     const prodDeleted = await deleteProd(pid);
     res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
