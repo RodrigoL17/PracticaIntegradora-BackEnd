@@ -1,6 +1,6 @@
 export const errorName = {
-  PRODUCT_ERROR: "Product Error",
-  CART_ERROR: "Cart Error",
+  PRODUCT_ERROR: "PRODUCT ERROR",
+  CART_ERROR: "CART ERROR",
 };
 
 export const errorMessage = {
@@ -9,9 +9,7 @@ export const errorMessage = {
 };
 
 export const errorCause = {
-  MISSING_ID_PROD: "Not found ID Product property",
-  MISSING_ID_CART: "Not found ID Cart property",
-  MISSING_PRODUCT: "Not found Product Data",
-  WRONG_ID: "Wrong ID product property"
+  INVALID_AND_MISSING_PROD_ID: "Invalid or missing ID property of Product",
+  INVALID_AND_MISSING_CART_ID: "Invalid or missing ID property of Cart",
+  INVALID_OR_MISSING_QUANTITY: "Invalid or missing quantity property of Product",
 };
-
