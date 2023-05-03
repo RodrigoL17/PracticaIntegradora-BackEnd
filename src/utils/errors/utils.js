@@ -1,44 +1,53 @@
 import CustomError from "./customErrors.js";
-import { errorCause, errorName, errorMessage } from "./EErrors.js";
+// import { errorCause, errorName, errorMessage } from "./EErrors.js";
 
-export const checkPID = (pid) => {
-    if (!pid) {
-        CustomError.createCustomError({
-          name: errorName.PRODUCT_ERROR,
-          cause: errorCause.ERROR_ID,
-          message: errorMessage.PRODUCT_DATA_INCOMPLETE,
-        });
-      }
-}
-
-export const recivedProdExists = (prod) => {
-    if (prod == null) {
-        CustomError.createCustomError({
-          name: errorName.PRODUCT_ERROR,
-          cuase: errorCause.MISSING_PRODUCT,
-          message: errorMessage.PRODUCT_DATA_INCOMPLETE,
-        });
-      }
-}
-
-export const checkCID = (cid) => {
-  if (!cid) {
-    CustomError.createCustomError({
-      name: errorName.CART_ERROR,
-      cause: errorCause.MISSING_ID_CART,
-      message: errorMessage.CART_DATA_INCOMPLETE,
-    });
-  }
+export const errorName = {
+  PRODUCT_ERROR: "PRODUCT ERROR",
+  CART_ERROR: "CART ERROR",
 };
 
-export const checkPIDforCart = (pid) => {
-  console.log("pedo", pid);
-  if (!pid) {
-    console.log("1")
+export const errorMessage = {
+  PRODUCT_DATA_INCOMPLETE: "Invalid or missing Product Data",
+  CART_DATA_INCOMPLETE: "Invalid or missing Cart Data",
+};
+
+export const errorCause = {
+  INVALID_AND_MISSING_PROD_ID: "Invalid or missing ID property of Product",
+  INVALID_AND_MISSING_CART_ID: "Invalid or missing ID property of Cart",
+  MISSING_PRODUCT: "Not found Product Data",
+  WRONG_ID: "Wrong ID product property"
+};
+
+const genereateProductMissingInfo = (prod) => {
+  return `One or more properties were incomplete or not valid.
+  List of Required Products Properties:
+  * title: [string], received ${prod.title}.
+  * description: [string], received ${prod.description}.
+  * code: [string][unique], received ${prod.code}.
+  * price: [number], received ${prod.price}.
+  * status: [boolean], received ${prod.status}.
+  * stock: [number], received ${prod.stock}.
+  * category: [string], received ${prod.category}.`
+}
+
+export const checkRequiredProdProperties = (prod) => {
+  const {title, description, code, price, status, stock, category} = prod
+  if(!title || !description || !code || !price || !status || !stock || !category){
     CustomError.createCustomError({
-      name: errorName.CART_ERROR,
-      cause: errorCause.ERROR_ID,
+      name: errorName.PRODUCT_ERROR,
+      cause: genereateProductMissingInfo(prod),
       message: errorMessage.PRODUCT_DATA_INCOMPLETE,
     });
   }
-};
+}
+
+export const ProdByIdNotRecived = (prod) => {
+    if (prod == null) {
+        CustomError.createCustomError({
+          name: errorName.PRODUCT_ERROR,
+          cause: errorCause.INVALID_AND_MISSING_PROD_ID,
+          message: errorMessage.PRODUCT_DATA_INCOMPLETE,
+        });
+      }
+}
+

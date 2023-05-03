@@ -7,11 +7,6 @@ import {
   updateQuantityOfProductService,
   updateProductsService,
 } from "../services/cart.services.js";
-import {
-  checkCID,
-  checkPIDforCart,
-  recivedProdExists,
-} from "../utils/errors/utils.js";
 
 export const createCartController = async (req, res) => {
   const product = req.body;
@@ -32,8 +27,8 @@ export const createCartController = async (req, res) => {
 };
 
 export const getCartByIdController = async (req, res) => {
-  const { cid } = req.params;
   try {
+    const { cid } = req.params;
     const cartFound = await getCartByIdService(cid);
     res.json(cartFound);
   } catch (error) {

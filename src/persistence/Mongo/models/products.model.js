@@ -33,7 +33,6 @@ const productsSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: Array,
-    required: true,
   },
 });
 

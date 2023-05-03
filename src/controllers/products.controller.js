@@ -5,8 +5,7 @@ import {
   updateProd,
   deleteProd,
 } from "../services/products.services.js";
-import { recivedProdExists } from "../utils/errors/utils.js";
-
+import { checkRequiredProdProperties, ProdByIdNotRecived } from "../utils/errors/utils.js";
 
 export const getAllProducts = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;
@@ -33,51 +32,46 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-export const getProductById = async (req, res) => {
-  const { pid } = req.params;
+export const getProductById = async (req, res, next) => {
   try {
+    const { pid } = req.params;
     const prod = await getProdById(pid);
+    ProdByIdNotRecived(prod);
     res.json({ message: "Producto Encontrado", product: prod });
   } catch (error) {
-    
+    next(error);
   }
 };
 
-export const addProduct = async (req, res) => {
-  const product = req.body;
-  recivedProdExists(product);
+export const addProduct = async (req, res, next) => {
   try {
-    await addProd(product);
-    res.send({ message: "Producto agregado correctamente", product });
+    const product = req.body;
+    checkRequiredProdProperties(product)
+    const prod = await addProd(product);
+    res.send({ message: "Producto agregado correctamente", product: prod });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
-export const updateProduct = async (req, res) => {
-  const { pid } = req.params;
-  const productoAModificar = req.body;
+export const updateProduct = async (req, res, next) => {
   try {
-    const productoExistente = await getProdById(pid);
-    if (productoExistente == null) {
-      CustomError.createCustomError({
-        name: errorName.PRODUCT_ERROR,
-        cuase: errorCause.WRONG_ID,
-        message: errorMessage.PRODUCT_DATA_INCOMPLETE,
-      });
-    }
-    const prod = await updateProd(pid, productoAModificar);
+    const { pid } = req.params;
+    const productToModify = req.body;
+    checkRequiredProdProperties(productToModify)
+    const prod = await updateProd(pid, productToModify);
     res.json({ message: "Producto actualizado correctamente", prod: prod });
   } catch (error) {
-    console.log(error);
+    next(error)
   }
 };
 
-export const deleteProduct = async (req, res) => {
-  const { pid } = req.params;
+export const deleteProduct = async (req, res, next) => {
   try {
+    const { pid } = req.params;
     const prodDeleted = await deleteProd(pid);
+    ProdByIdNotRecived(prodDeleted)
     res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
   } catch (error) {
-    console.log(error);
+    next(error)
   }
 };

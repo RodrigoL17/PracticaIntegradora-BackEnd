@@ -19,7 +19,7 @@ export default class ProductManager {
     try {
       return await productsModel.findById(ID);
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
   async addProduct(product) {

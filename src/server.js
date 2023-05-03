@@ -74,21 +74,21 @@ app.use("/views", viewsRouter);
 app.use("/chat", chatRouter);
 app.use("/mockingproducts", mockingProductsRouter);
 
-app.get("/error", (req,res) => {
-  CustomError.createCustomError({
-    name: errorName.PRODUCT_ERROR,
-    cause: errorCause.MISSING_PRODUCT,
-    message: errorMessage.PRODUCT_DATA_INCOMPLETE
-  })
-})
+// app.get("/error", (req,res) => {
+//   CustomError.createCustomError({
+//     name: errorName.PRODUCT_ERROR,
+//     cause: errorCause.MISSING_PRODUCT,
+//     message: errorMessage.PRODUCT_DATA_INCOMPLETE
+//   })
+// })
 
 
+app.use(errorMiddleware)
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Escuchando puerto ${PORT}`);
 });
 
-app.use(errorMiddleware)
 
 //Socket del lado del servidor
 // const socketServer = new Server(httpServer);
