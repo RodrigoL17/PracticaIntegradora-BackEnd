@@ -10,18 +10,6 @@ import {
 import { getProdById} from "../services/products.services.js"
 import { cartByIdNotRecived, checkExistsProd, checkQuantityToUpdateCartProducts, checkRequiredProdProperties, prodByIdNotRecived } from "../utils/errors/utils.js";
 
-export const createCartController = async (req, res) => {
-  try {
-    const product = req.body;
-    checkExistsProd(product)
-    checkRequiredProdProperties(product)
-    await createCartService(product);
-    return res.json({ message: "creaste un nuevo carrito" });
-  } catch (error) {
-    next(error);
-    return res.status(500).json({ message: "Error al crear el carrito" });
-  }
-};
 
 export const getCartByIdController = async (req, res, next) => {
   try {

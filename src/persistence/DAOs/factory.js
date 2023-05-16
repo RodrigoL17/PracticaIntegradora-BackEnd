@@ -2,7 +2,7 @@ import config from "../../config.js";
 import ProductManagerMongo from "./productsDAOs/productManagerMongo.js";
 import ProductManagerFS from "./productsDAOs/productManagerFS.js";
 import CartManagerMongo from "./cartDAOs/cartManagerMongo.js";
-import CartManagerFS from "./cartDAOs/cartManagerFS.js";
+import CartManagerFS from "./cartDAOs/cartManagerFs.js";
 import UserManagerMongo from "./userDAOs/usersManagerMongo.js"
 // import UserManagerFS from "./userDAOs/usersManagerFS.js";
 import TicketManagerMongo from "./ticketDAOs/ticketManagerMongo.js";

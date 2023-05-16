@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { userModel} from "../persistence/Mongo/models/users.model.js"
+import { cartsModel } from "../persistence/Mongo/models/carts.model.js"
 import config from "../config.js";
 
 passport.serializeUser((user, done) => {
@@ -23,9 +24,10 @@ passport.use(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/github",
+      callbackURL: "http://localhost:3000/githubCallback",
     },
     async (accessToken, refreshToken, profile, done) => {
+
       const userEmail = await userModel.findOne({ email: profile._json.email });
       const userLogin = await userModel.findOne({ email: profile._json.login });
       if (!userEmail && !userLogin) {
@@ -47,3 +49,4 @@ passport.use(
     }
   )
 );
+

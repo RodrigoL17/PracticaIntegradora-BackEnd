@@ -17,8 +17,8 @@ router.get("/:pid", getProductById);
 
 router.post("/", addProduct);
 
-router.put("/:pid", authAdmin, updateProduct);
+router.put("/:pid", updateProduct);
 
-router.delete("/:pid", authAdmin, deleteProduct);
+router.delete("/:pid", deleteProduct);
 
 export default router;

@@ -42,7 +42,6 @@ export default class UserManager {
 
   async findUser(email) {
     const user = await userModel.findOne({ email });
-    const userDTO = new UserRespDTO(user);
-    return userDTO;
+    return user;
   }
 }

@@ -1,6 +1,8 @@
 import { createUser, userLogIn } from "../services/user.services.js";
+import { createCartService } from "../services/cart.services.js";
 
 export const renderLogin = (req, res) => {
+  console.log(req.session)
   res.render("login");
 };
 
@@ -18,11 +20,12 @@ export const renderErrorLogin = (req, res) => {
 
 export const registration = async (req, res) => {
   const newUser = await createUser(req.body);
+  await createCartService(newUser._id)
   if (newUser) {
     res.redirect("/");
   } else {
     res.send("error registro");
-  }
+  } 
 };
 
 export const login = async (req, res) => {
@@ -40,6 +43,7 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     await req.session.destroy();
+    await res.clearCookie('connect.sid');
     res.redirect("/");
   } catch (error) {
     console.log(error);

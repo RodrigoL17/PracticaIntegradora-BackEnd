@@ -9,6 +9,8 @@ import {
   renderRegistration,
 } from "../controllers/session.controller.js";
 import passport from "passport";
+import { createCartService, findCartByUserIdService } from "../services/cart.services.js";
+
 
 const router = Router();
 
@@ -30,7 +32,14 @@ router.get(
   })
 );
 
-router.get("/github", passport.authenticate("github"), (req, res) => {
+router.get("/githubCallback", passport.authenticate("github"),async (req, res) => {
+  try {
+    const userId = req.user._id
+    const haveCart = await findCartByUserIdService(userId)
+    !haveCart && await createCartService(userId)
+  } catch (error) {
+    console.log(error)
+  }
   req.session.email = req.user.email;
   res.redirect("/views/products");
 });

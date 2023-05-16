@@ -1,7 +1,6 @@
 import { Router } from "express";
 import {
   addProductToCartController,
-  createCartController,
   deleteAllProductsController,
   deleteProductFromCartController,
   getCartByIdController,
@@ -14,7 +13,7 @@ import { authUser } from "../middlewares/current.middleware.js";
 
 const router = Router();
 //crear carrito
-router.post("/", createCartController);
+
 
 //obtener carrito mediante id
 router.get("/:cid", getCartByIdController);

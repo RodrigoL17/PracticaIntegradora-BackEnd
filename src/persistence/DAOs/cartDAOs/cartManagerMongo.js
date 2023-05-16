@@ -9,11 +9,9 @@ export default class cartManager {
     }
   }
 
-  async createCart(prod) {
+  async createCart(userId) {
     try {
-      const newCart = await cartsModel.create({
-        products: { pid: prod._id, quantity: 1 },
-      });
+      const newCart = await cartsModel.create({userId: userId, products: []});
       return newCart;
     } catch (error) {
       console.log(error);
@@ -97,5 +95,10 @@ export default class cartManager {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async findCartByUserId(userId) {
+    const cart = await cartsModel.find({userId: userId});
+    return cart
   }
 }

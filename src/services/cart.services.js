@@ -6,8 +6,8 @@ export const getAllCartsService = async () => {
   return cart;
 };
 
-export const createCartService = async (prod) => {
-  const newCart = await cartDao.createCart(prod);
+export const createCartService = async (userId) => {
+  const newCart = await cartDao.createCart(userId);
   return newCart;
 };
 
@@ -38,3 +38,8 @@ export const updateQuantityOfProductService = async (cid, pid, newQuantity) => {
 export const updateProductsService = async (cid, newProducts) => {
   await cartDao.updateProducts(cid, newProducts);
 };
+
+export const findCartByUserIdService = async (userId) => {
+  const cart = await cartDao.findCartByUserId(userId);
+  return cart
+}
