@@ -53,18 +53,6 @@ app.engine(
   //Cookie
   app.use(cookieParser());
 
-//Configuracion express-session
-app.use(
-  session({
-    secret: "secretKey",
-    resave: false,
-    saveUninitialized: true,
-    store: new MongoStore({
-      mongoUrl: config.MONGO_URI,
-    }),
-    cookie: {maxAge:300000}
-  })
-); 
 
 //Passport
 //inicializar

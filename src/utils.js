@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import jwt from "jsonwebtoken"
+import config from "./config.js";
 
 //dirnname
 
@@ -25,5 +27,13 @@ export const generateRandomString = () => {
     return code
 }
 
+// jwt
 
+export const generateToken = (user) => {
+  const token = jwt.sign({user}, config.JWT_SECRET, {expiresIn: "1h"})
+  return token
+}
 
+export const compareToken = (token) => {
+  
+}

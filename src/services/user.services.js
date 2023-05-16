@@ -15,3 +15,11 @@ export const userLogIn = async(user) => {
    return userL;
 }
 
+export const findUserById = async(id) => {
+    const user = await userDao.findUserById(id);
+    return user;
+}
+
+export const findUserByIdAndUpdatePassword = async(id, password) => {
+    await userDao.findUserByIdAndUpdatePassword(id, password);
+}

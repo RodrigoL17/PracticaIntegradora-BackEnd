@@ -1,8 +1,8 @@
 import { createUser, userLogIn } from "../services/user.services.js";
 import { createCartService } from "../services/cart.services.js";
+import { generateToken } from "../utils.js";
 
 export const renderLogin = (req, res) => {
-  console.log(req.session)
   res.render("login");
 };
 
@@ -29,14 +29,17 @@ export const registration = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await userLogIn(req.body);
-  if (user) {
-    req.session.email = email;
-    req.session.password = password;
-    res.redirect("/views/products");
-  } else {
-    res.redirect("/api/session/errorLogin");
+  try {
+    const { email, password } = req.body;
+    const user = await userLogIn(req.body);
+    if (user) {
+      const token = generateToken(user)
+      res.cookie("token", token, {httpOnly}).redirect("/views/products");
+    } else {
+      res.redirect("/api/session/errorLogin");
+    }
+  } catch (error) {
+    console.log(error)
   }
 };
 

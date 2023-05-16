@@ -23,7 +23,6 @@ export const getProuctsEmailAssociated = async (req, res) => {
   const {email} = req.session 
   const user = await findUser(email);
   const userCart = await findCartByUserIdService(user._id)
-  console.log("la", userCart)
   const products = await getAllProds(limit, page, sort, query);
   res.render("products", { products: products.docs, user:user, cartId: userCart._id });
 };

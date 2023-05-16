@@ -44,4 +44,13 @@ export default class UserManager {
     const user = await userModel.findOne({ email });
     return user;
   }
+
+  async findUserById(id) {
+    const user = await userModel.findById(id);
+    return user;
+  }
+
+  async findUserByIdAndUpdatePassword(id, password){
+    await userModel.findByIdAndUpdate(id, {password: password});
+  }
 }
