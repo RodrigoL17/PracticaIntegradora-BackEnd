@@ -4,7 +4,7 @@ import { updateProductsService } from "../services/cart.services.js";
 
 export const purchaseController = async (req, res) => {
   const { cid } = req.params;
-  const { email} = req.session;
+  const { email} = req.user;
   const productsToRemove = await checkStockAndObtainProductsToRemove(cid)
   const cartFiltered = await cartFilter (productsToRemove, cid)
   const amount = cartFiltered.reduce((acc,prod) => {

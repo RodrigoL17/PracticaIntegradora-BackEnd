@@ -34,6 +34,3 @@ export const generateToken = (user) => {
   return token
 }
 
-export const compareToken = (token) => {
-  
-}

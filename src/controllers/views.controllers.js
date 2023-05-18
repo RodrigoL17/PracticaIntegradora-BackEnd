@@ -2,15 +2,6 @@ import { getAllProds } from "../services/products.services.js";
 import { getCartByIdService, findCartByUserIdService } from "../services/cart.services.js";
 import { findUser } from "../services/user.services.js";
 
-export const renderRealTimeProdcuts = (req, res) => {
-  res.render("realtimeproducts");
-};
-
-export const getAllProductsViews = async (req, res) => {
-  const { limit = 10, page = 1, sort, ...query } = req.params;
-  const products = await getAllProds(limit, page, sort, query);
-  res.render("home", { products: products.docs });
-};
 
 export const getCart = async (req, res) => {
   const { cid } = req.params;
@@ -19,10 +10,10 @@ export const getCart = async (req, res) => {
 };
 
 export const getProuctsEmailAssociated = async (req, res) => {
-  const { limit = 10, page = 1, sort, ...query } = req.params;
-  const {email} = req.session 
+  const { limit = 40, page = 1, sort, ...query } = req.params;
+  const { email, _id } = req.user;
   const user = await findUser(email);
-  const userCart = await findCartByUserIdService(user._id)
+  const userCart = await findCartByUserIdService(_id)
   const products = await getAllProds(limit, page, sort, query);
   res.render("products", { products: products.docs, user:user, cartId: userCart._id });
 };

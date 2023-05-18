@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
-import { userModel} from "../persistence/Mongo/models/users.model.js"
-import { cartsModel } from "../persistence/Mongo/models/carts.model.js"
+import { ExtractJwt, Strategy as jwtStrategy } from "passport-jwt";
+import { userModel } from "../persistence/Mongo/models/users.model.js";
 import config from "../config.js";
 
 passport.serializeUser((user, done) => {
@@ -27,7 +27,6 @@ passport.use(
       callbackURL: "http://localhost:3000/githubCallback",
     },
     async (accessToken, refreshToken, profile, done) => {
-
       const userEmail = await userModel.findOne({ email: profile._json.email });
       const userLogin = await userModel.findOne({ email: profile._json.login });
       if (!userEmail && !userLogin) {
@@ -50,3 +49,22 @@ passport.use(
   )
 );
 
+//JWT Strategy
+
+const cookieExtractor = (req) => {
+  const token = req.cookies.token
+  return token
+}
+
+passport.use(
+  "jwt",
+  new jwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+      secretOrKey: config.JWT_SECRET,
+    },
+    async (jwt_payload, done) => {
+      done(null, jwt_payload.user)
+    }
+  )
+);

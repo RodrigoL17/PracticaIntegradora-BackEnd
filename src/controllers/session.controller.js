@@ -20,37 +20,36 @@ export const renderErrorLogin = (req, res) => {
 
 export const registration = async (req, res) => {
   const newUser = await createUser(req.body);
-  await createCartService(newUser._id)
+  await createCartService(newUser._id);
   if (newUser) {
     res.redirect("/");
   } else {
     res.send("error registro");
-  } 
+  }
 };
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
     const user = await userLogIn(req.body);
     if (user) {
-      const token = generateToken(user)
-      res.cookie("token", token, {httpOnly}).redirect("/views/products");
+      const token = generateToken(user);
+     
+      res
+        .cookie("token", token, { httpOnly:true })
+        .redirect("/views/products");
     } else {
       res.redirect("/api/session/errorLogin");
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
-export const logout = async (req, res) => {
+export const logout = (req, res) => {
   try {
-    await req.session.destroy();
-    await res.clearCookie('connect.sid');
+    res.clearCookie("token");
     res.redirect("/");
   } catch (error) {
     console.log(error);
-    res.json({ message: error });
   }
 };
-

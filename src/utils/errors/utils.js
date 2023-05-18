@@ -24,13 +24,12 @@ export const checkExistsProd = (prod) => {
 };
 
 export const checkRequiredProdProperties = (prod) => {
-  const { title, description, code, price, status, stock, category } = prod;
+  const { title, description, code, price, stock, category } = prod;
   if (
     !title ||
     !description ||
     !code ||
     !price ||
-    !status ||
     !stock ||
     !category
   ) {

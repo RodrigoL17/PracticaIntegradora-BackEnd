@@ -22,8 +22,9 @@ export default class ProductManager {
       console.log(error)
     }
   }
-  async addProduct(product) {
+  async addProduct(product, _id) {
     try {
+      // const newProduct = await 
       const newProduct = await productsModel.create(product);
       return newProduct;
     } catch (error) {

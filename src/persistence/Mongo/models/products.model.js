@@ -21,7 +21,7 @@ const productsSchema = new mongoose.Schema({
   },
   status: {
     type: Boolean,
-    required: true,
+    default: true,
   },
   stock: {
     type: Number,
@@ -33,6 +33,7 @@ const productsSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: Array,
+    default: []
   },
   owner :{
     type: mongoose.Schema.Types.ObjectId,

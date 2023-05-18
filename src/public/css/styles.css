@@ -44,7 +44,7 @@ body{
   background-color: transparent;
 }
 
-.formularioLogin{
+.loginForm{
   min-width: 70%;
   height: 15rem;
   display: flex;

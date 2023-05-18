@@ -45,9 +45,10 @@ export const getProductById = async (req, res, next) => {
 
 export const addProduct = async (req, res, next) => {
   try {
-    const product = req.body;
+    const product = req.body; 
     checkRequiredProdProperties(product)
     const prod = await addProd(product);
+    console.log("prod", prod);
     res.send({ message: "Producto agregado correctamente", product: prod });
   } catch (error) {
     next(error);

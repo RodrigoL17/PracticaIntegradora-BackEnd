@@ -14,13 +14,18 @@ import {
   findCartByUserIdService,
 } from "../services/cart.services.js";
 import { transporter } from "../nodemailer.js";
-import { findUser, findUserById, findUserByIdAndUpdatePassword } from "../services/user.services.js";
-import { hashPassword, comparePassword } from "../utils.js";
-
+import {
+  findUser,
+  findUserById,
+  findUserByIdAndUpdatePassword,
+} from "../services/user.services.js";
+import { hashPassword, comparePassword, generateToken } from "../utils.js";
 
 const router = Router();
 
 router.get("/", renderLogin);
+
+router.post("/login", login);
 
 router.get("/api/session/registration", renderRegistration);
 
@@ -49,8 +54,7 @@ router.get(
     } catch (error) {
       console.log(error);
     }
-    req.session.email = req.user.email;
-    res.redirect("/views/products");
+    res.redirect("/views/products/Github");
   }
 );
 
@@ -59,8 +63,6 @@ router.get(
   "/githubLogin",
   passport.authenticate("github", { scope: ["user:email"] })
 );
-
-router.post("/", login);
 
 router.get("/api/session/reestablecer", (req, res) => {
   res.render("reestablecer");
@@ -73,24 +75,30 @@ router.post("/api/session/reestablecerRedirect", async (req, res) => {
     if (!user) {
       res.send("el usuario ingresado no existe");
     } else {
+      const token = generateToken(user)
       const id = user._id.toString();
       await transporter.sendMail({
         from: "ECOMMERCE",
         to: email,
         subject: "Reestablecer contraseña",
         html: `<p>Para reestablecer la contraseña dirigete al siguiente link: </p>
-      <a href="http://localhost:3000/api/session/reestablecerContrasena/${id}">Haz click aqui</a>`,
+      <a href="http://localhost:3000/api/session/reestablecerContrasena/${id}/${token}">Haz click aqui</a>`,
       });
-      res.redirect("/");
+      res.cookie("token", token).redirect("/");
     }
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get("/api/session/reestablecerContrasena/:uid", (req, res) => {
-  const { uid } = req.params;
+router.get("/api/session/reestablecerContrasena/:uid/:token", (req, res) => {
+  const { uid, token } = req.params;
+  const prevToken = req.cookies.token
+  if(token === prevToken) {
   res.render("reestablecerContraseña", { uid: uid });
+} else {
+  res.render("redireccionRC")
+}
 });
 
 router.post("/api/session/reestablecerContrasena/:uid", async (req, res) => {
@@ -98,15 +106,14 @@ router.post("/api/session/reestablecerContrasena/:uid", async (req, res) => {
     const { uid } = req.params;
     const { password } = req.body;
     const user = await findUserById(uid);
-    const isPassword = await comparePassword(password, user.password)
+    const isPassword = await comparePassword(password, user.password);
     if (isPassword) {
-      res.send("No se puede colocar la misma contraseña")
-    }else{
-      const newPassword = await hashPassword(password)
-      await findUserByIdAndUpdatePassword(uid, newPassword)
-      res.send("Contraseña modificada con exito")
+      res.send("No se puede colocar la misma contraseña");
+    } else {
+      const newPassword = await hashPassword(password);
+      await findUserByIdAndUpdatePassword(uid, newPassword);
+      res.send("Contraseña modificada con exito");
     }
-    
   } catch (error) {
     console.log(error);
   }

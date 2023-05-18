@@ -51,12 +51,26 @@ app.engine(
   app.set("view engine", ".hbs");
   
   //Cookie
-  app.use(cookieParser());
+  app.use(cookieParser(config.COOKIE_KEY));
 
+//Configuracion express-session
+app.use(
+  session({
+    secret: "secretKey",
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({
+      mongoUrl: config.MONGO_URI,
+    }),
+    cookie: {maxAge:300000}
+  })
+); 
 
 //Passport
+
 //inicializar
 app.use(passport.initialize())
+
 //passport va a guardar la informacion de session
 app.use(passport.session())
 
@@ -64,9 +78,9 @@ app.use(passport.session())
 
 
 //rutas
+app.use("/", sessionRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/", sessionRouter);
 app.use("/views", viewsRouter);
 app.use("/mockingproducts", mockingProductsRouter);
 app.use("/loggerTest", loggerTestRouter);

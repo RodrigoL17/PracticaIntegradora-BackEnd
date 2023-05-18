@@ -23,11 +23,21 @@ const usersSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rol: {
-    type: String,
+  isUser: {
+    type: Boolean,
     required: true,
-    default: "user",
+    default: true,
   },
+  isAdmin: {
+    type:Boolean,
+    required: true,
+    default: false,
+  },
+  isPremium: {
+    type:Boolean,
+    required: true,
+    default: false,
+  }
 });
 
 export const userModel = mongoose.model("User", usersSchema);

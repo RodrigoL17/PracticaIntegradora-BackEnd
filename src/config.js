@@ -11,5 +11,6 @@ export default {
     ENVIROMENT: process.env.ENV,
     GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
     GMAIL_USER: process.env.GMAIL_USER,
-    JWT_SECRET: process.env.JWT_SECRET
+    JWT_SECRET: process.env.JWT_SECRET,
+    COOKIE_KEY: process.env.COOKIE_KEY
 }

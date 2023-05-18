@@ -1,25 +1,39 @@
-
 <div class="saludo">
   <p>Bienvenido: {{user.first_name}} {{user.last_name}}</p>
-  <p>Rol: {{user.rol}}</p>  
+  <p>Rol: {{#if user.isAdmin}}
+    Admin
+    {{else if user.isPremium}}
+    Premium
+    {{else}}
+    User
+    {{/if}}</p>
+    {{#if user.isPremium}}
+    <button onclick="location.href='/views/createProduct/{{user._id}}'">Crear Producto</button>
+    {{/if}}
   <button onclick="location.href='/api/session/logout'">Logout</button>
 </div>
 <div class="container">
-     {{#each products}}
-        <div class="card">
-          <h3 class="title">{{title}}</h3>
-          <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
-          <div class="info">
-            <p class="description"><strong>Descripción:</strong> {{description}}</p>
-            <p class="code"><strong>Codigo:</strong> {{code}}</p>
-            <p class="stock"><strong>Stock:</strong> {{stock}}</p>
-            <p class="category"><strong>Categoria:</strong> {{category}}</p>
-            <p class="id"><strong>Id:</strong> {{_id}}</p>
-          </div>
-          <form class="prodForm" method="post" action="http://localhost:3000/api/carts/{{cartId}}/product/{{_id}}">
-            <button class="add-to-cart" type="submit">Agregar al carrito</button>
-          </form>
-          <p class="price">${{price}}</p>
-        </div>
-    {{/each}}
+  {{#each products}}
+  <div class="card">
+    <h3 class="title">{{title}}</h3>
+    <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
+    <div class="info">
+      <p class="description"><strong>Descripción:</strong> {{description}}</p>
+      <p class="code"><strong>Codigo:</strong> {{code}}</p>
+      <p class="stock"><strong>Stock:</strong> {{stock}}</p>
+      <p class="category"><strong>Categoria:</strong> {{category}}</p>
+      <p class="id"><strong>Id:</strong> {{_id}}</p>
+      <p class="owner"><strong>Owner:</strong>{{owner}}</p>
+    </div>
+    <form class="prodForm" method="post" action="http://localhost:3000/api/carts/{{cartId}}/product/{{_id}}">
+      <button class="add-to-cart" type="submit">Agregar al carrito</button>
+    </form>
+    {{#if (or (eq user._id owner) user.isAdmin)}}
+    <form class="prodForm" method="delete" action="http://localhost:3000/api/products/{{_id}}">
+      <button class="delete-product" type="submit">Eliminar Producto</button>
+    </form>
+    {{/if}}
+    <p class="price">${{price}}</p>
+  </div>
+  {{/each}}
 </div>

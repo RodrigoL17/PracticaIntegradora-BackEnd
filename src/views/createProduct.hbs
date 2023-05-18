@@ -1,0 +1,11 @@
+<h2>Crear Producto</h2>
+<form action="http://localhost:3000/api/products" method="post">
+    Titulo: <input type="text" name="title" id="title" style="color: black;">
+    Descripcion: <input type="text" name="description" id="description" style="color: black;">
+    Codigo: <input type="text" name="code" id="code" style="color: black;">
+    Price: <input type="number" name="price" id="price" style="color: black;">
+    Stock: <input type="number" name="stock" id="stock" style="color: black;">
+    Categoria: <input type="text" name="category" id="category" style="color: black;">
+    Creador: <input type="text" name="owner" id="owner" style="color: black;" value="{{uid}}" readonly>
+    <input type="submit" value="Agregar">
+</form>
