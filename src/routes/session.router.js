@@ -13,7 +13,7 @@ import {
   createCartService,
   findCartByUserIdService,
 } from "../services/cart.services.js";
-import { transporter } from "../nodemailer.js";
+import { transporter } from "../utils/NodeMailer/nodemailer.js";
 import {
   findUser,
   findUserById,
@@ -75,7 +75,7 @@ router.post("/api/session/reestablecerRedirect", async (req, res) => {
     if (!user) {
       res.send("el usuario ingresado no existe");
     } else {
-      const token = generateToken(user)
+      const token = generateToken(user);
       const id = user._id.toString();
       await transporter.sendMail({
         from: "ECOMMERCE",
@@ -93,12 +93,12 @@ router.post("/api/session/reestablecerRedirect", async (req, res) => {
 
 router.get("/api/session/reestablecerContrasena/:uid/:token", (req, res) => {
   const { uid, token } = req.params;
-  const prevToken = req.cookies.token
-  if(token === prevToken) {
-  res.render("reestablecerContraseña", { uid: uid });
-} else {
-  res.render("redireccionRC")
-}
+  const prevToken = req.cookies.token;
+  if (token === prevToken) {
+    res.render("reestablecerContraseña", { uid: uid });
+  } else {
+    res.render("redireccionRC");
+  }
 });
 
 router.post("/api/session/reestablecerContrasena/:uid", async (req, res) => {

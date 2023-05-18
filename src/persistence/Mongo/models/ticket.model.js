@@ -4,7 +4,7 @@ import { generateRandomString } from "../../../utils.js";
 const ticketSchema = new mongoose.Schema({
     code:{
         type: String,
-        default: generateRandomString(),
+        default: generateRandomString(), // generate random string for code ticket 
         unique: true
     },
     purchase_datetime: Date,

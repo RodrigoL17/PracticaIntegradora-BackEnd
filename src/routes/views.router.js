@@ -24,7 +24,7 @@ router.get("/createProduct/:uid", (req,res) => {
   res.render("createProduct", {uid: uid})
 })
 
-//Cart
-// router.get("/carts/:cid", getCart);
+// Cart
+router.get("/carts/:cid", getCart);
 
 export default router;

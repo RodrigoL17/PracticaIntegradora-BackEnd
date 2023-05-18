@@ -11,49 +11,45 @@ import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import sessionRouter from "./routes/session.router.js";
 import mockingProductsRouter from "./routes/mockingProducts.router.js";
-import loggerTestRouter from "./routes/loggerTest.router.js"
+import loggerTestRouter from "./routes/loggerTest.router.js";
 
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
-import "./passport/passportStrategies.js"
-import config from "./config.js";
+import "./passport/passportStrategies.js";
+import config from "./utils/Dotenv/config.js";
 import { __dirname } from "./utils.js";
-import { errorMiddleware } from "./utils/errors/error.middleware.js";
+import { errorMiddleware } from "./utils/Errors/error.middleware.js";
 
-
-//creamos servidor
+//Server Config
 const app = express();
 const PORT = config.PORT;
-
-//para que codifique
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-//para path absoluto
 app.use(express.static(__dirname + "/public"));
 
-//configurar handlebars
-Handlebars.registerHelper('getFirstElement', function(array) {
-  return array[0];
-});
-
+//Handlebars config
+app.set("views", __dirname + "/views");
+app.set("view engine", ".hbs");
 app.engine(
   ".hbs",
   handlebars.engine({
     extname: ".hbs",
     handlebars: allowInsecurePrototypeAccess(Handlebars),
-    helpers:{
-      getFirstElement:Handlebars.helpers.getFirstElement
-    }
+    helpers: {
+      getFirstElement: Handlebars.helpers.getFirstElement,
+    },
   })
-  ); //configuracion exclusiva handlebars
-  app.set("views", __dirname + "/views");
-  app.set("view engine", ".hbs");
-  
-  //Cookie
-  app.use(cookieParser(config.COOKIE_KEY));
+);
 
-//Configuracion express-session
+//Handlebars helper
+Handlebars.registerHelper("getFirstElement", function (array) {
+  return array[0];
+});
+
+//Cookie config
+app.use(cookieParser(config.COOKIE_KEY));
+
+//Express-session config
 app.use(
   session({
     secret: "secretKey",
@@ -62,22 +58,16 @@ app.use(
     store: new MongoStore({
       mongoUrl: config.MONGO_URI,
     }),
-    cookie: {maxAge:300000}
+    cookie: { maxAge: 300000 },
   })
-); 
+);
 
-//Passport
+//Passport Config
+//Initialize
+app.use(passport.initialize());
+app.use(passport.session()); //passport saves info in session
 
-//inicializar
-app.use(passport.initialize())
-
-//passport va a guardar la informacion de session
-app.use(passport.session())
-
-
-
-
-//rutas
+//Routes
 app.use("/", sessionRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
@@ -85,9 +75,9 @@ app.use("/views", viewsRouter);
 app.use("/mockingproducts", mockingProductsRouter);
 app.use("/loggerTest", loggerTestRouter);
 
+//Use Error Middleware
 // app.use(errorMiddleware)
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Escuchando puerto ${PORT}`);
 });
-

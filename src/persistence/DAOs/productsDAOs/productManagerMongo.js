@@ -24,7 +24,6 @@ export default class ProductManager {
   }
   async addProduct(product, _id) {
     try {
-      // const newProduct = await 
       const newProduct = await productsModel.create(product);
       return newProduct;
     } catch (error) {

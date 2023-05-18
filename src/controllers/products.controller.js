@@ -5,7 +5,10 @@ import {
   updateProd,
   deleteProd,
 } from "../services/products.services.js";
-import { checkRequiredProdProperties, prodByIdNotRecived } from "../utils/errors/utils.js";
+import {
+  checkRequiredProdProperties,
+  prodByIdNotRecived,
+} from "../utils/Errors/utils.js";
 
 export const getAllProducts = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;
@@ -45,8 +48,8 @@ export const getProductById = async (req, res, next) => {
 
 export const addProduct = async (req, res, next) => {
   try {
-    const product = req.body; 
-    checkRequiredProdProperties(product)
+    const product = req.body;
+    checkRequiredProdProperties(product);
     const prod = await addProd(product);
     console.log("prod", prod);
     res.send({ message: "Producto agregado correctamente", product: prod });
@@ -58,11 +61,11 @@ export const updateProduct = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const productToModify = req.body;
-    checkRequiredProdProperties(productToModify)
+    checkRequiredProdProperties(productToModify);
     const prod = await updateProd(pid, productToModify);
     res.json({ message: "Producto actualizado correctamente", prod: prod });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
@@ -70,9 +73,9 @@ export const deleteProduct = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const prodDeleted = await deleteProd(pid);
-    prodByIdNotRecived(prodDeleted)
+    prodByIdNotRecived(prodDeleted);
     res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };

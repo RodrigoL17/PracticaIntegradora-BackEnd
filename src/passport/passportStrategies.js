@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { ExtractJwt, Strategy as jwtStrategy } from "passport-jwt";
 import { userModel } from "../persistence/Mongo/models/users.model.js";
-import config from "../config.js";
+import config from "../utils/Dotenv/config.js";
 
 passport.serializeUser((user, done) => {
   done(null, user._id);
@@ -52,9 +52,9 @@ passport.use(
 //JWT Strategy
 
 const cookieExtractor = (req) => {
-  const token = req.cookies.token
-  return token
-}
+  const token = req.cookies.token;
+  return token;
+};
 
 passport.use(
   "jwt",
@@ -64,7 +64,7 @@ passport.use(
       secretOrKey: config.JWT_SECRET,
     },
     async (jwt_payload, done) => {
-      done(null, jwt_payload.user)
+      done(null, jwt_payload.user);
     }
   )
 );
