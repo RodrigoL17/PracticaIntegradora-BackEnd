@@ -1,45 +1,51 @@
 import { cartDao } from "../persistence/DAOs/factory.js";
 
-
-export const getAllCartsService = async () => {
-  const cart = await cartDao.getAllCarts();
+const getAll = async () => {
+  const cart = await cartDao.getAll();
   return cart;
 };
 
-export const createCartService = async (userId) => {
-  const newCart = await cartDao.createCart(userId);
+const getById = async (cid) => {
+  const cart = await cartDao.getById(cid);
+  return cart;
+};
+
+const getByUserId = async (userId) => {
+  const cart = await cartDao.getByUserId(userId);
+  return cart;
+};
+
+const create = async (userId) => {
+  const newCart = await cartDao.create(userId);
   return newCart;
 };
 
-export const getCartByIdService = async (cid) => {
-  const cart = await cartDao.getCartById(cid);
-  return cart;
+const addProd = async (cid, pid) => {
+  await cartDao.addProd(cid, pid);
 };
 
-export const addProductToCartService = async (cid, pid) => {
-  await cartDao.addProductToCart(cid, pid);
-};
-
-export const deleteProductFromCartService = async (cid, pid) => {
-  const cart = await cartDao.deleteProductFromCart(cid, pid);
-  return cart;
-};
-
-export const deleteAllProductsService = async (cid) => {
-  const cart = await cartDao.deleteAllProducts(cid);
-  return cart;
-};
-
-export const updateQuantityOfProductService = async (cid, pid, newQuantity) => {
-  const cart = await cartDao.updateQuantityOfProduct(cid, pid, newQuantity);
-  return cart;
-};
-
-export const updateProductsService = async (cid, newProducts) => {
-  await cartDao.updateProducts(cid, newProducts);
-};
-
-export const findCartByUserIdService = async (userId) => {
-  const cart = await cartDao.findCartByUserId(userId);
-  return cart
+const oneMoreProd = async (cid, pid) => {
+  await cartDao.oneMoreProd(cid, pid);
 }
+const updateQuantityOfProd = async (cid, pid, newQuantity) => {
+  const cart = await cartDao.updateQuantityOfProd(cid, pid, newQuantity);
+  return cart;
+};
+
+const updateProds = async (cid, newProducts) => {
+  await cartDao.updateProds(cid, newProducts);
+};
+
+const deleteProd = async (cid, pid) => {
+  const cart = await cartDao.deleteProd(cid, pid);
+  return cart;
+};
+
+const deleteAllProds = async (cid) => {
+  const cart = await cartDao.deleteAllProds(cid);
+  return cart;
+};
+
+
+
+export default {getAll, create, getById, addProd, deleteProd, deleteAllProds, updateQuantityOfProd, updateProds, getByUserId, oneMoreProd}

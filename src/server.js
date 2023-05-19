@@ -32,6 +32,11 @@ Handlebars.registerHelper("getFirstElement", function (array) {
   return array[0];
 });
 
+
+Handlebars.registerHelper('isEqual', function (value1, value2, options) {
+  return value1 === value2 ? options.fn(this) : options.inverse(this);
+});
+
 //Handlebars config
 app.set("views", __dirname + "/views");
 app.set("view engine", ".hbs");
@@ -42,12 +47,7 @@ app.engine(
     handlebars: allowInsecurePrototypeAccess(Handlebars),
     helpers: {
       getFirstElement: Handlebars.helpers.getFirstElement,
-      eq: function (a, b) {
-        return a === b;
-      },
-      or: function (a, b) {
-        return a || b;
-      },
+      isEqual: Handlebars.helpers.isEqual,
     },
   })
 );

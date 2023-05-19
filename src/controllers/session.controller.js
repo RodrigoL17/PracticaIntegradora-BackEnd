@@ -1,5 +1,5 @@
 import { createUser, userLogIn } from "../services/user.services.js";
-import { createCartService } from "../services/cart.services.js";
+import cartService from "../services/cart.services.js";
 import { generateToken } from "../utils.js";
 
 export const renderLogin = (req, res) => {
@@ -20,7 +20,7 @@ export const renderErrorLogin = (req, res) => {
 
 export const registration = async (req, res) => {
   const newUser = await createUser(req.body);
-  await createCartService(newUser._id);
+  await cartService.create(newUser._id);
   if (newUser) {
     res.redirect("/");
   } else {

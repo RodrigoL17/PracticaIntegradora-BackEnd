@@ -9,11 +9,10 @@ import { fileURLToPath } from "url";
 //Absolute Path
 export const __dirname = dirname(fileURLToPath(import.meta.url));
 
-//hasheo de contraseña
+//Bcrypt hash and compare password
 export const hashPassword = async (password) => {
   return bcrypt.hash(password, 10);
 };
-
 export const comparePassword = async (password, passwordBD) => {
   return bcrypt.compare(password, passwordBD);
 };

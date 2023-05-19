@@ -9,10 +9,7 @@ import {
   renderRegistration,
 } from "../controllers/session.controller.js";
 import passport from "passport";
-import {
-  createCartService,
-  findCartByUserIdService,
-} from "../services/cart.services.js";
+import cartServices from "../services/cart.services.js";
 import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 import {
   findUser,
@@ -49,8 +46,8 @@ router.get(
   async (req, res) => {
     try {
       const userId = req.user._id;
-      const haveCart = await findCartByUserIdService(userId);
-      !haveCart && (await createCartService(userId));
+      const haveCart = await cartServices.getByUserId(userId);
+      !haveCart && (await cartServices.create(userId));
     } catch (error) {
       console.log(error);
     }

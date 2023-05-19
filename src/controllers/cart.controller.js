@@ -1,12 +1,4 @@
-import {
-  createCartService,
-  getCartByIdService,
-  addProductToCartService,
-  deleteProductFromCartService,
-  deleteAllProductsService,
-  updateQuantityOfProductService,
-  updateProductsService,
-} from "../services/cart.services.js";
+import cartService from "../services/cart.services.js";
 import { getProdById } from "../services/products.services.js";
 import {
   cartByIdNotRecived,
@@ -19,8 +11,9 @@ import {
 const getCartById = async (req, res, next) => {
   try {
     const { cid } = req.params;
-    const cartFound = await getCartByIdService(cid);
+    const cartFound = await cartService.getById(cid);
     cartByIdNotRecived(cartFound);
+    //falta cambiar ----> crear view para render cart
     res.json(cartFound);
   } catch (error) {
     next(error);
@@ -28,15 +21,26 @@ const getCartById = async (req, res, next) => {
 };
 
 //falta cambiar
-const addProduct = async (req, res, next) => {
+const addProductToCart = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
-    const cart = await getCartByIdService(cid);
+    const cart = await cartService.getById(cid);
     const product = await getProdById(pid);
+    //check if cart and product already exist
     cartByIdNotRecived(cart);
     prodByIdNotRecived(product);
-    const newCart = await addProductToCartService(cid, pid);
-    res.json({ message: "producto agregado al carrito", cart: newCart });
+    //check if product already exists in cart
+    const existingProduct = cart.products.find(
+      (prod) => prod.pid.toString() === pid
+    );
+    if(cart.products.length === 0 || !existingProduct) {
+      //if cart is empty or product does not exist in cart, add product
+      await cartService.addProd(cid, pid);
+    }
+    if(existingProduct){
+      //if product already exists in cart +1 to quatity
+      await cartService.oneMoreProd(cid,pid)
+    }
   } catch (error) {
     next(error);
   }
@@ -55,7 +59,7 @@ const deleteProduct = async (req, res, next) => {
     next(error);
   }
 };
-
+//falta cambiar
 const deleteAllProducts = async (req, res, next) => {
   try {
     const { cid } = req.params;
@@ -67,6 +71,7 @@ const deleteAllProducts = async (req, res, next) => {
     next(error);
   }
 };
+//falta cambiar
 const updateQuantityOfProduct = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
@@ -101,4 +106,4 @@ const updateBulkProducts = async (req, res, next) => {
   }
 };
 
-export default {getCartById, addProduct, deleteProduct, deleteAllProducts, updateQuantityOfProduct ,updateBulkProducts}
+export default {getCartById, addProductToCart, deleteProduct, deleteAllProducts, updateQuantityOfProduct ,updateBulkProducts}
