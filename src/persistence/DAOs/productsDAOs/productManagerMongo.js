@@ -1,7 +1,7 @@
 import { productsModel } from "../../Mongo/models/products.model.js";
 
 export default class ProductManager {
-  async getAllProducts(limit, page, sort, query) {
+  async getAll(limit, page, sort, query) {
     const options = {
       limit: limit,
       page: page,
@@ -15,14 +15,14 @@ export default class ProductManager {
     }
   }
 
-  async getProdutcById(ID) {
+  async getById(id) {
     try {
-      return await productsModel.findById(ID);
+      return await productsModel.findById(id);
     } catch (error) {
       console.log(error)
     }
   }
-  async addProduct(product, _id) {
+  async create(product) {
     try {
       const newProduct = await productsModel.create(product);
       return newProduct;
@@ -31,7 +31,7 @@ export default class ProductManager {
     }
   }
 
-  async updateProduct(id, product) {
+  async update(id, product) {
     try {
       const productUpdate = await productsModel.findByIdAndUpdate(id, product);
       return productUpdate;
@@ -40,13 +40,13 @@ export default class ProductManager {
     }
   }
 
-  async deleteProduct(id) {
+  async remove(id) {
     return await productsModel.findByIdAndDelete(id);
   }
 
-  async updateStock(pid, stock, quantity) {
+  async updateStock(id, stock, quantity) {
     try {
-      await productsModel.findByIdAndUpdate(pid, { stock: stock - quantity });
+      await productsModel.findByIdAndUpdate(id,{$set: { stock: stock - quantity }});
     } catch (error) {
       console.log(error);
     }

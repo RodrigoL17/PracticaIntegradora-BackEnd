@@ -3,6 +3,7 @@ import { generateProduct } from "../Utilities/Mocks/productMock.js";
 
 const router = Router()
 
+//Generate fake product faker.Js
 router.get("/", (req, res) => {
     const products = []
     for (let i = 0; i < 100; i++) {

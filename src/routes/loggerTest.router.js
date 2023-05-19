@@ -2,7 +2,7 @@ import { Router } from "express";
 import logger from "../Utilities/Logger/logger.js";
 
 const router = Router();
-
+// Test of loggers
 router.get("/", (req, res) => {
   logger.fatal("fatal");
   logger.error("error");
