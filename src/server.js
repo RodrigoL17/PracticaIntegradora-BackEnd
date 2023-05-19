@@ -27,6 +27,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
+//Handlebars helper
+Handlebars.registerHelper("getFirstElement", function (array) {
+  return array[0];
+});
+
 //Handlebars config
 app.set("views", __dirname + "/views");
 app.set("view engine", ".hbs");
@@ -37,14 +42,15 @@ app.engine(
     handlebars: allowInsecurePrototypeAccess(Handlebars),
     helpers: {
       getFirstElement: Handlebars.helpers.getFirstElement,
+      eq: function (a, b) {
+        return a === b;
+      },
+      or: function (a, b) {
+        return a || b;
+      },
     },
   })
 );
-
-//Handlebars helper
-Handlebars.registerHelper("getFirstElement", function (array) {
-  return array[0];
-});
 
 //Cookie config
 app.use(cookieParser(config.COOKIE_KEY));
