@@ -8,7 +8,7 @@ import {
 import {
   checkRequiredProdProperties,
   prodByIdNotRecived,
-} from "../utils/Errors/utils.js";
+} from "../Utilities/Errors/utils.js";
 
 export const getAllProducts = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;

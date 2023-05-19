@@ -6,8 +6,7 @@ import {
   getProductById,
   updateProduct,
 } from "../controllers/products.controller.js";
-
-import { authAdmin } from "../middlewares/current.middleware.js";
+import { authAdmin } from "../Utilities/Middlewares/current.middleware.js";
 
 const router = Router();
 

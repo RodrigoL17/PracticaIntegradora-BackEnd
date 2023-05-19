@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import config from "./utils/Dotenv/config.js";
+import config from "./Utilities/Dotenv/config.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";

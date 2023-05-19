@@ -1,8 +1,8 @@
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { ExtractJwt, Strategy as jwtStrategy } from "passport-jwt";
-import { userModel } from "../persistence/Mongo/models/users.model.js";
-import config from "../utils/Dotenv/config.js";
+import { userModel } from "../../persistence/Mongo/models/users.model.js";
+import config from "../Dotenv/config.js";
 
 passport.serializeUser((user, done) => {
   done(null, user._id);

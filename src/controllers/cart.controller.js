@@ -14,9 +14,9 @@ import {
   checkQuantityToUpdateCartProducts,
   checkRequiredProdProperties,
   prodByIdNotRecived,
-} from "../utils/Errors/utils.js";
+} from "../Utilities/Errors/utils.js";
 
-export const getCartByIdController = async (req, res, next) => {
+const getCartById = async (req, res, next) => {
   try {
     const { cid } = req.params;
     const cartFound = await getCartByIdService(cid);
@@ -28,7 +28,7 @@ export const getCartByIdController = async (req, res, next) => {
 };
 
 //falta cambiar
-export const addProductToCartController = async (req, res, next) => {
+const addProduct = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
     const cart = await getCartByIdService(cid);
@@ -42,7 +42,7 @@ export const addProductToCartController = async (req, res, next) => {
   }
 };
 //falta cambiar
-export const deleteProductFromCartController = async (req, res, next) => {
+const deleteProduct = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
     const cart = await getCartByIdService(cid);
@@ -56,7 +56,7 @@ export const deleteProductFromCartController = async (req, res, next) => {
   }
 };
 
-export const deleteAllProductsController = async (req, res, next) => {
+const deleteAllProducts = async (req, res, next) => {
   try {
     const { cid } = req.params;
     const cart = await getCartByIdService(cid);
@@ -67,7 +67,7 @@ export const deleteAllProductsController = async (req, res, next) => {
     next(error);
   }
 };
-export const updateQuantityOfProductController = async (req, res, next) => {
+const updateQuantityOfProduct = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
     const cart = await getCartByIdService(cid);
@@ -83,7 +83,7 @@ export const updateQuantityOfProductController = async (req, res, next) => {
   }
 };
 //falta cambiar
-export const updateProductsController = async (req, res, next) => {
+const updateBulkProducts = async (req, res, next) => {
   try {
     const { cid } = req.params;
     const cart = await getCartByIdService(cid);
@@ -100,3 +100,5 @@ export const updateProductsController = async (req, res, next) => {
     next(error);
   }
 };
+
+export default {getCartById, addProduct, deleteProduct, deleteAllProducts, updateQuantityOfProduct ,updateBulkProducts}

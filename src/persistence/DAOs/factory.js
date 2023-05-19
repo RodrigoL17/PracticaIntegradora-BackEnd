@@ -1,4 +1,4 @@
-import config from "../../utils/Dotenv/config.js";
+import config from "../../Utilities/Dotenv/config.js";
 import ProductManagerMongo from "./productsDAOs/productManagerMongo.js";
 import CartManagerMongo from "./cartDAOs/cartManagerMongo.js";
 import UserManagerMongo from "./userDAOs/usersManagerMongo.js";

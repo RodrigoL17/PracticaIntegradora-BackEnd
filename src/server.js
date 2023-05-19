@@ -15,10 +15,10 @@ import loggerTestRouter from "./routes/loggerTest.router.js";
 
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
-import "./passport/passportStrategies.js";
-import config from "./utils/Dotenv/config.js";
+import "./Utilities/Passport/passportStrategies.js";
+import config from "./Utilities/Dotenv/config.js";
 import { __dirname } from "./utils.js";
-import { errorMiddleware } from "./utils/Errors/error.middleware.js";
+import { errorMiddleware } from "./Utilities/Errors/error.middleware.js";
 
 //Server Config
 const app = express();

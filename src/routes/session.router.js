@@ -13,7 +13,7 @@ import {
   createCartService,
   findCartByUserIdService,
 } from "../services/cart.services.js";
-import { transporter } from "../utils/NodeMailer/nodemailer.js";
+import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 import {
   findUser,
   findUserById,
