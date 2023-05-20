@@ -9,6 +9,18 @@ const renderRegistration = (req, res) => {
   res.render("registration");
 };
 
+const renderProfile = (req, res) => {
+  res.render("profile");
+};
+
+const renderErrorLogin = (req, res) => {
+  res.render("errorLogin");
+};
+
+const renderReestablecer = (req, res) => {
+  res.render("reestablecer");
+}
+
 const getCart = async (req, res) => {
   const { cid } = req.params;
   const cart = await cartService.getById(cid);
@@ -27,4 +39,4 @@ const getProuctsEmailAssociated = async (req, res) => {
   });
 };
 
-export default {getCart, getProuctsEmailAssociated, renderLogin, renderRegistration}
+export default {getCart, getProuctsEmailAssociated, renderLogin, renderRegistration, renderProfile, renderErrorLogin, renderReestablecer}

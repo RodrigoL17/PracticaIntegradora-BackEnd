@@ -6,6 +6,9 @@ const router = Router();
 
 router.get("/", viewsController.renderLogin);
 router.get("/registration", viewsController.renderRegistration);
+router.get("/profile", viewsController.renderProfile);
+router.get("/errorlogin", viewsController.renderErrorLogin);
+router.get("/reestablecer", viewsController.renderReestablecer);
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),

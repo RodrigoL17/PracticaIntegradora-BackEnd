@@ -4,19 +4,15 @@ import passport from "passport";
 
 const router = Router();
 
-
-
-router.get("/api/sesion/profile", sessionController.renderProfile);
-router.get("/api/session/errorlogin", sessionController.renderErrorLogin);
 router.get("/api/session/logout", sessionController.logout);
-router.get("/api/session/reestablecer", sessionController.renderReestablecer);
+
 router.get(
-  "/api/session/reestablecerContrasena/:uid/:token",
+  "/reestablecerContrasena/:uid/:token",
   sessionController.reestablecerContrasena
 );
 //registro via github
 router.get(
-  "/api/session/GitHubregistration",
+  "/GitHubregistration",
   passport.authenticate("github", {
     scope: ["user:email"],
   })
@@ -32,13 +28,13 @@ router.get(
   passport.authenticate("github", { scope: ["user:email"] })
 );
 router.post("/login", sessionController.login);
-router.post("/api/session/registration", sessionController.registration);
+router.post("/registration", sessionController.registration);
 router.post(
-  "/api/session/reestablecerRedirect",
+  "/reestablecerRedirect",
   sessionController.reestablecerRedirect
 );
 router.post(
-  "/api/session/reestablecerContrasena/:uid",
+  "/reestablecerContrasena/:uid",
   sessionController.changePassword
 );
 

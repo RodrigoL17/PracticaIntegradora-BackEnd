@@ -4,21 +4,6 @@ import { generateToken, comparePassword, hashPassword } from "../utils.js";
 import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 
 
-
-
-
-const renderProfile = (req, res) => {
-  res.render("profile");
-};
-
-const renderErrorLogin = (req, res) => {
-  res.render("errorLogin");
-};
-
-const renderReestablecer = (req, res) => {
-  res.render("reestablecer");
-}
-
 const registration = async (req, res) => {
   const newUser = await userService.create(req.body);
   await cartService.create(newUser._id);
@@ -119,9 +104,6 @@ const changePassword = async (req, res) => {
 }
 
 export default {
-  renderProfile,
-  renderErrorLogin,
-  renderReestablecer,
   login,
   logout,
   registration,
