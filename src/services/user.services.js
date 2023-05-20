@@ -1,25 +1,27 @@
 import { userDao } from "../persistence/DAOs/factory.js"
 
-export const createUser =  async (user) => {
-    const userC = await userDao.createUser(user);
+ const create =  async (user) => {
+    const userC = await userDao.create(user);
     return userC
 }
 
-export const findUser = async(email) => {
-    const user = await userDao.findUser(email);
+ const getByEmail = async(email) => {
+    const user = await userDao.getByEmail(email);
     return user;
 }
 
-export const userLogIn = async(user) => {
-   const userL = await userDao.userLogIn(user);
+ const logIn = async(user) => {
+   const userL = await userDao.LogIn(user);
    return userL;
 }
 
-export const findUserById = async(id) => {
-    const user = await userDao.findUserById(id);
+ const getById = async(id) => {
+    const user = await userDao.getById(id);
     return user;
 }
 
-export const findUserByIdAndUpdatePassword = async(id, password) => {
-    await userDao.findUserByIdAndUpdatePassword(id, password);
+ const updatePassword = async(id, password) => {
+    await userDao.updatePassword(id, password);
 }
+
+export default {create, getByEmail, logIn, getById, updatePassword}

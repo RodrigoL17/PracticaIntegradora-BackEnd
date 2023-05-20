@@ -74,10 +74,10 @@ app.use(passport.initialize());
 app.use(passport.session()); //passport saves info in session
 
 //Routes
-app.use("/", sessionRouter);
+app.use("/api/session", sessionRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/views", viewsRouter);
+app.use("/", viewsRouter);
 app.use("/mockingproducts", mockingProductsRouter);
 app.use("/loggerTest", loggerTestRouter);
 

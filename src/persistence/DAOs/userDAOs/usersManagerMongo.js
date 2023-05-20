@@ -3,7 +3,7 @@ import { hashPassword, comparePassword } from "../../../utils.js";
 import UserRespDTO from "../../DTOs/userResp.DTO.js";
 
 export default class UserManager {
-  async createUser(user) {
+  async create(user) {
     try {
       const { email, password } = user;
       const [,domain ] = email.split("@");
@@ -41,7 +41,7 @@ export default class UserManager {
     }
   }
 
-  async userLogIn(user) {
+  async logIn(user) {
     const { email, password } = user;
     const existsUser = await userModel.findOne({ email });
     if (!existsUser) {
@@ -54,17 +54,17 @@ export default class UserManager {
     return existsUser;
   }
 
-  async findUser(email) {
+  async getByEmail(email) {
     const user = await userModel.findOne({ email });
     return user;
   }
 
-  async findUserById(id) {
+  async getById(id) {
     const user = await userModel.findById(id);
     return user;
   }
 
-  async findUserByIdAndUpdatePassword(id, password) {
+  async updatePassword(id, password) {
     await userModel.findByIdAndUpdate(id, { password: password });
   }
 }

@@ -1,30 +1,25 @@
 import { Router } from "express";
-import {
-  getCart,
-  getProuctsEmailAssociated,
-} from "../controllers/views.controllers.js";
+import viewsController from "../controllers/views.controllers.js";
 import passport from "passport";
 
 const router = Router();
 
-
+router.get("/", viewsController.renderLogin);
+router.get("/registration", viewsController.renderRegistration);
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),
-  getProuctsEmailAssociated
+  viewsController.getProuctsEmailAssociated
 );
 
-router.get(
-  "/products/Github",
-  getProuctsEmailAssociated
-);
+router.get("/products/Github", viewsController.getProuctsEmailAssociated);
 
-router.get("/createProduct/:uid", (req,res) => {
-  const {uid} = req.params
-  res.render("createProduct", {uid: uid})
-})
+router.get("/createProduct/:uid", (req, res) => {
+  const { uid } = req.params;
+  res.render("createProduct", { uid: uid });
+});
 
 // Cart
-router.get("/carts/:cid", getCart);
+router.get("/carts/:cid", viewsController.getCart);
 
 export default router;
