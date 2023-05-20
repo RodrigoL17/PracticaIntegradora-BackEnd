@@ -1,0 +1,131 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Todos los productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+    post:
+      summary: Crear un nuevo producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        "200":
+          description: Producto creado exitosamente
+        "400":
+          description: Error en la solicitud
+
+  /api/products/{pid}:
+    get:
+      summary: Obtener producto por ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Información del producto
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Producto no encontrado
+
+    put:
+      summary: Actualizar producto
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        "200":
+          description: Producto actualizado exitosamente
+        "400":
+          description: Error en la solicitud
+        "404":
+          description: Producto no encontrado
+
+    delete:
+      summary: Eliminar producto
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado exitosamente
+        "400":
+          description: Error en la solicitud
+        "404":
+          description: Producto no encontrado
+
+# Componentes
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+        status:
+          type: boolean
+        stock:
+          type: number
+        category:
+          type: string
+        thumbnail:
+          type: array
+          items:
+            type: string
+        owner:
+          type: string
+      required:
+        - title
+        - description
+        - code
+        - price
+        - stock
+        - category

@@ -1,6 +1,7 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import {__dirname} from "../../utils.js"
 
+console.log(`${__dirname}/Docs/CartDocs/**/*yaml`)
 // Config swagger to use in SwaggerUI-express on server
 const swaggerOptions = {
     definition: {
@@ -10,7 +11,8 @@ const swaggerOptions = {
             version: "1.0.0"
         }
     },
-    apis: [`${__dirname}/Docs/CartDocs/**/*yaml`, `${__dirname}/Docs/ProductsDocs/**/*yaml`],
+    apis: [`${__dirname}/Docs/Carts/Carts.yaml`, `${__dirname}/Docs/Products/Products.yaml` ],
 }
+
 
 export const swaggerSetup = swaggerJSDoc(swaggerOptions)

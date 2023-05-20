@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
-import swaggerUi from "swagger-ui-express";
+import swaggerUI from "swagger-ui-express";
 
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
@@ -80,7 +80,7 @@ app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/session", sessionRouter);
-app.use("/api/documentation", swaggerUi.serve, swaggerUi.setup(swaggerSetup)) // Swagger documentation endpoint
+app.use("/api/documentation", swaggerUI.serve, swaggerUI.setup(swaggerSetup)) // Swagger documentation endpoint
 app.use("/mockingproducts", mockingProductsRouter); 
 app.use("/loggerTest", loggerTestRouter); //Endpoint to test loggers
 
