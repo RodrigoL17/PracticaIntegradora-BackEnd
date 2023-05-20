@@ -56,7 +56,7 @@
   color: #bdbebf;
 }
 
-.sing-in-form {
+.sign-in-form {
   width: 60%;
   padding-top: 2rem;
   gap: 2rem;
@@ -65,7 +65,7 @@
   justify-content: space-around;
 }
 
-.sing-up-form {
+.sign-up-form {
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -88,22 +88,22 @@
   border: 2px solid #0b47a9;
 }
 
-.sing-in,
-.sing-up {
+.sign-in,
+.sign-up {
   align-self: center;
   padding: 0 5rem;
   font-size: 1rem;
   height: 2.5rem;
   border-radius: 0.5rem;
   background-color: #00ccff;
-  color: black;
+  color: #555555;
   font-weight: bold;
   outline: none;
   border: none;
 }
 
-.sing-in:hover,
-.sing-up:hover {
+.sign-in:hover,
+.sign-up:hover {
   color: white;
   background-color: #0f3d87;
 }

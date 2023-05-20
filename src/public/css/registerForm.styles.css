@@ -1,0 +1,129 @@
+.sign-up-main {
+  height: 100vh;
+  background-color: #dee1e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-section {
+  padding: 2rem 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+  height: 90%;
+  background-color: white;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sign-up-title {
+  display: flex;
+  align-items: center;
+}
+
+.sign-up-title img {
+  max-width: 6rem;
+}
+
+.sign-up-form {
+  width: 60%;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-up-name,
+.sign-up-last-name,
+.sign-up-mail,
+.sign-up-age,
+.sign-up-password {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border: 2px solid #00ccff;
+  display: flex;
+  gap: 8px;
+}
+
+.sign-up-name img,
+.sign-up-last-name img,
+.sign-up-mail img,
+.sign-up-age img,
+.sign-up-password img {
+  border-right: 2px solid #555555;
+  padding-right: 0.5rem;
+}
+
+.sign-up-name input,
+.sign-up-last-name input,
+.sign-up-mail input,
+.sign-up-age input,
+.sign-up-password input {
+  width: 100%;
+  border: none;
+}
+
+.sign-up-name input:focus,
+.sign-up-last-name input:focus,
+.sign-up-mail input:focus,
+.sign-up-age input:focus,
+.sign-up-password input:focus {
+  outline: none;
+}
+
+.sign-up-name:focus-within,
+.sign-up-last-name:focus-within,
+.sign-up-mail:focus-within,
+.sign-up-age:focus-within,
+.sign-up-password:focus-within {
+  border: 2px solid #0b47a9;
+}
+
+.sign-up-button {
+  cursor: pointer;
+  align-self: center;
+  padding: 0 5rem;
+  font-size: 1rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: #00ccff;
+  color: #555555;
+  font-weight: bold;
+  outline: none;
+  border: none;
+}
+
+.sign-up-button:hover {
+  color: white;
+  background-color: #0f3d87;
+}
+
+.sign-up-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.github-sign-up-button {
+  cursor: pointer;
+  font-size: medium;
+  font-weight: bold;
+  border-radius: 1rem;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  background-color: transparent;
+}
+
+.github-sign-up-button img {
+  padding: 0.5rem 0;
+  width: 15%;
+}
+
+.github-sign-up-button:hover {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}

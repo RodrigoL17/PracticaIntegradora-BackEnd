@@ -1,12 +1,38 @@
-<h2>Registro</h2>
-<form action="/api/session/registration" method="post">
-    Nombre: <input type="text" name="first_name" id="first_name" style="color: black;">
-    Apellido: <input type="text" name="last_name" id="last_name" style="color: black;">
-    Email: <input type="email" name="email" id="email" style="color: black;">
-    Edad: <input type="number" name="age" id="age" style="color: black;">
-    Constraseña: <input type="password" name="password" id="password" style="color: black;">
-    <input type="submit" value="Registrarse">
-</form>
+<main class="sign-up-main">
+    <section class="sign-up-section">
+        <header class="sign-up-title">
+            <img src="/images/logo.png" alt="logo">
+            <h2 class="sign-up-title">Create an Account</h2>
+        </header>
+        <form class="sign-up-form" action="/api/session/signUp" method="post">
+            <div class="sign-up-name">
+                <img src="/images/avatar-icon.svg" alt="avatar icon">
+                <input type="text" name="first_name" id="first_name" placeholder="Insert your name" required>
+            </div>
+            <div class="sign-up-last-name">
+                <img src="/images/avatar-icon.svg" alt="avatar icon">
+                <input type="text" name="last_name" id="last_name" placeholder="Insert your last name" required>
+            </div>
+            <div class="sign-up-mail">
+                <img src="/images/mail-icon.svg" alt="email icon">
+                <input type="email" name="email" id="email" placeholder="Insert your e-mail" required>
+            </div>
+            <div class="sign-up-age">
+                <img src="/images/calendar-icon.svg" alt="calendar icon">
+                <input type="number" inputmode="numeric" name="age" id="age" placeholder="Insert your age" required>
+            </div>
+            <div class="sign-up-password">
+                <img src="/images/lock-icon.svg" alt="lock icon">
+                <input type="password" name="password" id="password" placeholder="Insert a password" required>
+            </div>
+            <input class="sign-up-button" type="submit" value="Sign Up">
+        </form>
+        <footer class="sign-up-footer">
+            <p class="Or-sign-up">Or</p>
+            <div>
+                <button class="github-sign-up-button" onclick="location.href='/api/session/GitHubregistration'">Sign Up with <img src="/images/github-logo.svg" alt=""></button>
+            </div>
+        </footer>
 
-<h3>Registro con github</h3>
-<button onclick="location.href='/api/session/GitHubregistration'">GITHUB</button>
+    </section>
+</main>

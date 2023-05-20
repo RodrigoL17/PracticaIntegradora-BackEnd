@@ -6,7 +6,7 @@ import passport from "passport";
 const router = Router();
 
 router.get("/", viewsController.renderLogin); // Render login
-router.get("/registration", viewsController.renderRegistration); //Render registration
+router.get("/signUp", viewsController.renderRegistration); //Render registration
 router.get("/profile", viewsController.renderProfile);
 router.get("/errorlogin", viewsController.renderErrorLogin); //
 router.get("/reestablish", viewsController.renderReestablish); // Render reestablish password

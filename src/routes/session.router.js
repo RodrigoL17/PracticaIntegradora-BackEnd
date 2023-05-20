@@ -23,7 +23,7 @@ router.get(
   passport.authenticate("github", { scope: ["user:email"] })
 );
 router.post("/login", sessionController.login);
-router.post("/registration", sessionController.registration);
+router.post("/signUp", sessionController.registration);
 router.post(
   "/reestablecerRedirect",
   sessionController.reestablecerRedirect
