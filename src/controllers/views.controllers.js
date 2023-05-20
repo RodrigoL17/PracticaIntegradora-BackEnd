@@ -3,7 +3,10 @@ import cartService from "../services/cart.services.js";
 import userService from "../services/user.services.js";
 
 const renderLogin = (req, res) => {
-  res.render("login");
+  const data = {
+    logoPath: "images/logo.png",
+  }
+  res.render("Login/login", data);
 };
 const renderRegistration = (req, res) => {
   res.render("registration");
