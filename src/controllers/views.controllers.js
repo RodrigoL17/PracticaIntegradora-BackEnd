@@ -9,7 +9,7 @@ const renderLogin = (req, res) => {
   res.render("Login/login", data);
 };
 const renderRegistration = (req, res) => {
-  res.render("registration");
+  res.render("Registration/registerForm");
 };
 
 const renderProfile = (req, res) => {
@@ -17,11 +17,11 @@ const renderProfile = (req, res) => {
 };
 
 const renderErrorLogin = (req, res) => {
-  res.render("errorLogin");
+  res.render("Login/errorLogin");
 };
 
-const renderReestablecer = (req, res) => {
-  res.render("reestablecer");
+const renderReestablish = (req, res) => {
+  res.render("reestablish");
 }
 
 const getCart = async (req, res) => {
@@ -42,4 +42,4 @@ const getProuctsEmailAssociated = async (req, res) => {
   });
 };
 
-export default {getCart, getProuctsEmailAssociated, renderLogin, renderRegistration, renderProfile, renderErrorLogin, renderReestablecer}
+export default {getCart, getProuctsEmailAssociated, renderLogin, renderRegistration, renderProfile, renderErrorLogin, renderReestablish}

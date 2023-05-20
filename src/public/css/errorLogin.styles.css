@@ -1,0 +1,61 @@
+.error-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #dee1e7;
+}
+
+.section-error-login {
+  padding: 2rem 1rem;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+  height: 90%;
+  background-color: white;
+}
+
+.title-error-login {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem 4rem;
+  background-color: rgb(255, 211, 211);
+  font-size: 1.6rem;
+  text-align: center;
+  color: #9e0101;
+}
+
+.error-icon {
+  aspect-ratio: 1/1;
+  width: 5%;
+}
+
+.back-to-login,
+.change-password {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #0f3d87;
+}
+
+.back-to-login a,
+.change-password a {
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+  display: block;
+}
+
+.Or-error {
+  color: #555555;
+  padding: 0.5rem 0;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.error-login-logo{
+    width: 7rem;
+}

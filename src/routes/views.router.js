@@ -9,7 +9,7 @@ router.get("/", viewsController.renderLogin); // Render login
 router.get("/registration", viewsController.renderRegistration); //Render registration
 router.get("/profile", viewsController.renderProfile);
 router.get("/errorlogin", viewsController.renderErrorLogin); //
-router.get("/reestablecer", viewsController.renderReestablecer); // Render reestablish password
+router.get("/reestablish", viewsController.renderReestablish); // Render reestablish password
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),

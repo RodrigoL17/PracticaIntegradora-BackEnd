@@ -73,6 +73,7 @@
 
 .mail,
 .password {
+  margin: 0 1rem;
   border: 2px solid #00ccff;
   color: #555555;
   font-weight: bold;
