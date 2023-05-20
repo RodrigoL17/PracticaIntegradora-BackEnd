@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
+import swaggerUi from "swagger-ui-express";
 
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
@@ -18,6 +19,7 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 import "./Utilities/Passport/passportStrategies.js";
 import config from "./Utilities/Dotenv/config.js";
 import { __dirname } from "./utils.js";
+import { swaggerSetup } from "./Utilities/Swagger/swagger.js";
 import { errorMiddleware } from "./Utilities/Errors/error.middleware.js";
 
 //Server Config
@@ -74,12 +76,13 @@ app.use(passport.initialize());
 app.use(passport.session()); //passport saves info in session
 
 //Routes
-app.use("/api/session", sessionRouter);
+app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/", viewsRouter);
-app.use("/mockingproducts", mockingProductsRouter);
-app.use("/loggerTest", loggerTestRouter);
+app.use("/api/session", sessionRouter);
+app.use("/api/documentation", swaggerUi.serve, swaggerUi.setup(swaggerSetup)) // Swagger documentation endpoint
+app.use("/mockingproducts", mockingProductsRouter); 
+app.use("/loggerTest", loggerTestRouter); //Endpoint to test loggers
 
 //Use Error Middleware
 // app.use(errorMiddleware)
