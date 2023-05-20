@@ -22,9 +22,9 @@ const login = async (req, res) => {
 
       res
         .cookie("token", token, { httpOnly: true })
-        .redirect("/views/products");
+        .redirect("/products");
     } else {
-      res.redirect("/api/session/errorLogin");
+      res.redirect("/errorLogin");
     }
   } catch (error) {
     console.log(error);
@@ -43,12 +43,12 @@ const logout = (req, res) => {
 const githubCallback = async (req, res) => {
   try {
     const userId = req.user._id;
-    const haveCart = await cartServices.getByUserId(userId);
-    !haveCart && (await cartServices.create(userId));
+    const haveCart = await cartService.getByUserId(userId);
+    !haveCart && (await cartService.create(userId));
   } catch (error) {
     console.log(error);
   }
-  res.redirect("/views/products/Github");
+  res.redirect("/products/Github");
 };
 
 const reestablecerContrasena = (req, res) => {
@@ -85,7 +85,6 @@ const reestablecerRedirect = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-  //falta separar controlador
   try {
     const { uid } = req.params;
     const { password } = req.body;

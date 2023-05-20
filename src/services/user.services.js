@@ -11,7 +11,7 @@ import { userDao } from "../persistence/DAOs/factory.js"
 }
 
  const logIn = async(user) => {
-   const userL = await userDao.LogIn(user);
+   const userL = await userDao.logIn(user);
    return userL;
 }
 

@@ -1,14 +1,15 @@
 import { Router } from "express";
 import viewsController from "../controllers/views.controllers.js";
+import sessionController from "../controllers/session.controller.js";
 import passport from "passport";
 
 const router = Router();
 
-router.get("/", viewsController.renderLogin);
-router.get("/registration", viewsController.renderRegistration);
+router.get("/", viewsController.renderLogin); // Render login
+router.get("/registration", viewsController.renderRegistration); //Render registration
 router.get("/profile", viewsController.renderProfile);
-router.get("/errorlogin", viewsController.renderErrorLogin);
-router.get("/reestablecer", viewsController.renderReestablecer);
+router.get("/errorlogin", viewsController.renderErrorLogin); //
+router.get("/reestablecer", viewsController.renderReestablecer); // Render reestablish password
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),
@@ -24,5 +25,11 @@ router.get("/createProduct/:uid", (req, res) => {
 
 // Cart
 router.get("/carts/:cid", viewsController.getCart);
+
+router.get(
+  "/githubCallback",
+  passport.authenticate("github"),
+  sessionController.githubCallback
+);
 
 export default router;

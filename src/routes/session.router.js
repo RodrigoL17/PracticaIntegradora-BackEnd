@@ -4,8 +4,7 @@ import passport from "passport";
 
 const router = Router();
 
-router.get("/api/session/logout", sessionController.logout);
-
+router.get("/logout", sessionController.logout);
 router.get(
   "/reestablecerContrasena/:uid/:token",
   sessionController.reestablecerContrasena
@@ -17,11 +16,7 @@ router.get(
     scope: ["user:email"],
   })
 );
-router.get(
-  "/githubCallback",
-  passport.authenticate("github"),
-  sessionController.githubCallback
-);
+
 //login con github
 router.get(
   "/githubLogin",
@@ -34,7 +29,7 @@ router.post(
   sessionController.reestablecerRedirect
 );
 router.post(
-  "/reestablecerContrasena/:uid",
+  "/changePassword/:uid",
   sessionController.changePassword
 );
 
