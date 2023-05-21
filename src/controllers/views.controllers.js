@@ -35,7 +35,7 @@ const getProuctsEmailAssociated = async (req, res) => {
   const user = await userService.getByEmail(email);
   const userCart = await cartService.getByUserId(_id);
   const products = await prodService.getAll(limit, page, sort, query);
-  res.render("products", {
+  res.render("Products/products", {
     products: products.docs,
     user: user,
     cartId: userCart._id,
