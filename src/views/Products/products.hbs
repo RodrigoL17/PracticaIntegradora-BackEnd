@@ -4,12 +4,11 @@
       <div>
         <img class="products-logo" src="/images/logo.png" alt="logo">
       </div>
-      <h2 class="welcome">Welcome! , {{user.first_name}} {{user.last_name}}</h2>
+      <h2 class="welcome">Welcome! {{user.first_name}} {{user.last_name}}</h2>
       <div class="search-container">
         <img src="/images/magnifyingglass-icon.svg" alt="search icon">
         <input class="search" type="search" placeholder="Search your products (not working)">
       </div>
-      
       <div class="icons">
         <p>{{#if user.isAdmin}}
           Admin
@@ -18,29 +17,33 @@
           {{else}}
           User
           {{/if}}</p>
-        <button class="profile-button" title="Profile" onclick="location.href='/logout'"><img class="profile-img" src="/images/avatar-icon.svg" alt="profile icon"></button>
-        <button class="logout-button" title="Logout" onclick="location.href='/api/session/logout'"><img class="logout-img" src="/images/logout-icon.svg" alt="logout icon"></button>
+        <button class="profile-button" title="Profile" onclick="location.href='/logout'"><img class="profile-img"
+            src="/images/avatar-icon.svg" alt="profile icon"></button>
+        <button class="logout-button" title="Logout" onclick="location.href='/api/session/logout'"><img
+            class="logout-img" src="/images/logout-icon.svg" alt="logout icon"></button>
       </div>
     </nav>
   </header>
-  <div class="container">
-    {{#each products}}
-    <div class="card">
-      <h3 class="title">{{title}}</h3>
-      <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
-      <div class="info">
-        <p class="description"><strong>Descripción:</strong> {{description}}</p>
-        <p class="code"><strong>Codigo:</strong> {{code}}</p>
-        <p class="stock"><strong>Stock:</strong> {{stock}}</p>
-        <p class="category"><strong>Categoria:</strong> {{category}}</p>
-        <p class="id"><strong>Id:</strong> {{_id}}</p>
-        <p class="owner"><strong>Owner:</strong>{{owner}}</p>
+  <section>
+    <div class="container">
+      {{#each products}}
+      <div class="card">
+        <h3 class="title">{{title}}</h3>
+        <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
+        <div class="info">
+          <p class="description"><strong>Descripción:</strong> {{description}}</p>
+          <p class="code"><strong>Codigo:</strong> {{code}}</p>
+          <p class="stock"><strong>Stock:</strong> {{stock}}</p>
+          <p class="category"><strong>Categoria:</strong> {{category}}</p>
+          <p class="id"><strong>Id:</strong> {{_id}}</p>
+          <p class="owner"><strong>Owner:</strong>{{owner}}</p>
+        </div>
+        <form class="prodForm" method="post" action="http://localhost:3000/api/carts/{{cartId}}/product/{{_id}}">
+          <button class="add-to-cart" type="submit">Agregar al carrito</button>
+        </form>
+        <p class="price">${{price}}</p>
       </div>
-      <form class="prodForm" method="post" action="http://localhost:3000/api/carts/{{cartId}}/product/{{_id}}">
-        <button class="add-to-cart" type="submit">Agregar al carrito</button>
-      </form>
-      <p class="price">${{price}}</p>
+      {{/each}}
     </div>
-    {{/each}}
-  </div>
+  </section>
 </main>
