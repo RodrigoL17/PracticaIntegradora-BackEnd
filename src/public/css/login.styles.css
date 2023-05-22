@@ -71,6 +71,20 @@
   flex-direction: column;
 }
 
+.password-container{
+  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.password-container a {
+  font-weight: bold;
+  display: flex;
+  font-size: 0.9rem;
+  margin: 0 1rem;
+  justify-content: flex-end;
+}
+
 .mail,
 .password {
   margin: 0 1rem;

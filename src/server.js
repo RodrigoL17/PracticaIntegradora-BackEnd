@@ -38,6 +38,14 @@ Handlebars.registerHelper("toUpperCase", function (str) {
   return str.toUpperCase();
 });
 
+Handlebars.registerHelper('range', function(start, end) {
+  const result = [];
+  for (let i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+});
+
 //Handlebars config
 app.set("views", __dirname + "/views");
 app.set("view engine", ".hbs");
@@ -49,6 +57,7 @@ app.engine(
     helpers: {
       getFirstElement: Handlebars.helpers.getFirstElement,
       toUpperCase: Handlebars.helpers.toUpperCase,
+      range: Handlebars.helpers.range,
     },
   })
 );

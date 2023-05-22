@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const forms = document.querySelectorAll(".add-to-cart");
-  forms.forEach((form) => {
-    form.addEventListener("submit", (event) => {
+  const buttons = document.querySelectorAll(".add-to-cart");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click",function (event) {
       event.preventDefault();
 
-      const url = form.action;
+      const cartId = this.dataset.cartId
+      const productId = this.dataset.productId
+      const url = `http://localhost:3000/api/carts/${cartId}/product/${productId}`;
 
       fetch(url, {
         method: "POST",

@@ -10,21 +10,19 @@ router.get("/signUp", viewsController.renderRegistration); //Render registration
 router.get("/profile", viewsController.renderProfile);
 router.get("/errorlogin", viewsController.renderErrorLogin); //
 router.get("/reestablish", viewsController.renderReestablish); // Render reestablish password
+router.get("/carts/:cid", viewsController.renderCart); // Render Cart
+router.get("/products/Github", viewsController.renderProductsEmailAssociated); //Render Products for Github User
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),
-  viewsController.getProuctsEmailAssociated
+  viewsController.renderProductsEmailAssociated
 );
 
-router.get("/products/Github", viewsController.getProuctsEmailAssociated);
 
 router.get("/createProduct/:uid", (req, res) => {
   const { uid } = req.params;
   res.render("createProduct", { uid: uid });
 });
-
-// Cart
-router.get("/carts/:cid", viewsController.getCart);
 
 router.get(
   "/githubCallback",

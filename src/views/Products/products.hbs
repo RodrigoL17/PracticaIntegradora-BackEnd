@@ -16,7 +16,7 @@
         {{else}}
         User
         {{/if}}</p>
-      <button class="profile-button" title="Profile" onclick="location.href='/logout'"><img class="profile-img"
+      <button class="profile-button" title="Profile" onclick="location.href='/profile'"><img class="profile-img"
           src="/images/avatar-icon.svg" alt="profile icon"></button>
       <button class="cart-button" title="Cart" onclick="location.href='/carts/{{cartId}}'"><img class="cart-img"
           src="/images/cart-icon.svg" alt="cart icon"></button>
@@ -27,26 +27,56 @@
 </header>
 <main class="main-products">
   <aside class="aside-products">
+    filtros
   </aside>
   <section class="section-products">
+    <div class="total-products">
+      <p><strong>Total results:</strong> {{pagination.totalDocs}}</p>
+      <p><strong>Page: </strong>{{pagination.page}} of {{pagination.totalPages}}</p>
+    </div>
+
     {{#each products}}
     <div class="card">
-      {{!-- agregar href a carrito --}}
+      {{!-- Falta href a card detalle de producto --}}
       <div class="img-container" onclick="location.href='/'">
         <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
       </div>
       <div class="info">
         <h3 class="price">${{price}}</h3>
-        <p class="title">{{toUpperCase title}}</p>
-        <form class="add-to-cart" method="post" action="http://localhost:3000/api/carts/{{../cartId}}/product/{{_id}}">
-          <div>
-            <img src="/images/cart-icon.svg" alt="">
-            <input type="submit" value="Add to cart" data-cart-id="{{cartId}}" data-product-id="{{_id}}">
-          </div>
-        </form>
+        <p class="products-title">{{toUpperCase title}}</p>
+        <button class="add-to-cart" data-cart-id="{{../cartId}}" data-product-id="{{_id}}">
+          <img src="/images/cart-plus-icon.svg" alt="add to cart icon" fill="currentColor">
+          Add to cart
+        </button>
       </div>
     </div>
     {{/each}}
+    <div class="paginate">
+      {{#if pagination.prevLink}}
+      <button class="btn-link" onclick="location.href='{{pagination.prevLink}}'">
+        <img src="/images/caret-left-icon.svg" alt="caret left">
+      </button>
+      {{else}}
+      <button class="hidden">
+        <img src="/images/caret-left-icon.svg" alt="caret left">
+      </button>
+      {{/if}}
+      <div class="pages">
+        -
+        {{#each (range 1 pagination.totalPages)}}
+        - <button class="page-btn" onclick="location.href='http://localhost:3000/products?page={{this}}'">{{this}}</button> -
+        {{/each}}-
+      </div>
+      {{#if pagination.nextLink}}
+      <button class="btn-link" onclick="location.href='{{pagination.nextLink}}'">
+        <img src="/images/caret-right-icon.svg" alt="caret right">
+      </button>
+      {{else}}
+      <button class="hidden">
+        <img src="/images/caret-right-icon.svg" alt="caret right">
+      </button>
+      {{/if}}
+    </div>
   </section>
   <footer class="footer-products">
 

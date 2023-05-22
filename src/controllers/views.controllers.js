@@ -5,7 +5,7 @@ import userService from "../services/user.services.js";
 const renderLogin = (req, res) => {
   const data = {
     logoPath: "images/logo.png",
-  }
+  };
   res.render("Login/login", data);
 };
 const renderRegistration = (req, res) => {
@@ -22,25 +22,44 @@ const renderErrorLogin = (req, res) => {
 
 const renderReestablish = (req, res) => {
   res.render("reestablish");
-}
+};
 
-const getCart = async (req, res) => {
+const renderCart = async (req, res) => {
   const { cid } = req.params;
   const cart = await cartService.getById(cid);
   res.render("cart", { cart: cart.products });
 };
-const getProuctsEmailAssociated = async (req, res) => {
-  const { limit = 25, page = 1, sort, ...query } = req.params;
+const renderProductsEmailAssociated = async (req, res) => {
+  const { limit = 12, page = 1, sort, ...query } = req.query;
   const { email, _id } = req.user;
   const user = await userService.getByEmail(email);
   const userCart = await cartService.getByUserId(_id);
   const cartId = userCart._id.toString();
   const products = await prodService.getAll(limit, page, sort, query);
+  const { docs, ...rest } = products;
+  const pagination = {
+    ...rest,
+    prevLink: rest.prevPage
+      ? `http://localhost:3000/products?page=${rest.prevPage}`
+      : null,
+    nextLink: rest.nextPage
+      ? `http://localhost:3000/products?page=${rest.nextPage}`
+      : null,
+  };
   res.render("Products/products", {
     products: products.docs,
     user: user,
     cartId: cartId,
+    pagination: pagination,
   });
 };
 
-export default {getCart, getProuctsEmailAssociated, renderLogin, renderRegistration, renderProfile, renderErrorLogin, renderReestablish}
+export default {
+  renderCart,
+  renderProductsEmailAssociated,
+  renderLogin,
+  renderRegistration,
+  renderProfile,
+  renderErrorLogin,
+  renderReestablish,
+};

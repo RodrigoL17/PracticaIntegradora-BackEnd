@@ -10,7 +10,10 @@
       </div>
       <form class="sign-in-form" action="/api/session/login" method="post">
         <input class="mail" type="email" id="email" name="email" placeholder="Insert your email" required>
+        <div class="password-container">
         <input class="password" type="password" id="password" name="password" placeholder="Insert your password" required>
+        <a href="/reestablish">Forgot password?</a>
+        </div>
         <input class="sign-in" type="submit" value="Sign In">
       </form>
       <h2 class="Or">Or</h2>
