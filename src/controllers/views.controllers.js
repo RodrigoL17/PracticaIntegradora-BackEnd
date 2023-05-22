@@ -30,15 +30,16 @@ const getCart = async (req, res) => {
   res.render("cart", { cart: cart.products });
 };
 const getProuctsEmailAssociated = async (req, res) => {
-  const { limit = 40, page = 1, sort, ...query } = req.params;
+  const { limit = 25, page = 1, sort, ...query } = req.params;
   const { email, _id } = req.user;
   const user = await userService.getByEmail(email);
   const userCart = await cartService.getByUserId(_id);
+  const cartId = userCart._id.toString();
   const products = await prodService.getAll(limit, page, sort, query);
   res.render("Products/products", {
     products: products.docs,
     user: user,
-    cartId: userCart._id,
+    cartId: cartId,
   });
 };
 

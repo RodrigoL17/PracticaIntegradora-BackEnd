@@ -34,9 +34,8 @@ Handlebars.registerHelper("getFirstElement", function (array) {
   return array[0];
 });
 
-
-Handlebars.registerHelper('isEqual', function (value1, value2, options) {
-  return value1 === value2 ? options.fn(this) : options.inverse(this);
+Handlebars.registerHelper("toUpperCase", function (str) {
+  return str.toUpperCase();
 });
 
 //Handlebars config
@@ -49,7 +48,7 @@ app.engine(
     handlebars: allowInsecurePrototypeAccess(Handlebars),
     helpers: {
       getFirstElement: Handlebars.helpers.getFirstElement,
-      isEqual: Handlebars.helpers.isEqual,
+      toUpperCase: Handlebars.helpers.toUpperCase,
     },
   })
 );
@@ -80,8 +79,8 @@ app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/session", sessionRouter);
-app.use("/api/documentation", swaggerUI.serve, swaggerUI.setup(swaggerSetup)) // Swagger documentation endpoint
-app.use("/mockingproducts", mockingProductsRouter); 
+app.use("/api/documentation", swaggerUI.serve, swaggerUI.setup(swaggerSetup)); // Swagger documentation endpoint
+app.use("/mockingproducts", mockingProductsRouter);
 app.use("/loggerTest", loggerTestRouter); //Endpoint to test loggers
 
 //Use Error Middleware

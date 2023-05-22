@@ -35,10 +35,14 @@ const addProductToCart = async (req, res, next) => {
     if(cart.products.length === 0 || !existingProduct) {
       //if cart is empty or product does not exist in cart, add product
       await cartService.addProd(cid, pid);
+      res.setHeader("X-Message", "Producto agregado correctamente");
+      res.sendStatus(204);
     }
     if(existingProduct){
       //if product already exists in cart +1 to quatity
       await cartService.oneMoreProd(cid,pid)
+      res.setHeader("X-Message", "Producto agregado correctamente");
+      res.sendStatus(204);
     }
   } catch (error) {
     next(error);

@@ -20,7 +20,7 @@ export default class cartManager {
 
   async getByUserId(userId) {
     //  Gets cart by user Id associated
-    const cart = await cartsModel.find({ userId: userId });
+    const cart = await cartsModel.findOne({ userId: userId });
     return cart;
   }
 
