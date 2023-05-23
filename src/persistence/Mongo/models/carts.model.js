@@ -11,8 +11,7 @@ const cartSchema = new mongoose.Schema({
         {
           pid: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'products',
-            required: true
+            ref: 'Product',
           },
           quantity: {
             type: Number,
@@ -26,9 +25,7 @@ const cartSchema = new mongoose.Schema({
 });
 
 cartSchema.pre("findOne", function (next) {
-  if (this.products && this.products.length > 0) {
     this.populate("products.pid");
-  }
   next();
 });
 

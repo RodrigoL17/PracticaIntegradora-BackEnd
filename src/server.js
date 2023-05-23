@@ -46,6 +46,7 @@ Handlebars.registerHelper('range', function(start, end) {
   return result;
 });
 
+
 //Handlebars config
 app.set("views", __dirname + "/views");
 app.set("view engine", ".hbs");

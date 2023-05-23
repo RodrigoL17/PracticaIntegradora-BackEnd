@@ -27,7 +27,14 @@ const renderReestablish = (req, res) => {
 const renderCart = async (req, res) => {
   const { cid } = req.params;
   const cart = await cartService.getById(cid);
-  res.render("cart", { cart: cart.products });
+  const productPromises = cart.products.map(async product => {
+    const prod = await prodService.getById(product.pid)
+    return prod
+  })
+  const products = await Promise.all(productPromises)
+
+  console.log("cart", cart);
+  res.render("Cart/cart", { cart: cart, prods: products });
 };
 const renderProductsEmailAssociated = async (req, res) => {
   const { limit = 12, page = 1, sort, ...query } = req.query;

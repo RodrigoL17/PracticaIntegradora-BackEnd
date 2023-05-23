@@ -36,11 +36,11 @@ const productsSchema = new mongoose.Schema({
     default: []
   },
   owner :{
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,
     default: "admin"
   }
 });
 
 productsSchema.plugin(mongoosePaginate);
 
-export const productsModel = mongoose.model("products", productsSchema);
+export const productsModel = mongoose.model("Product", productsSchema);
