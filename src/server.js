@@ -46,6 +46,9 @@ Handlebars.registerHelper('range', function(start, end) {
   return result;
 });
 
+Handlebars.registerHelper('multiply', function (a, b) {
+  return a * b;
+})
 
 //Handlebars config
 app.set("views", __dirname + "/views");
@@ -59,6 +62,7 @@ app.engine(
       getFirstElement: Handlebars.helpers.getFirstElement,
       toUpperCase: Handlebars.helpers.toUpperCase,
       range: Handlebars.helpers.range,
+      multiply: Handlebars.helpers.multiply,
     },
   })
 );
@@ -92,6 +96,8 @@ app.use("/api/session", sessionRouter);
 app.use("/api/documentation", swaggerUI.serve, swaggerUI.setup(swaggerSetup)); // Swagger documentation endpoint
 app.use("/mockingproducts", mockingProductsRouter);
 app.use("/loggerTest", loggerTestRouter); //Endpoint to test loggers
+
+
 
 //Use Error Middleware
 // app.use(errorMiddleware)

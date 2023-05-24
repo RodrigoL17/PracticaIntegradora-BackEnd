@@ -1,9 +1,7 @@
 
-
-export default class UserRespDTO {
+export default class UserCartDTO {
     constructor (user){
     this.fullName = `${user.first_name} ${user.last_name}`
-    this.rol = user.rol
     this.email = user.email
     }
 }

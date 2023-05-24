@@ -1,6 +1,62 @@
 <main class="main-cart">
-    {{#each cart.products}}
-    <a href="">{{pid}} {{quantity}}</a>
-    
-    {{/each}}
+    <header class="header-cart">
+        <div class="cart-logo-container">
+            <div>
+                <img class="cart-logo" src="/images/logo.png" alt="logo">
+            </div>
+            <h2 class="cart-title">Cart Overview</h2>
+        </div>
+        <p><strong> {{user.first_name}} {{user.last_name}}!</strong> This is your cart summary.</p>
+    </header>
+    <section class="cart-section">
+        <div class="cart-section-container">
+            <div class="cart-summary-title">
+                <h3>Summary Order</h3>
+                <p>Check your items, to continue to order</p>
+            </div>
+            <table>
+                <tbody>
+                    {{#each products}}
+                    <tr class="tr">
+                        <td class="td-btn">
+                            <button class="remove-prod-btn" data-cart-id="{{../cartId}}" data-product-id="{{pid._id}}">
+                                <img src="/images/trash-icon.svg" alt="">
+                            </button>
+                        </td>
+                        <td>
+                            <div class="cart-prod-img-container">
+                                <img src="{{getFirstElement pid.thumbnail}}" alt="{{pid.title}} image">
+                            </div>
+                        </td>
+                        <td>
+                            Code: <strong>{{pid.code}}</strong>
+                        </td>
+                        <td>
+                            <strong>{{pid.title}}</strong>
+                        </td>
+                        <td>
+                            Price: <strong>${{pid.price}}</strong>
+                        </td>
+                        <td>
+                            Quantity: <strong>{{quantity}}</strong>
+                        </td>
+                        <td>
+                            Subtotal: <strong>${{multiply pid.price quantity }}</strong>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <div class="cart-buttons">
+                <button class="shopping" onclick="location.href='/products'">
+                    <img src="/images/cart-icon.svg" alt="cart icon"> Continue Shopping
+                </button>
+                <button class="checkout">
+                    <img src="/images/credit-card-icon.svg" alt=""> Checkout
+                </button>
+            </div>
+        </div>
+    </section>
 </main>
+
+<script src="/js/cart.js"></script>

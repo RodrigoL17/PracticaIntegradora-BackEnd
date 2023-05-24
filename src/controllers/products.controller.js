@@ -50,7 +50,7 @@ import {
     //falta revisar si es necesario
     res.send({ message: "Producto agregado correctamente", product: prod });
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
  const update = async (req, res, next) => {

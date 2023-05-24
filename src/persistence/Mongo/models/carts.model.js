@@ -12,6 +12,7 @@ const cartSchema = new mongoose.Schema({
           pid: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
+            required: true,
           },
           quantity: {
             type: Number,
@@ -26,6 +27,7 @@ const cartSchema = new mongoose.Schema({
 
 cartSchema.pre("findOne", function (next) {
     this.populate("products.pid");
+    this.populate("userId");
   next();
 });
 

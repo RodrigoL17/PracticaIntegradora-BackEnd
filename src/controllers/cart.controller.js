@@ -28,19 +28,20 @@ const addProductToCart = async (req, res, next) => {
     //check if cart and product already exist
     cartByIdNotRecived(cart);
     prodByIdNotRecived(product);
-    //check if product already exists in cart
+    // check if product already exists in cart
     const existingProduct = cart.products.find(
-      (prod) => prod.pid.toString() === pid
+      (prod) => prod.pid._id.toString() === product._id.toString()
     );
-    if(cart.products.length === 0 || !existingProduct) {
+    console.log("existingProduct", existingProduct);
+    if (cart.products.length === 0 || !existingProduct) {
       //if cart is empty or product does not exist in cart, add product
       await cartService.addProd(cid, pid);
       res.setHeader("X-Message", "Producto agregado correctamente");
       res.sendStatus(204);
     }
-    if(existingProduct){
+    if (existingProduct) {
       //if product already exists in cart +1 to quatity
-      await cartService.oneMoreProd(cid,pid)
+      await cartService.oneMoreProd(cid, pid);
       res.setHeader("X-Message", "Producto agregado correctamente");
       res.sendStatus(204);
     }
@@ -56,9 +57,9 @@ const deleteProductFromCart = async (req, res, next) => {
     const product = await prodService.getById(pid);
     cartByIdNotRecived(cart);
     prodByIdNotRecived(product);
-    const newCart = await cartService.deleteProd(cid, pid);
-    //falta cambiar ----> ver si es necesario rescatar el cart o renderizarlo
-    res.json({ newCart });
+    await cartService.deleteProd(cid, pid);
+    res.setHeader("X-Message", "Producto eliminado correctamente");
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }
@@ -70,7 +71,7 @@ const deleteAllProductsFromCart = async (req, res, next) => {
     const cart = await cartService.getById(cid);
     cartByIdNotRecived(cart);
     const newCart = await cartService.deleteAllProds(cid);
-    //falta cambiar ----> ver si el res es necesario 
+    //falta cambiar ----> ver si el res es necesario
     res.json({ message: "carrito vaciado con exito", cart: newCart });
   } catch (error) {
     next(error);
@@ -78,9 +79,10 @@ const deleteAllProductsFromCart = async (req, res, next) => {
 };
 
 const updateQuantityOfProductFromCart = async (req, res, next) => {
+  //falta revisa bien
   try {
     const { cid, pid } = req.params;
-    const cart = await getCartByIdService(cid);
+    const cart = await cartService.getById(cid);
     const product = await prodService.getById(pid);
     cartByIdNotRecived(cart);
     prodByIdNotRecived(product);
@@ -94,4 +96,10 @@ const updateQuantityOfProductFromCart = async (req, res, next) => {
   }
 };
 
-export default {getCartById, addProductToCart, deleteProductFromCart, deleteAllProductsFromCart, updateQuantityOfProductFromCart}
+export default {
+  getCartById,
+  addProductToCart,
+  deleteProductFromCart,
+  deleteAllProductsFromCart,
+  updateQuantityOfProductFromCart,
+};
