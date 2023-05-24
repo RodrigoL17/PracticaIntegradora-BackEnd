@@ -3,7 +3,6 @@ import cartService from "../services/cart.services.js";
 import { generateToken, comparePassword, hashPassword } from "../utils.js";
 import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 
-
 const registration = async (req, res) => {
   const newUser = await userService.create(req.body);
   await cartService.create(newUser._id);
@@ -20,9 +19,7 @@ const login = async (req, res) => {
     if (user) {
       const token = generateToken(user);
 
-      res
-        .cookie("token", token, { httpOnly: true })
-        .redirect("/products");
+      res.cookie("token", token, { httpOnly: true }).redirect("/products");
     } else {
       res.redirect("/errorLogin");
     }
@@ -51,21 +48,12 @@ const githubCallback = async (req, res) => {
   res.redirect("/products/Github");
 };
 
-const reestablecerContrasena = (req, res) => {
-  const { uid, token } = req.params;
-  const prevToken = req.cookies.token;
-  if (token === prevToken) {
-    res.render("reestablecerContraseña", { uid: uid });
-  } else {
-    res.render("redireccionRC");
-  }
-};
-
-const reestablecerRedirect = async (req, res) => {
+const emailResetPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await userService.getByEmail(email);
     if (!user) {
+      //falta manejar esto mejor
       res.send("el usuario ingresado no existe");
     } else {
       const token = generateToken(user);
@@ -75,7 +63,7 @@ const reestablecerRedirect = async (req, res) => {
         to: email,
         subject: "Reestablecer contraseña",
         html: `<p>Para reestablecer la contraseña dirigete al siguiente link: </p>
-      <a href="http://localhost:3000/api/session/reestablecerContrasena/${id}/${token}">Haz click aqui</a>`,
+      <a href="http://localhost:3000/changePassword/${id}/${token}">Haz click aqui</a>`,
       });
       res.cookie("token", token).redirect("/");
     }
@@ -87,27 +75,33 @@ const reestablecerRedirect = async (req, res) => {
 const changePassword = async (req, res) => {
   try {
     const { uid } = req.params;
-    const { password } = req.body;
+    const { password, token } = req.body;
+    console.log("uid", uid);
+    console.log("password", password);
+    console.log("token", token);
     const user = await userService.getById(uid);
     const isPassword = await comparePassword(password, user.password);
+    console.log("isPassword", isPassword);
     if (isPassword) {
-      res.send("No se puede colocar la misma contraseña");
+      const isWrong = true;
+      const redirectUrl = `/changePassword/${uid}/${token}?isWrong=${isWrong}`
+      res.status(200).json({redirectUrl})
     } else {
       const newPassword = await hashPassword(password);
       await userService.updatePassword(uid, newPassword);
-      res.send("Contraseña modificada con exito");
+      const successMessage = "Contraseña modificada correctamente";
+      res.status(200).json({ successMessage });
     }
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export default {
   login,
   logout,
   registration,
   githubCallback,
-  reestablecerContrasena,
-  reestablecerRedirect,
-  changePassword
+  emailResetPassword,
+  changePassword,
 };

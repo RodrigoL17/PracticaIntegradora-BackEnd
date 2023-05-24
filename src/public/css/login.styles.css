@@ -114,12 +114,14 @@
   font-weight: bold;
   outline: none;
   border: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .sign-in:hover,
 .sign-up:hover {
   color: white;
   background-color: #0f3d87;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .Or {

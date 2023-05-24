@@ -5,10 +5,7 @@ import passport from "passport";
 const router = Router();
 
 router.get("/logout", sessionController.logout);
-router.get(
-  "/reestablecerContrasena/:uid/:token",
-  sessionController.reestablecerContrasena
-);
+
 //registro via github
 router.get(
   "/GitHubregistration",
@@ -24,13 +21,7 @@ router.get(
 );
 router.post("/login", sessionController.login);
 router.post("/signUp", sessionController.registration);
-router.post(
-  "/reestablecerRedirect",
-  sessionController.reestablecerRedirect
-);
-router.post(
-  "/changePassword/:uid",
-  sessionController.changePassword
-);
+router.post("/emailResetPassword", sessionController.emailResetPassword);
+router.post("/changePassword/:uid", sessionController.changePassword);
 
 export default router;

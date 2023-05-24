@@ -20,14 +20,13 @@ const renderErrorLogin = (req, res) => {
   res.render("Login/errorLogin");
 };
 
-const renderReestablish = (req, res) => {
-  res.render("reestablish");
+const renderResetPassword = (req, res) => {
+  res.render("ResetPassword/resetPassword");
 };
 
 const renderCart = async (req, res) => {
   const { cid } = req.params;
   const cart = await cartService.getById(cid);
-  console.log("cart", cart);
   res.render("Cart/cart", {cartId: cart._id, user: cart.userId, products: cart.products });
 };
 const renderProductsEmailAssociated = async (req, res) => {
@@ -55,6 +54,17 @@ const renderProductsEmailAssociated = async (req, res) => {
   });
 };
 
+const renderChangePassword = (req, res) => {
+  const { uid, token } = req.params;
+  const { isWrong } = req.query
+  const prevToken = req.cookies.token;
+  if (token === prevToken) {
+    res.render("ResetPassword/changePassword", { uid: uid, token: token, isWrong: isWrong });
+  } else {
+    res.render("ResetPassword/tokenExpired");
+  }
+};
+
 export default {
   renderCart,
   renderProductsEmailAssociated,
@@ -62,5 +72,6 @@ export default {
   renderRegistration,
   renderProfile,
   renderErrorLogin,
-  renderReestablish,
+  renderResetPassword,
+  renderChangePassword
 };
