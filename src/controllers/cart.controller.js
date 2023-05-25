@@ -1,6 +1,11 @@
 import cartService from "../services/cart.services.js";
 import prodService from "../services/products.services.js";
 import {
+  checkStockAndObtainProductsToRemove,
+  cartFilter,
+} from "../services/purchase.services.js";
+import { createTicketService } from "../services/ticket.services.js";
+import {
   cartByIdNotRecived,
   checkExistsProd,
   checkQuantityToUpdateCartProducts,
@@ -32,7 +37,6 @@ const addProductToCart = async (req, res, next) => {
     const existingProduct = cart.products.find(
       (prod) => prod.pid._id.toString() === product._id.toString()
     );
-    console.log("existingProduct", existingProduct);
     if (cart.products.length === 0 || !existingProduct) {
       //if cart is empty or product does not exist in cart, add product
       await cartService.addProd(cid, pid);
@@ -96,10 +100,54 @@ const updateQuantityOfProductFromCart = async (req, res, next) => {
   }
 };
 
+export const purchase = async (req, res) => {
+  try {
+    const { cid } = req.params;
+    const cart = await cartService.getById(cid);
+    console.log("cart", cart);
+    const { products } = cart;
+    const { email } = cart.userId;
+    const toRemove = []
+
+    const promises = products.map(async (product, i) => {
+      const searchProd = await prodService.getById(product.pid._id);
+      if (product.quantity <= searchProd.stock) {
+        await productsDao.updateStock(
+          searchProd._id,
+          searchProd.stock,
+          product.quantity
+        );
+      } else {
+        const removed = products.splice(i, 1);
+        const [first] = removed;
+        toRemove.push(first);
+      }
+    });
+    await Promise.all(promises);
+
+  } catch (error) {
+    console.log(error)
+  }
+  // const productsToRemove = await checkStockAndObtainProductsToRemove(cid);
+  // const cartFiltered = await cartFilter(productsToRemove, cid);
+  // const amount = cartFiltered.reduce((acc, prod) => {
+  //   return acc + prod.pid.price * prod.quantity;
+  // }, 0);
+  // const ticketc = await createTicketService(ticket);
+  // const cart = await cartService.updateProds(cid, productsToRemove);
+  // res.json({
+  //   message: "Su compra se ha realizado con exito",
+  //   ticket: ticketc,
+  //   cart: cart,
+  //   productosSinStock: productsToRemove.map((prod) => prod.pid._id),
+  // });
+};
+
 export default {
   getCartById,
   addProductToCart,
   deleteProductFromCart,
   deleteAllProductsFromCart,
   updateQuantityOfProductFromCart,
+  purchase,
 };

@@ -1,9 +1,9 @@
 import { cartDao, productsDao } from "../persistence/DAOs/factory.js";
 
 export const checkStockAndObtainProductsToRemove = async (cid) => {
-  const cart = await cartDao.getCartById(cid);
-  const { products } = cart;
-  const toRemove = [];
+  // const cart = await cartDao.getCartById(cid);
+  // const { products } = cart;
+  // const toRemove = [];
 
   const promises = products.map(async (product, i) => {
     const searchProd = await productsDao.getProdutcById(product.pid._id);

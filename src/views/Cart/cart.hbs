@@ -51,8 +51,8 @@
                 <button class="shopping" onclick="location.href='/products'">
                     <img src="/images/cart-icon.svg" alt="cart icon"> Continue Shopping
                 </button>
-                <button class="checkout">
-                    <img src="/images/credit-card-icon.svg" alt=""> Checkout
+                <button class="checkout" onclick="location.href='/api/carts/{{cartId}}/purchase'">
+                    <img src="/images/credit-card-icon.svg" alt="credit card icon"> Checkout
                 </button>
             </div>
         </div>
