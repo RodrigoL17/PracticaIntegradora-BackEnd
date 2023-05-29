@@ -48,6 +48,19 @@ export default class cartManager {
     }
   }
 
+  async addProdQuantity(cid, pid, quantity) {
+    try {
+      const cart = await cartsModel.findByIdAndUpdate(
+        cid,
+        { $push: { products: { pid, quantity: quantity } } },
+        { new: true }
+      );
+      return cart;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async oneMoreProd(cid, pid) {
     //Increment in 1 quantity number of product from the cart
     try {

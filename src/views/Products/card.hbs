@@ -1,3 +1,73 @@
-<main class="prod-card">
-    
+<header class="header-products">
+    <nav class="nav-products">
+        <div>
+            <img class="products-logo" src="/images/logo.png" alt="logo">
+        </div>
+        <h2 class="welcome">Welcome! {{user.first_name}} {{user.last_name}}</h2>
+        <div class="search-container">
+            <img src="/images/magnifyingglass-icon.svg" alt="search icon">
+            <input class="search" type="search" placeholder="Search your products (not working)">
+        </div>
+        <div class="icons">
+            <p>{{#if user.isAdmin}}
+                Admin
+                {{else if user.isPremium}}
+                Premium
+                {{else}}
+                User
+                {{/if}}</p>
+            <button class="profile-button" title="Profile" onclick="location.href='/profile'"><img class="profile-img"
+                    src="/images/avatar-icon.svg" alt="profile icon"></button>
+            <button class="cart-button" title="Cart" onclick="location.href='/carts/{{cartId}}'"><img class="cart-img"
+                    src="/images/cart-icon.svg" alt="cart icon"></button>
+            <button class="logout-button" title="Logout" onclick="location.href='/api/session/logout'"><img
+                    class="logout-img" src="/images/logout-icon.svg" alt="logout icon"></button>
+        </div>
+    </nav>
+</header>
+<main class="prod-card-main">
+    <section class="prod-card-section">
+        <div class="part-1">
+            <div class="img-prod-container">
+                <img src="{{getFirstElement product.thumbnail}}" alt="{{product.title}}">
+            </div>
+        </div>
+        <div class="part-2">
+            <h2 class="card-title">{{toUpperCase product.title}}</h2>
+            <div class="prod-info">
+                <div class="prod-title" p>
+                    <h2>Product details</h2>
+                    <h3> ${{product.price}}</h3>
+                </div>
+                <div class="prod-desc">
+                    <p><strong>Description:</strong> {{product.description}}</p>
+                    <p><strong>ID:</strong> {{product._id}}</p>
+                    <p><strong>Code:</strong> {{product.code}}</p>
+                    <p><strong>Stock:</strong> {{product.stock}}</p>
+                    <p><strong>Category:</strong> {{product.category}}</p>
+                </div>
+                <div class="add-quantity">
+                    <div>
+                        <strong>Quantity: </strong> <button class="plus-quantity"><img src="/images/plus-icon.svg"
+                                alt="plus button"></button><input class="quantity" type="number" value="1" min="1"
+                            max="99"> <button class="minus-quantity"><img src="/images/minus-icon.svg"
+                                alt="minus button"></button>
+                    </div>
+                    <div>
+                        <button class="add-to-cart add-to-cart-prod" id="add-prod" data-cart-id="{{cartId}}"
+                            data-product-id="{{product._id}}">
+                            <img src="/images/cart-plus-icon.svg" alt="add to cart icon" fill="currentColor">
+                            Add to cart
+                        </button>
+                        <button class="add-to-cart add-to-cart-prod" id="cont-shop" onclick="location.href='/products'">
+                            <img src="/images/cart-icon.svg" alt="cart icon"> Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
 </main>
+
+<script src="/js/prod.js"></script>

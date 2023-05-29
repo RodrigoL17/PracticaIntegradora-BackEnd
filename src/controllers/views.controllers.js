@@ -65,6 +65,15 @@ const renderChangePassword = (req, res) => {
   }
 };
 
+const renderCardProduct = async (req, res) => {
+  const {pid, uid} = req.params;
+  const user = await userService.getById(uid);
+  const product = await prodService.getById(pid);
+  const {_id} = user
+  const cart = await cartService.getByUserId(_id) 
+  res.render("Products/card", {product: product, user: user, cartId: cart._id})
+}
+
 export default {
   renderCart,
   renderProductsEmailAssociated,
@@ -73,5 +82,6 @@ export default {
   renderProfile,
   renderErrorLogin,
   renderResetPassword,
-  renderChangePassword
+  renderChangePassword,
+  renderCardProduct,
 };

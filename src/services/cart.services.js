@@ -24,9 +24,13 @@ const addProd = async (cid, pid) => {
   await cartDao.addProd(cid, pid);
 };
 
+const addProdQuantity = async (cid, pid, quantity) => {
+  await cartDao.addProdQuantity(cid, pid, quantity);
+};
+
 const oneMoreProd = async (cid, pid) => {
   await cartDao.oneMoreProd(cid, pid);
-}
+};
 const updateQuantityOfProd = async (cid, pid, newQuantity) => {
   const cart = await cartDao.updateQuantityOfProd(cid, pid, newQuantity);
   return cart;
@@ -46,6 +50,16 @@ const deleteAllProds = async (cid) => {
   return cart;
 };
 
-
-
-export default {getAll, create, getById, addProd, deleteProd, deleteAllProds, updateQuantityOfProd, updateProds, getByUserId, oneMoreProd}
+export default {
+  getAll,
+  create,
+  getById,
+  addProd,
+  deleteProd,
+  deleteAllProds,
+  updateQuantityOfProd,
+  updateProds,
+  getByUserId,
+  oneMoreProd,
+  addProdQuantity,
+};

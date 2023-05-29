@@ -98,6 +98,7 @@
 }
 
 .sign-up-button {
+  margin-top: 0.5rem;
   cursor: pointer;
   align-self: center;
   padding: 0 5rem;

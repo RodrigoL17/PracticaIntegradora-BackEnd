@@ -38,13 +38,13 @@
     {{#each products}}
     <div class="card">
       {{!-- Falta href a card detalle de producto --}}
-      <div class="img-container" onclick="location.href='/'">
+      <div class="img-container" onclick="location.href='/products/details/{{_id}}/{{../user._id}}'" title="see details">
         <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
       </div>
       <div class="info">
         <h3 class="price">${{price}}</h3>
         <p class="products-title">{{toUpperCase title}}</p>
-        <button class="add-to-cart" data-cart-id="{{../cartId}}" data-product-id="{{_id}}">
+        <button class="add-to-cart add-to-cart-prod" data-cart-id="{{../cartId}}" data-product-id="{{_id}}">
           <img src="/images/cart-plus-icon.svg" alt="add to cart icon" fill="currentColor">
           Add to cart
         </button>
@@ -79,7 +79,7 @@
     </div>
   </section>
   <footer class="footer-products">
-
+    footer
   </footer>
 </main>
 

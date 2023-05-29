@@ -28,6 +28,7 @@ const getCartById = async (req, res, next) => {
 const addProductToCart = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
+    const { quantity } = req.body;
     const cart = await cartService.getById(cid);
     const product = await prodService.getById(pid);
     //check if cart and product already exist
@@ -39,15 +40,31 @@ const addProductToCart = async (req, res, next) => {
     );
     if (cart.products.length === 0 || !existingProduct) {
       //if cart is empty or product does not exist in cart, add product
-      await cartService.addProd(cid, pid);
-      res.setHeader("X-Message", "Producto agregado correctamente");
-      res.sendStatus(204);
+      if (!quantity || quantity === 1) {
+        console.log("quantity undefined o 1 no existe")
+        await cartService.addProd(cid, pid);
+        res.setHeader("X-Message", "Producto agregado correctamente");
+        res.sendStatus(204);
+      } else {
+        console.log("2 prod no existe")
+        await cartService.addProdQuantity(cid, pid, quantity);
+        res.setHeader("X-Message", "Producto agregado correctamente");
+        res.sendStatus(204);
+      }
     }
     if (existingProduct) {
-      //if product already exists in cart +1 to quatity
-      await cartService.oneMoreProd(cid, pid);
-      res.setHeader("X-Message", "Producto agregado correctamente");
-      res.sendStatus(204);
+      if (!quantity || quantity === 1) {
+        console.log("quantity undefined o 1 existe")
+        //if product already exists in cart +1 to quatity
+        await cartService.oneMoreProd(cid, pid);
+        res.setHeader("X-Message", "Producto agregado correctamente");
+        res.sendStatus(204);
+      } else {
+        console.log("2 prod existe")
+        await cartService.updateQuantityOfProd(cid, pid, quantity);
+        res.setHeader("X-Message", "Producto agregado correctamente");
+        res.sendStatus(204);
+      }
     }
   } catch (error) {
     next(error);
@@ -107,7 +124,7 @@ export const purchase = async (req, res) => {
     console.log("cart", cart);
     const { products } = cart;
     const { email } = cart.userId;
-    const toRemove = []
+    const toRemove = [];
 
     const promises = products.map(async (product, i) => {
       const searchProd = await prodService.getById(product.pid._id);
@@ -124,9 +141,8 @@ export const purchase = async (req, res) => {
       }
     });
     await Promise.all(promises);
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
   // const productsToRemove = await checkStockAndObtainProductsToRemove(cid);
   // const cartFiltered = await cartFilter(productsToRemove, cid);

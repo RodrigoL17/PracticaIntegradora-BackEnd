@@ -14,6 +14,7 @@ router.get("/resetPassword", viewsController.renderResetPassword); // Render res
 router.get("/carts/:cid", viewsController.renderCart); // Render Cart
 router.get("/products/Github", viewsController.renderProductsEmailAssociated); //Render Products for Github User
 router.get("/changePassword/:uid/:token", viewsController.renderChangePassword); //Render change password
+router.get("/products/details/:pid/:uid", viewsController.renderCardProduct); // Render Card Product Details
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),
