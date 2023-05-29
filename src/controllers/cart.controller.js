@@ -1,10 +1,8 @@
 import cartService from "../services/cart.services.js";
+import productsServices from "../services/products.services.js";
 import prodService from "../services/products.services.js";
-import {
-  checkStockAndObtainProductsToRemove,
-  cartFilter,
-} from "../services/purchase.services.js";
-import { createTicketService } from "../services/ticket.services.js";
+import ticketsService from "../services/ticket.services.js";
+import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 import {
   cartByIdNotRecived,
   checkExistsProd,
@@ -41,12 +39,10 @@ const addProductToCart = async (req, res, next) => {
     if (cart.products.length === 0 || !existingProduct) {
       //if cart is empty or product does not exist in cart, add product
       if (!quantity || quantity === 1) {
-        console.log("quantity undefined o 1 no existe")
         await cartService.addProd(cid, pid);
         res.setHeader("X-Message", "Producto agregado correctamente");
         res.sendStatus(204);
       } else {
-        console.log("2 prod no existe")
         await cartService.addProdQuantity(cid, pid, quantity);
         res.setHeader("X-Message", "Producto agregado correctamente");
         res.sendStatus(204);
@@ -54,13 +50,11 @@ const addProductToCart = async (req, res, next) => {
     }
     if (existingProduct) {
       if (!quantity || quantity === 1) {
-        console.log("quantity undefined o 1 existe")
         //if product already exists in cart +1 to quatity
         await cartService.oneMoreProd(cid, pid);
         res.setHeader("X-Message", "Producto agregado correctamente");
         res.sendStatus(204);
       } else {
-        console.log("2 prod existe")
         await cartService.updateQuantityOfProd(cid, pid, quantity);
         res.setHeader("X-Message", "Producto agregado correctamente");
         res.sendStatus(204);
@@ -121,42 +115,44 @@ export const purchase = async (req, res) => {
   try {
     const { cid } = req.params;
     const cart = await cartService.getById(cid);
-    console.log("cart", cart);
+    const { email, first_name, last_name } = cart.userId;
     const { products } = cart;
-    const { email } = cart.userId;
     const toRemove = [];
-
-    const promises = products.map(async (product, i) => {
-      const searchProd = await prodService.getById(product.pid._id);
-      if (product.quantity <= searchProd.stock) {
-        await productsDao.updateStock(
-          searchProd._id,
-          searchProd.stock,
-          product.quantity
-        );
-      } else {
-        const removed = products.splice(i, 1);
-        const [first] = removed;
-        toRemove.push(first);
-      }
+    const toCheckOut = [];
+    let totalAmount = 0;
+    await Promise.all(
+      products.map(async (prod) => {
+        if (prod.quantity > prod.pid.stock) {
+          toRemove.push(prod);
+        } else {
+          // await productsServices.updateStock(prod.pid._id, prod.quantity);
+          totalAmount += prod.pid.price * prod.quantity;
+          toCheckOut.push(prod);
+        }
+      })
+    );
+    if (toCheckOut.length > 0) {
+      const ticket = { amount: totalAmount, purchaser: email };
+      await ticketsService.create(ticket)
+      // await transporter.sendMail({
+      //   from: "ECOMMERCE",
+      //   to: email,
+      //   subject: "Compra Exitosa",
+      //   text: `Muchas gracias ${first_name} ${last_name} por confiar en nosotros, tu compra se ha realizado con exito, el monto total es de $${totalAmount}.`,
+      // });
+    }
+    if (toCheckOut.length > 0) {
+     await cartService.updateProds(cid, toRemove);
+    }
+    const newCart = await cartService.getById(cid);
+    res.render("Cart/purchase", {
+      cart: newCart,
+      amount: totalAmount,
+      user: cart.userId,
     });
-    await Promise.all(promises);
   } catch (error) {
     console.log(error);
   }
-  // const productsToRemove = await checkStockAndObtainProductsToRemove(cid);
-  // const cartFiltered = await cartFilter(productsToRemove, cid);
-  // const amount = cartFiltered.reduce((acc, prod) => {
-  //   return acc + prod.pid.price * prod.quantity;
-  // }, 0);
-  // const ticketc = await createTicketService(ticket);
-  // const cart = await cartService.updateProds(cid, productsToRemove);
-  // res.json({
-  //   message: "Su compra se ha realizado con exito",
-  //   ticket: ticketc,
-  //   cart: cart,
-  //   productosSinStock: productsToRemove.map((prod) => prod.pid._id),
-  // });
 };
 
 export default {

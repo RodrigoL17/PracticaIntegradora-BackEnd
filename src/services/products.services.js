@@ -25,8 +25,8 @@ const remove = async (id) => {
 };
 
 //Falta chekiar donde lo estoy usando
-const updateStock = async (id, stock, quantity) => {
-  await productsDao.updateStock(id, stock, quantity);
+const updateStock = async (id, quantity) => {
+  await productsDao.updateStock(id, quantity);
 };
 
 export default {getAll, getById, create, update, remove, updateStock}

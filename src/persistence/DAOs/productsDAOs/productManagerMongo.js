@@ -19,7 +19,7 @@ export default class ProductManager {
     try {
       return await productsModel.findById(id);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   async create(product) {
@@ -44,9 +44,13 @@ export default class ProductManager {
     return await productsModel.findByIdAndDelete(id);
   }
 
-  async updateStock(id, stock, quantity) {
+  async updateStock(id, quantity) {
     try {
-      await productsModel.findByIdAndUpdate(id,{$set: { stock: stock - quantity }});
+      const product = await productsModel.findById(id);
+      const updatedStock = product.stock - quantity;
+      await productsModel.findByIdAndUpdate(id, {
+        $set: { stock: updatedStock },
+      });
     } catch (error) {
       console.log(error);
     }

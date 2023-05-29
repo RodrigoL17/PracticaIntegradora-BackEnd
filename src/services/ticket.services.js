@@ -1,6 +1,8 @@
 import {ticketDao} from "../persistence/DAOs/factory.js"
 
-export const createTicketService = async (ticket) => {
-    const ticketc = await ticketDao.createTicket(ticket)
+const create = async (ticket) => {
+    const ticketc = await ticketDao.create(ticket)
     return ticketc
 }
+
+export default {create}

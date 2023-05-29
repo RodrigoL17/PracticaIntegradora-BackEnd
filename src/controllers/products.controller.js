@@ -78,7 +78,5 @@ import {
   }
 };
 
-// falta cambiar
-const updateStock = async (req, res, next) => {}
 
-export default  {getAll, getById, create, update, remove, updateStock}
+export default  {getAll, getById, create, update, remove}
