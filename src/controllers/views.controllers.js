@@ -13,7 +13,7 @@ const renderRegistration = (req, res) => {
 };
 
 const renderProfile = (req, res) => {
-  res.render("profile");
+  res.render("Profile/profile");
 };
 
 const renderErrorLogin = (req, res) => {

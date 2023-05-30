@@ -4,30 +4,61 @@ import { generateToken, comparePassword, hashPassword } from "../utils.js";
 import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 
 const registration = async (req, res) => {
-  const newUser = await userService.create(req.body);
-  await cartService.create(newUser._id);
-  if (newUser) {
-    res.redirect("/");
-  } else {
-    res.send("error registro");
+  try {
+    const user = req.body;
+    const { email, password } = user;
+    const [, domain] = email.split("@");
+    const existsUser = await userService.getByEmail(email);
+    if (existsUser) {
+      res.send("User already exists");
+    }
+    const hashNewPassword = await hashPassword(password);
+    if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+      const newUser = {
+        ...user,
+        password: hashNewPassword,
+        isUser: false,
+        isAdmin: true,
+      };
+      const userCreated = await userService.create(newUser);
+      await cartService.create(userCreated._id)
+      userCreated ? res.redirect("/") : res.send("error registro");
+    }
+    if (domain === "premium.com") {
+      const newUser = {
+        ...user,
+        password: hashNewPassword,
+        isUser: false,
+        isPremium: true,
+      };
+      const userCreated = await userService.create(newUser);
+      await cartService.create(userCreated._id)
+      userCreated ? res.redirect("/") : res.send("error registro");
+    }
+    const newUser = { ...user, password: hashNewPassword };
+    const userCreated = await userService.create(newUser);
+    await cartService.create(userCreated._id)
+    userCreated ? res.redirect("/") : res.send("error registro");
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
   }
 };
 
 const login = async (req, res) => {
   try {
-    const user = await userService.logIn(req.body);
-    if (user) {
-      const token = generateToken(user);
-
-      res.cookie("token", token, { httpOnly: true }).redirect("/products");
-    } else {
-      res.redirect("/errorLogin");
-    }
+    const user = req.body;
+    const { email, password } = user;
+    const existsUser = await userService.getByEmail(email);
+    if (!existsUser) res.redirect("/errorLogin");
+    const isPassword = await comparePassword(password, existsUser.password);
+    if (!isPassword) res.redirect("/errorLogin");
+    const token = generateToken(existsUser);
+    res.cookie("token", token, { httpOnly: true }).redirect("/products");
   } catch (error) {
     console.log(error);
   }
 };
-
 const logout = (req, res) => {
   try {
     res.clearCookie("token");
@@ -84,8 +115,8 @@ const changePassword = async (req, res) => {
     console.log("isPassword", isPassword);
     if (isPassword) {
       const isWrong = true;
-      const redirectUrl = `/changePassword/${uid}/${token}?isWrong=${isWrong}`
-      res.status(200).json({redirectUrl})
+      const redirectUrl = `/changePassword/${uid}/${token}?isWrong=${isWrong}`;
+      res.status(200).json({ redirectUrl });
     } else {
       const newPassword = await hashPassword(password);
       await userService.updatePassword(uid, newPassword);

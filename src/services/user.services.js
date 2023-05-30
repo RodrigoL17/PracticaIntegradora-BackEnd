@@ -10,11 +10,6 @@ import { userDao } from "../persistence/DAOs/factory.js"
     return user;
 }
 
- const logIn = async(user) => {
-   const userL = await userDao.logIn(user);
-   return userL;
-}
-
  const getById = async(id) => {
     const user = await userDao.getById(id);
     return user;
@@ -24,4 +19,4 @@ import { userDao } from "../persistence/DAOs/factory.js"
     await userDao.updatePassword(id, password);
 }
 
-export default {create, getByEmail, logIn, getById, updatePassword}
+export default {create, getByEmail, getById, updatePassword}
