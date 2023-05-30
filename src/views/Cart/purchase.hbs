@@ -1,3 +1,18 @@
 <main class="main-purchase">
-
+    <section class="section-purchase">
+        <h2>{{user.first_name}} {{user.last_name}}! Thank you for purchasing from our E-commerce platform!</h2>
+        <p>You will receive an email with the details of your purchase.</p>
+        <p>The total amount to pay is: <strong>${{amount}}</strong></p>
+        {{#arrayNotEmpty cart.products}}
+        <p>Unfortunately, the following products could not be processed due to either insufficient stock or
+            unavailability.</p>
+        {{#each cart.products}}
+        <p>
+            Code: {{pid._id}} -- Product: {{pid.title}}
+        </p>
+        {{/each}}
+        <p>Please review the details of the pending product in your cart.</p>
+        <p>Thank you for your understanding.</p>
+        {{/arrayNotEmpty}}
+    </section>
 </main>

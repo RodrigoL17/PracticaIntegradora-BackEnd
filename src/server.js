@@ -50,6 +50,13 @@ Handlebars.registerHelper('multiply', function (a, b) {
   return a * b;
 })
 
+Handlebars.registerHelper("arrayNotEmpty", function (array, options) {
+  if (Array.isArray(array) && array.length > 0) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 //Handlebars config
 app.set("views", __dirname + "/views");
 app.set("view engine", ".hbs");
@@ -63,6 +70,7 @@ app.engine(
       toUpperCase: Handlebars.helpers.toUpperCase,
       range: Handlebars.helpers.range,
       multiply: Handlebars.helpers.multiply,
+      arrayNotEmpty: Handlebars.helpers.arrayNotEmpty,
     },
   })
 );

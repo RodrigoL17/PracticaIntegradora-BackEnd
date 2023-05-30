@@ -91,19 +91,18 @@ export default class cartManager {
   async updateProds(cid, newProducts) {
     try {
       // Updates one or more products (all kind of properties) from the cart
-      const cart = await cartsModel.findOneAndUpdate(
-        { _id: cid },
-        { products: newProducts },
+      const cart = await cartsModel.findByIdAndUpdate(
+        cid,
+        { $set: { products: newProducts } },
         { new: true }
       );
       return cart;
     } catch (error) {
       console.log(error);
-      return null
+      return null;
     }
   }
   async deleteProd(cid, pid) {
-
     //Delete a product from the cart
     try {
       const cart = await cartsModel.findByIdAndUpdate(
