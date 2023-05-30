@@ -76,6 +76,12 @@ const renderCardProduct = async (req, res) => {
   res.render("Products/card", {product: product, user: user, cartId: cart._id})
 }
 
+const renderAddNewProduct = async (req, res) => {
+  const {uid} = req.params
+  const user = await userService.getById(uid)
+  res.render("ProductsManipulation/createProduct", {user: user})
+}
+
 export default {
   renderCart,
   renderProductsEmailAssociated,
@@ -86,4 +92,5 @@ export default {
   renderResetPassword,
   renderChangePassword,
   renderCardProduct,
+  renderAddNewProduct
 };

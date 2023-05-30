@@ -16,8 +16,8 @@
                 {{else}}
                 User
                 {{/if}}</p>
-            <button class="profile-button" title="Profile" onclick="location.href='/profile/{{user._id}}'"><img class="profile-img"
-                    src="/images/avatar-icon.svg" alt="profile icon"></button>
+            <button class="profile-button" title="Profile" onclick="location.href='/profile/{{user._id}}'"><img
+                    class="profile-img" src="/images/avatar-icon.svg" alt="profile icon"></button>
             <button class="cart-button" title="Cart" onclick="location.href='/carts/{{cartId}}'"><img class="cart-img"
                     src="/images/cart-icon.svg" alt="cart icon"></button>
             <button class="logout-button" title="Logout" onclick="location.href='/api/session/logout'"><img
@@ -63,6 +63,18 @@
                             <img src="/images/cart-icon.svg" alt="cart icon"> Continue Shopping
                         </button>
                     </div>
+                    {{#if user.isAdmin}}
+                    <p><strong>Owner:</strong> {{product.owner}}</p>
+                    {{/if}}
+                    {{#if user.isPremium}}
+                    <p><strong>Owner:</strong> {{product.owner}}</p>
+                    {{/if}}
+                    {{#if user.isAdmin}}
+                    <div class="admin-buttons">
+                        <button>Update</button>
+                        <button>Delete</button>
+                    </div>
+                    {{/if}}
                 </div>
             </div>
 

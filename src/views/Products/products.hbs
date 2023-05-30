@@ -4,6 +4,12 @@
       <img class="products-logo" src="/images/logo.png" alt="logo">
     </div>
     <h2 class="welcome">Welcome! {{user.first_name}} {{user.last_name}}</h2>
+    {{#if user.isAdmin}}
+    <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img src="/images/plus-icon.svg" alt="plus icon"> Add new product</button>
+    {{/if}}
+    {{#if user.isPremium}}
+    <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img src="/images/plus-icon.svg" alt="plus icon">Add new product</button>
+    {{/if}}
     <div class="search-container">
       <img src="/images/magnifyingglass-icon.svg" alt="search icon">
       <input class="search" type="search" placeholder="Search your products (not working)">
@@ -16,8 +22,8 @@
         {{else}}
         User
         {{/if}}</p>
-      <button class="profile-button" title="Profile" onclick="location.href='/profile/{{user._id}}'"><img class="profile-img"
-          src="/images/avatar-icon.svg" alt="profile icon"></button>
+      <button class="profile-button" title="Profile" onclick="location.href='/profile/{{user._id}}'"><img
+          class="profile-img" src="/images/avatar-icon.svg" alt="profile icon"></button>
       <button class="cart-button" title="Cart" onclick="location.href='/carts/{{cartId}}'"><img class="cart-img"
           src="/images/cart-icon.svg" alt="cart icon"></button>
       <button class="logout-button" title="Logout" onclick="location.href='/api/session/logout'"><img class="logout-img"
@@ -37,8 +43,8 @@
 
     {{#each products}}
     <div class="card">
-      {{!-- Falta href a card detalle de producto --}}
-      <div class="img-container" onclick="location.href='/products/details/{{_id}}/{{../user._id}}'" title="see details">
+      <div class="img-container" onclick="location.href='/products/details/{{_id}}/{{../user._id}}'"
+        title="see details">
         <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
       </div>
       <div class="info">
@@ -64,7 +70,8 @@
       <div class="pages">
         -
         {{#each (range 1 pagination.totalPages)}}
-        - <button class="page-btn" onclick="location.href='http://localhost:3000/products?page={{this}}'">{{this}}</button> -
+        - <button class="page-btn"
+          onclick="location.href='http://localhost:3000/products?page={{this}}'">{{this}}</button> -
         {{/each}}-
       </div>
       {{#if pagination.nextLink}}
