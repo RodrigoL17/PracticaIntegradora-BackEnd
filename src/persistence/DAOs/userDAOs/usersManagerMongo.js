@@ -1,5 +1,4 @@
 import { userModel } from "../../Mongo/models/users.model.js";
-import UserRespDTO from "../../DTOs/userCart.DTO.js";
 
 export default class UserManager {
   async create(user) {

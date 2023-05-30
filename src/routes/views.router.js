@@ -8,7 +8,7 @@ const router = Router();
 
 router.get("/", viewsController.renderLogin); // Render login
 router.get("/signUp", viewsController.renderRegistration); //Render registration
-router.get("/profile", viewsController.renderProfile);
+router.get("/profile/:uid", viewsController.renderProfile);
 router.get("/errorlogin", viewsController.renderErrorLogin); // Render error login
 router.get("/resetPassword", viewsController.renderResetPassword); // Render reset password
 router.get("/carts/:cid", viewsController.renderCart); // Render Cart

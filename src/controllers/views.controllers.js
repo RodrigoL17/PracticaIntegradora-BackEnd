@@ -12,8 +12,10 @@ const renderRegistration = (req, res) => {
   res.render("Registration/registerForm");
 };
 
-const renderProfile = (req, res) => {
-  res.render("Profile/profile");
+const renderProfile = async (req, res) => {
+  const {uid} = req.params
+  const user = await userService.getById(uid)
+  res.render("Profile/profile", {user: user});
 };
 
 const renderErrorLogin = (req, res) => {
