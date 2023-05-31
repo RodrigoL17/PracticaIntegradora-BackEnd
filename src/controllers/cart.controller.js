@@ -126,7 +126,7 @@ export const purchase = async (req, res) => {
         if (prod.quantity > prod.pid.stock) {
           toRemove.push(prod);
         } else {
-          // await productsServices.updateStock(prod.pid._id, prod.quantity);
+          await productsServices.updateStock(prod.pid._id, prod.quantity);
           totalAmount += prod.pid.price * prod.quantity;
           toCheckOut.push(prod);
         }
@@ -143,13 +143,13 @@ export const purchase = async (req, res) => {
     if (toCheckOut.length > 0) {
       //If there are products with enough stock toCheckOut length will be > 0, create ticket and send purchase mail
       const ticket = { amount: totalAmount, purchaser: email };
-      // await ticketsService.create(ticket)
-      // await transporter.sendMail({
-      //   from: "ECOMMERCE",
-      //   to: email,
-      //   subject: "Successful Purchase",
-      //   text: `Thank you very much, ${first_name} ${last_name}, for trusting us. Your purchase has been successful, and the total amount is $${totalAmount}.`,
-      // });
+      await ticketsService.create(ticket)
+      await transporter.sendMail({
+        from: "ECOMMERCE",
+        to: email,
+        subject: "Successful Purchase",
+        text: `Thank you very much, ${first_name} ${last_name}, for trusting us. Your purchase has been successful, and the total amount is $${totalAmount}.`,
+      });
     }
     const newCart = await cartService.getById(cid);
     res.render("Cart/purchase", {

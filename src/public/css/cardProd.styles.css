@@ -93,8 +93,7 @@
 
 .add-quantity div button {
   cursor: pointer;
-  border: none;
-  background-color: transparent;
+
 }
 
 .add-quantity div button img {
@@ -114,4 +113,31 @@
   padding: 0.7rem 1rem !important;
 }
 
+.plus-quantity, .minus-quantity{
+  border: none;
+  background-color: transparent;
+}
 
+.admin-buttons{
+  padding: 0.5rem;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.edit-btn, .delete-btn {
+  border: 1px solid transparent;
+  font-weight: bold;
+  color: #555555;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #ff9a02 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.edit-btn:hover, .delete-btn:hover{
+  border: 1px solid #555555;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}

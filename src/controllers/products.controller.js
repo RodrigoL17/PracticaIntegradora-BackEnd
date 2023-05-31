@@ -71,8 +71,8 @@ import {
     const { pid } = req.params;
     const prodDeleted = await prodService.remove(pid);
     prodByIdNotRecived(prodDeleted);
-    //falta revisar si es necesario
-    res.send({ message: "Producto elimando correctamente", prod: prodDeleted });
+    res.setHeader("X-Message", "Producto eliminado correctamente");
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const minusBtn = document.querySelector(".minus-quantity");
   const inputQuantity = document.querySelector(".quantity");
   const btnAddToCart = document.querySelector("#add-prod");
+  const btnDelete = document.querySelector(".delete-btn");
 
   plusBtn.addEventListener("click", () => {
     let contador = parseInt(inputQuantity.value);
@@ -29,13 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({quantity:quantity})
+      body: JSON.stringify({ quantity: quantity }),
     })
       .then((res) => {
         const message = res.headers.get("X-Message");
-        console.log("Response Headers:", res.headers);
-        console.log("X-Message:", message);
-
         if (message === "Producto agregado correctamente") {
           console.log("fire");
           Swal.fire({
@@ -51,6 +49,45 @@ document.addEventListener("DOMContentLoaded", () => {
             color: "#6cc43a",
             padding: "0.5rem",
           });
+        }
+      })
+      .catch((error) => {
+        console.error("Error al enviar la petición:", error);
+      });
+  });
+
+  btnDelete.addEventListener("click", function (e) {
+    e.preventDefault();
+    const productId = this.dataset.productId;
+    const url = `http://localhost:3000/api/products/${productId}`;
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        const message = res.headers.get("X-Message");
+        if (message === "Producto eliminado correctamente") {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            iconColor: "#FF0000",
+            text: "Product deleted succesfully!",
+            toast: true,
+            background: "#FEEBEB",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            color: "#FF0000",
+            padding: "0.5rem",
+          })
+            .then(()=> {
+                window.location.href = "/products";
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
       })
       .catch((error) => {
