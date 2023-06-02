@@ -14,9 +14,9 @@
                 <h3>Summary Order</h3>
                 <p>Check your items, to continue to order</p>
             </div>
+            {{#arrayNotEmpty products}}
             <table>
                 <tbody>
-                    {{#arrayNotEmpty products}}
                     {{#each products}}
                     <tr class="tr">
                         <td class="td-btn">
@@ -46,18 +46,24 @@
                         </td>
                     </tr>
                     {{/each}}
-                    {{else}}
-                    <p>Tu Carrito esta vacio</p>
-                    {{/arrayNotEmpty}}
                 </tbody>
             </table>
+            {{else}}
+            <p class="cart-empty">Your cart is empty, <strong> Continue Shopping</strong>, to see all products!!</p>
+            {{/arrayNotEmpty}}
             <div class="cart-buttons">
                 <button class="shopping" onclick="location.href='/products'">
                     <img src="/images/cart-icon.svg" alt="cart icon"> Continue Shopping
                 </button>
+                {{#arrayNotEmpty products}}
                 <button class="checkout" onclick="location.href='/api/carts/{{cartId}}/purchase'">
                     <img src="/images/credit-card-icon.svg" alt="credit card icon"> Checkout
                 </button>
+                {{else}}
+                <button class="checkout" onclick="location.href='/api/carts/{{cartId}}/purchase'" disabled>
+                    <img src="/images/credit-card-icon.svg" alt="credit card icon"> Checkout
+                </button>
+                {{/arrayNotEmpty}}
             </div>
         </div>
     </section>

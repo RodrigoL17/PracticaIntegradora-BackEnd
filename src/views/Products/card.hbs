@@ -30,9 +30,9 @@
         <div class="part-1">
             <div class="img-prod-container">
                 {{#arrayNotEmpty product.thumbnail}}
-                <img  src="{{getFirstElement product.thumbnail}}" alt="{{product.title}}">
+                <img src="{{getFirstElement product.thumbnail}}" alt="{{product.title}}">
                 {{else}}
-                <img  src="/images/logo.png" alt="{{title}}">
+                <img src="/images/logo.png" alt="{{title}}">
                 {{/arrayNotEmpty}}
             </div>
         </div>
@@ -72,7 +72,7 @@
                     {{#if user.isPremium}}
                     {{#isOwnerEqualToId user._id product.owner}}
                     {{else}}
-                     <div>
+                    <div>
                         <button class="add-to-cart add-to-cart-prod" id="add-prod" data-cart-id="{{cartId}}"
                             data-product-id="{{product._id}}">
                             <img src="/images/cart-plus-icon.svg" alt="add to cart icon" fill="currentColor">
@@ -92,14 +92,14 @@
                     {{/if}}
                     {{#if user.isAdmin}}
                     <div class="admin-buttons">
-                        <button class="edit-btn"><img src="/images/edit-icon.svg" alt=""> Update</button>
+                        <button class="edit-btn"><img src="/images/edit-icon.svg" alt="edit icon"> Update</button>
                         <button class="delete-btn" data-product-id="{{product._id}}"><img src="/images/trash-icon.svg"
                                 alt="trash icon"> Delete</button>
                     </div>
                     {{/if}}
                     {{#isOwnerEqualToId user._id product.owner}}
                     <div class="admin-buttons">
-                        <button class="edit-btn"><img src="/images/edit-icon.svg" alt=""> Update</button>
+                        <button class="edit-btn"><img src="/images/edit-icon.svg" alt="edit icon"> Update</button>
                         <button class="delete-btn" data-product-id="{{product._id}}"><img src="/images/trash-icon.svg"
                                 alt="trash icon"> Delete</button>
                     </div>
