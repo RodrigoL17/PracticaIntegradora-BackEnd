@@ -21,7 +21,7 @@ const registration = async (req, res) => {
         isAdmin: true,
       };
       const userCreated = await userService.create(newUser);
-      await cartService.create(userCreated._id)
+      await cartService.create(userCreated._id);
       userCreated ? res.redirect("/") : res.send("error registro");
     }
     if (domain === "premium.com") {
@@ -32,12 +32,12 @@ const registration = async (req, res) => {
         isPremium: true,
       };
       const userCreated = await userService.create(newUser);
-      await cartService.create(userCreated._id)
+      await cartService.create(userCreated._id);
       userCreated ? res.redirect("/") : res.send("error registro");
     }
     const newUser = { ...user, password: hashNewPassword };
     const userCreated = await userService.create(newUser);
-    await cartService.create(userCreated._id)
+    await cartService.create(userCreated._id);
     userCreated ? res.redirect("/") : res.send("error registro");
   } catch (error) {
     console.log(error);
@@ -128,6 +128,21 @@ const changePassword = async (req, res) => {
   }
 };
 
+const changePremiumStatus = async (req, res) => {
+  const { uid } = req.params;
+  const user = await userService.getById(uid);
+  let { isUser, isPremium } = user;
+  if (isUser) {
+    isUser = false;
+    isPremium = true;
+  } else {
+    isUser = true;
+    isPremium = false;
+  }
+  await userService.updateStatus(uid, isUser, isPremium);
+  res.redirect("/products")
+};
+
 export default {
   login,
   logout,
@@ -135,4 +150,5 @@ export default {
   githubCallback,
   emailResetPassword,
   changePassword,
+  changePremiumStatus,
 };

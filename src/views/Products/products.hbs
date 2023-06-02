@@ -5,10 +5,20 @@
     </div>
     <h2 class="welcome">Welcome! {{user.first_name}} {{user.last_name}}</h2>
     {{#if user.isAdmin}}
-    <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img src="/images/plus-icon.svg" alt="plus icon"> Add new product</button>
+    <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img
+        src="/images/plus-icon.svg" alt="plus icon"> Add new product</button>
     {{/if}}
     {{#if user.isPremium}}
-    <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img src="/images/plus-icon.svg" alt="plus icon">Add new product</button>
+    <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img
+        src="/images/plus-icon.svg" alt="plus icon">Add new product</button>
+    {{/if}}
+    {{#if user.isUser}}
+    <button class="premium-status" onclick="location.href='/api/session/premium/{{user._id}}'"><img
+        src="/images/avatar-icon.svg" alt="avatar icon"> Change Status</button>
+    {{/if}}
+    {{#if user.isPremium}}
+    <button class="premium-status" onclick="location.href='/api/session/premium/{{user._id}}'"><img
+        src="/images/avatar-icon.svg" alt="avatar icon">Change Status</button>
     {{/if}}
     <div class="search-container">
       <img src="/images/magnifyingglass-icon.svg" alt="search icon">
@@ -24,8 +34,14 @@
         {{/if}}</p>
       <button class="profile-button" title="Profile" onclick="location.href='/profile/{{user._id}}'"><img
           class="profile-img" src="/images/avatar-icon.svg" alt="profile icon"></button>
+      {{#if user.isUser}}
       <button class="cart-button" title="Cart" onclick="location.href='/carts/{{cartId}}'"><img class="cart-img"
           src="/images/cart-icon.svg" alt="cart icon"></button>
+      {{/if}}
+      {{#if user.isPremium}}
+      <button class="cart-button" title="Cart" onclick="location.href='/carts/{{cartId}}'"><img class="cart-img"
+          src="/images/cart-icon.svg" alt="cart icon"></button>
+      {{/if}}
       <button class="logout-button" title="Logout" onclick="location.href='/api/session/logout'"><img class="logout-img"
           src="/images/logout-icon.svg" alt="logout icon"></button>
     </div>
@@ -48,8 +64,8 @@
         {{#arrayNotEmpty thumbnail}}
         <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
         {{else}}
-         <img class="image" src="/images/logo.png" alt="{{title}}">
-         {{/arrayNotEmpty}}
+        <img class="image" src="/images/logo.png" alt="{{title}}">
+        {{/arrayNotEmpty}}
       </div>
       <div class="info">
         <h3 class="price">${{price}}</h3>

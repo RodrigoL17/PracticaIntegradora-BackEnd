@@ -32,4 +32,12 @@ export default class UserManager {
       console.log(error);
     }
   }
+
+  async updateStatus(id, isUser, isPremium) {
+    try {
+      await userModel.findByIdAndUpdate(id, { isUser: isUser, isPremium: isPremium });
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

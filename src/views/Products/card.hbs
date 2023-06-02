@@ -57,6 +57,7 @@
                             max="99"> <button class="minus-quantity"><img src="/images/minus-icon.svg"
                                 alt="minus button"></button>
                     </div>
+                    {{#if user.isUser}}
                     <div>
                         <button class="add-to-cart add-to-cart-prod" id="add-prod" data-cart-id="{{cartId}}"
                             data-product-id="{{product._id}}">
@@ -67,6 +68,22 @@
                             <img src="/images/cart-icon.svg" alt="cart icon"> Continue Shopping
                         </button>
                     </div>
+                    {{/if}}
+                    {{#if user.isPremium}}
+                    {{#isOwnerEqualToId user._id product.owner}}
+                    {{else}}
+                     <div>
+                        <button class="add-to-cart add-to-cart-prod" id="add-prod" data-cart-id="{{cartId}}"
+                            data-product-id="{{product._id}}">
+                            <img src="/images/cart-plus-icon.svg" alt="add to cart icon" fill="currentColor">
+                            Add to cart
+                        </button>
+                        <button class="add-to-cart add-to-cart-prod" id="cont-shop" onclick="location.href='/products'">
+                            <img src="/images/cart-icon.svg" alt="cart icon"> Continue Shopping
+                        </button>
+                    </div>
+                    {{/isOwnerEqualToId}}
+                    {{/if}}
                     {{#if user.isAdmin}}
                     <p><strong>Owner:</strong> {{product.owner}}</p>
                     {{/if}}

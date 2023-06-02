@@ -19,4 +19,8 @@ import { userDao } from "../persistence/DAOs/factory.js"
     await userDao.updatePassword(id, password);
 }
 
-export default {create, getByEmail, getById, updatePassword}
+const updateStatus = async(id, isUser, isPremium) => {
+    await userDao.updateStatus(id, isUser, isPremium);
+}
+
+export default {create, getByEmail, getById, updatePassword, updateStatus}

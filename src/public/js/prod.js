@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputQuantity = document.querySelector(".quantity");
   const btnAddToCart = document.querySelector("#add-prod");
   const btnDelete = document.querySelector(".delete-btn");
+  const btnEdit = document.querySelector(".edit-btn");
 
   plusBtn.addEventListener("click", () => {
     let contador = parseInt(inputQuantity.value);
@@ -94,4 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error al enviar la petición:", error);
       });
   });
+  btnEdit.addEventListener("click", function() {
+    
+  })
 });

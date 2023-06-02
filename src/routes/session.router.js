@@ -5,6 +5,7 @@ import passport from "passport";
 const router = Router();
 
 router.get("/logout", sessionController.logout);
+router.get("/premium/:uid", sessionController.changePremiumStatus)
 
 //registro via github
 router.get(
