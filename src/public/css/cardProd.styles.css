@@ -15,6 +15,10 @@
   margin-bottom: 3rem;
 }
 
+.logo-a:hover{
+  cursor: pointer;
+}
+
 .part-1 {
   gap: 1rem;
   display: flex;

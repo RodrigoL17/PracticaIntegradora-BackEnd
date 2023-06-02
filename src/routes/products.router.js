@@ -9,8 +9,20 @@ const router = Router();
 
 router.get("/", prodController.getAll);
 router.get("/:pid", prodController.getById);
-router.post("/", authPremium, authAdmin, prodController.create);
-router.put("/:pid", prodController.update);
+router.put("/:pid", authAdmin, prodController.update);
+router.post(
+  "/",
+  authPremium,
+  (req, res, next) => {
+    if (req.user?.isPremium) {
+      // If user is Premium goes directly to controller
+      return prodController.create(req, res, next);
+    }
+    // If user is notPremium go through authAdmin and then to controller
+    authAdmin(req, res, next);
+  },
+  prodController.create
+);
 router.delete(
   "/:pid",
   authPremium,

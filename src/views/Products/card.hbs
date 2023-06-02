@@ -1,8 +1,8 @@
 <header class="header-products">
     <nav class="nav-products">
-        <div>
+        <a class="logo-a" href="/products">
             <img class="products-logo" src="/images/logo.png" alt="logo">
-        </div>
+        </a>
         <h2 class="welcome">Welcome! {{user.first_name}} {{user.last_name}}</h2>
         <div class="search-container">
             <img src="/images/magnifyingglass-icon.svg" alt="search icon">
@@ -29,7 +29,11 @@
     <section class="prod-card-section">
         <div class="part-1">
             <div class="img-prod-container">
-                <img src="{{getFirstElement product.thumbnail}}" alt="{{product.title}}">
+                {{#arrayNotEmpty product.thumbnail}}
+                <img  src="{{getFirstElement product.thumbnail}}" alt="{{product.title}}">
+                {{else}}
+                <img  src="/images/logo.png" alt="{{title}}">
+                {{/arrayNotEmpty}}
             </div>
         </div>
         <div class="part-2">
@@ -72,9 +76,17 @@
                     {{#if user.isAdmin}}
                     <div class="admin-buttons">
                         <button class="edit-btn"><img src="/images/edit-icon.svg" alt=""> Update</button>
-                        <button class="delete-btn" data-product-id="{{product._id}}"><img src="/images/trash-icon.svg" alt="trash icon"> Delete</button>
+                        <button class="delete-btn" data-product-id="{{product._id}}"><img src="/images/trash-icon.svg"
+                                alt="trash icon"> Delete</button>
                     </div>
                     {{/if}}
+                    {{#isOwnerEqualToId user._id product.owner}}
+                    <div class="admin-buttons">
+                        <button class="edit-btn"><img src="/images/edit-icon.svg" alt=""> Update</button>
+                        <button class="delete-btn" data-product-id="{{product._id}}"><img src="/images/trash-icon.svg"
+                                alt="trash icon"> Delete</button>
+                    </div>
+                    {{/isOwnerEqualToId}}
                 </div>
             </div>
 

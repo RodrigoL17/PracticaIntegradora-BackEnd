@@ -45,15 +45,21 @@
     <div class="card">
       <div class="img-container" onclick="location.href='/products/details/{{_id}}/{{../user._id}}'"
         title="see details">
+        {{#arrayNotEmpty thumbnail}}
         <img class="image" src="{{getFirstElement thumbnail}}" alt="{{title}}">
+        {{else}}
+         <img class="image" src="/images/logo.png" alt="{{title}}">
+         {{/arrayNotEmpty}}
       </div>
       <div class="info">
         <h3 class="price">${{price}}</h3>
         <p class="products-title">{{toUpperCase title}}</p>
+        {{#if ../user.isUser}}
         <button class="add-to-cart add-to-cart-prod" data-cart-id="{{../cartId}}" data-product-id="{{_id}}">
           <img src="/images/cart-plus-icon.svg" alt="add to cart icon" fill="currentColor">
           Add to cart
         </button>
+        {{/if}}
       </div>
     </div>
     {{/each}}

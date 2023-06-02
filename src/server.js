@@ -57,6 +57,16 @@ Handlebars.registerHelper("arrayNotEmpty", function (array, options) {
   return options.inverse(this);
 });
 
+Handlebars.registerHelper('isOwnerEqualToId', function(property1, property2, options) {
+  const prop1 = property1.toString();
+  const prop2 = property2.toString();
+  if (prop1 === prop2) {
+    return options.fn(this); // Renderiza el contenido dentro del bloque {{#compareProperties}}
+  } else {
+    return options.inverse(this); // Renderiza el contenido dentro del bloque {{else}}
+  }
+});
+
 //Handlebars config
 app.set("views", __dirname + "/views");
 app.set("view engine", ".hbs");
@@ -71,6 +81,7 @@ app.engine(
       range: Handlebars.helpers.range,
       multiply: Handlebars.helpers.multiply,
       arrayNotEmpty: Handlebars.helpers.arrayNotEmpty,
+      isOwnerEqualToId: Handlebars.helpers.isOwnerEqualToId
     },
   })
 );

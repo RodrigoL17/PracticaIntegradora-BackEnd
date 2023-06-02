@@ -136,14 +136,14 @@ export const purchase = async (req, res) => {
       //If stock is not enough toRemove length will be > 0, so in cart kepts this products
       await cartService.updateProds(cid, toRemove);
     }
-    if(toRemove.length === 0) {
+    if (toRemove.length === 0) {
       //If all products stock is enough toRemove lenght will be 0, empty cart
-      await cartService.deleteAllProds(cid)
+      await cartService.deleteAllProds(cid);
     }
     if (toCheckOut.length > 0) {
       //If there are products with enough stock toCheckOut length will be > 0, create ticket and send purchase mail
       const ticket = { amount: totalAmount, purchaser: email };
-      await ticketsService.create(ticket)
+      await ticketsService.create(ticket);
       await transporter.sendMail({
         from: "ECOMMERCE",
         to: email,
@@ -156,7 +156,7 @@ export const purchase = async (req, res) => {
       cart: newCart,
       amount: totalAmount,
       user: cart.userId,
-      checkOutProds: toCheckOut
+      checkOutProds: toCheckOut,
     });
   } catch (error) {
     console.log(error);

@@ -1,21 +1,28 @@
-
 import { jwtValidation } from "./jwtValidator.js";
 
-
 export const authAdmin = async (req, res, next) => {
-  console.log("admin")
+  console.log("admin");
   const { token } = req.cookies;
   const user = jwtValidation(token);
-  !user?.isAdmin && res.status(401).send("No autorizado");
+  !user?.isAdmin && res.status(401).send("Unauthorized");
   req.user = user;
   next();
 };
 
 export const authPremium = async (req, res, next) => {
-  console.log("premium")
+  console.log("premium");
   const { token } = req.cookies;
   const user = jwtValidation(token);
-  !user?.isPremium && next()
+  !user?.isPremium && next();
   req.user = user;
-  next()
+  next();
+};
+
+export const authUser = async (req, res, next) => {
+  console.log("user");
+  const { token } = req.cookies;
+  const user = jwtValidation(token);
+  !user?.isUser && res.status(401).send("Unauthorized to perform this action");
+  req.user = user;
+  next();
 };

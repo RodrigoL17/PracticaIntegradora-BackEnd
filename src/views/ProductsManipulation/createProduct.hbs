@@ -1,10 +1,45 @@
-<h2>Crear Producto</h2>
-<form action="http://localhost:3000/api/products" method="post">
-    Titulo: <input type="text" name="title" id="title" style="color: black;">
-    Descripcion: <input type="text" name="description" id="description" style="color: black;">
-    Price: <input type="number" name="price" id="price" style="color: black;">
-    Stock: <input type="number" name="stock" id="stock" style="color: black;">
-    Categoria: <input type="text" name="category" id="category" style="color: black;">
-    Creador: <input type="text" name="owner" id="owner" style="color: black;" value="{{uid}}" readonly>
-    <input type="submit" value="Agregar">
-</form>
+<main class="sign-up-main">
+    <section class="sign-up-section">
+        <button class="close-button" onclick="location.href='/products'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="#555555"
+                    d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+            </svg>
+        </button>
+        <header class="sign-up-title">
+            <img src="/images/logo.png" alt="logo">
+            <h2 class="sign-up-title">Create a Product</h2>
+        </header>
+        <form class="sign-up-form" id="create-prod">
+            <div class="sign-up-name">
+                <img src="/images/title-icon.svg" alt="title icon">
+                <input class="create-prod-title" type="text" name="title" id="title" placeholder="Insert product title" required>
+            </div>
+            <div class="sign-up-last-name">
+                <img src="/images/description-icon.svg" alt="avatar icon">
+                <input class="create-prod-description" type="text" name="description" id="description" placeholder="Insert product description"
+                    required>
+            </div>
+            <div class="sign-up-mail">
+                <img src="/images/price-icon.svg" alt="email icon">
+                <input class="create-prod-price" type="number" name="price" id="price" placeholder="Insert product price" required>
+            </div>
+            <div class="sign-up-age">
+                <img src="/images/stock-icon.svg" alt="calendar icon">
+                <input class="create-prod-stock" type="number" inputmode="numeric" name="stock" id="stock" placeholder="Insert product stock"
+                    required>
+            </div>
+            <div class="sign-up-password">
+                <img src="/images/description-icon.svg" alt="lock icon">
+                <input class="create-prod-category" type="text" name="category" id="category" placeholder="Insert product category" required>
+            </div>
+            <div class="sign-up-name">
+                <img src="/images/avatar-icon.svg" alt="avatar icon">
+                <input class="create-prod-owner" type="text" name="owner" id="owner" value="{{user._id}}" readonly>
+            </div>
+            <input class="sign-up-button" type="submit" value="Create Product">
+        </form>
+    </section>
+</main>
+
+<script src="/js/createProduct.js"></script>

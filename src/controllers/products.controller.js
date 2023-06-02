@@ -1,11 +1,13 @@
 import prodService from "../services/products.services.js";
+import userService from "../services/user.services.js";
 import {
   checkRequiredProdProperties,
   prodByIdNotRecived,
 } from "../Utilities/Errors/utils.js";
+import { generateRandomString } from "../utils.js";
 
 //falta revisar
- const getAll = async (req, res) => {
+const getAll = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;
   const products = await prodService.getAll(limit, page, sort, query);
   if (products) {
@@ -30,7 +32,7 @@ import {
   }
 };
 
- const getById = async (req, res, next) => {
+const getById = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const prod = await prodService.getById(pid);
@@ -42,18 +44,33 @@ import {
   }
 };
 
- const create = async (req, res, next) => {
+const create = async (req, res, next) => {
   try {
+    console.log(req.body);
     const product = req.body;
-    checkRequiredProdProperties(product);
-    const prod = await prodService.create(product);
-    //falta revisar si es necesario
-    res.send({ message: "Producto agregado correctamente", product: prod });
+    const { owner } = product;
+    const user = await userService.getById(owner);
+    if (user.isAdmin) {
+      const newProduct = {
+        ...product,
+        code: generateRandomString(),
+        owner: "admin",
+      };
+      checkRequiredProdProperties(newProduct);
+      await prodService.create(newProduct);
+      res.setHeader("X-Message", "Producto creado correctamente");
+      res.sendStatus(204);
+    }
+    const newProduct = { ...product, code: generateRandomString() };
+    checkRequiredProdProperties(newProduct);
+    await prodService.create(newProduct);
+    res.setHeader("X-Message", "Producto creado correctamente");
+    res.sendStatus(204);
   } catch (error) {
     console.log(error);
   }
 };
- const update = async (req, res, next) => {
+const update = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const productToModify = req.body;
@@ -66,7 +83,7 @@ import {
   }
 };
 
- const remove = async (req, res, next) => {
+const remove = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const prodDeleted = await prodService.remove(pid);
@@ -78,5 +95,4 @@ import {
   }
 };
 
-
-export default  {getAll, getById, create, update, remove}
+export default { getAll, getById, create, update, remove };

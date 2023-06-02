@@ -16,6 +16,7 @@
             </div>
             <table>
                 <tbody>
+                    {{#arrayNotEmpty products}}
                     {{#each products}}
                     <tr class="tr">
                         <td class="td-btn">
@@ -45,6 +46,9 @@
                         </td>
                     </tr>
                     {{/each}}
+                    {{else}}
+                    <p>Tu Carrito esta vacio</p>
+                    {{/arrayNotEmpty}}
                 </tbody>
             </table>
             <div class="cart-buttons">
