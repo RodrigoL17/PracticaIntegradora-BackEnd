@@ -24,4 +24,9 @@ const updateStatus = async(id, isUser, isPremium) => {
    return user
 }
 
-export default {create, getByEmail, getById, updatePassword, updateStatus}
+const updateLastLogin = async(id, date) => {
+   const user = await userDao.updateLastLogin(id, date);
+   return user
+}
+
+export default {create, getByEmail, getById, updatePassword, updateStatus, updateLastLogin}

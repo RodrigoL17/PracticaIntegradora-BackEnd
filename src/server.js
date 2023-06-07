@@ -11,6 +11,7 @@ import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import sessionRouter from "./routes/session.router.js";
+import usersRouter from "./routes/users.router.js";
 import mockingProductsRouter from "./routes/mockingProducts.router.js";
 import loggerTestRouter from "./routes/loggerTest.router.js";
 
@@ -112,6 +113,7 @@ app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/session", sessionRouter);
+app.use("/api/users", usersRouter);
 app.use("/api/documentation", swaggerUI.serve, swaggerUI.setup(swaggerSetup)); // Swagger documentation endpoint
 app.use("/mockingproducts", mockingProductsRouter);
 app.use("/loggerTest", loggerTestRouter); //Endpoint to test loggers

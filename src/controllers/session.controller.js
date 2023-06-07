@@ -53,6 +53,8 @@ const login = async (req, res) => {
     if (!existsUser) res.redirect("/errorLogin");
     const isPassword = await comparePassword(password, existsUser.password);
     if (!isPassword) res.redirect("/errorLogin");
+    const date = new Date();
+    await userService.updateLastLogin(existsUser._id,date)
     const token = generateToken(existsUser);
     res.cookie("token", token, { httpOnly: true }).redirect("/products");
   } catch (error) {

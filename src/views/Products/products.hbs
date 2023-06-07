@@ -7,6 +7,8 @@
     {{#if user.isAdmin}}
     <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img
         src="/images/plus-icon.svg" alt="plus icon"> Add new product</button>
+    <button class="users-panel" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img
+        src="/images/avatar-icon.svg" alt="avatar icon"> Users panel</button>
     {{/if}}
     {{#if user.isPremium}}
     <button class="add-new-prod" onclick="location.href='/products/addNewProduct/{{user._id}}'"><img

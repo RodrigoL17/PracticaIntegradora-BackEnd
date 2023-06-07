@@ -41,4 +41,13 @@ export default class UserManager {
       console.log(error)
     }
   }
+
+  async updateLastLogin(id, date) {
+    try {
+      const user = await userModel.findByIdAndUpdate(id, {last_login: date});
+      return user
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

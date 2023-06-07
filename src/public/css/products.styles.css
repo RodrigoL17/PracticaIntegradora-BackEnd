@@ -207,7 +207,7 @@ button.add-to-cart:hover, .add-new-prod:hover{
   text-decoration: underline;
 }
 
-.add-new-prod, .premium-status {
+.add-new-prod, .premium-status, .users-panel {
   cursor: pointer;
   background-color: #ff9a02;
   border-color: #555555;
@@ -220,7 +220,7 @@ button.add-to-cart:hover, .add-new-prod:hover{
   border-radius: 0.5rem;
 }
 
-.add-new-prod img, .premium-status img {
+.add-new-prod img, .premium-status img, .users-panel img {
   aspect-ratio: 1/1;
   width: 1.2rem;
 }

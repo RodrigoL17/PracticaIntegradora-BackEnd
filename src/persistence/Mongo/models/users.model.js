@@ -37,6 +37,10 @@ const usersSchema = new mongoose.Schema({
     type:Boolean,
     required: true,
     default: false,
+  },
+  last_login: {
+    type: Date,
+    default: null,
   }
 });
 
