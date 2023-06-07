@@ -20,7 +20,8 @@ import { userDao } from "../persistence/DAOs/factory.js"
 }
 
 const updateStatus = async(id, isUser, isPremium) => {
-    await userDao.updateStatus(id, isUser, isPremium);
+   const user = await userDao.updateStatus(id, isUser, isPremium);
+   return user
 }
 
 export default {create, getByEmail, getById, updatePassword, updateStatus}

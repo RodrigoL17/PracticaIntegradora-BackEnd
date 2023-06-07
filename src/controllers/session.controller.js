@@ -139,8 +139,9 @@ const changePremiumStatus = async (req, res) => {
     isUser = true;
     isPremium = false;
   }
-  await userService.updateStatus(uid, isUser, isPremium);
-  res.redirect("/products")
+  const newUser = await userService.updateStatus(uid, isUser, isPremium);
+  const token = generateToken(newUser);
+  res.clearCookie("token").cookie("token", token).redirect("/products")
 };
 
 export default {

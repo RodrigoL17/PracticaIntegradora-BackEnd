@@ -5,6 +5,7 @@ import {
   prodByIdNotRecived,
 } from "../Utilities/Errors/utils.js";
 import { generateRandomString } from "../utils.js";
+import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 
 //falta revisar
 const getAll = async (req, res) => {
@@ -86,10 +87,20 @@ const update = async (req, res, next) => {
 const remove = async (req, res, next) => {
   try {
     const { pid } = req.params;
+    const prod = await prodService.getById(pid);
+    prodByIdNotRecived(prod);
+    const user = await userService.getById(prod.owner);
     const prodDeleted = await prodService.remove(pid);
-    prodByIdNotRecived(prodDeleted);
     res.setHeader("X-Message", "Producto eliminado correctamente");
     res.sendStatus(204);
+    if (prodDeleted) {
+      await transporter.sendMail({
+        from: "ECOMMERCE",
+        to: user.email,
+        subject: `Your Product has been deleted`,
+        text: `The product "${prod.title}" has been deleted succesfully from the e-commerce store.`,
+      });
+    }
   } catch (error) {
     next(error);
   }

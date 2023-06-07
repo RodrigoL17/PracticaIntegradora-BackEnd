@@ -41,7 +41,8 @@ export default class ProductManager {
   }
 
   async remove(id) {
-    return await productsModel.findByIdAndDelete(id);
+    const prodDeleted = await productsModel.findByIdAndDelete(id);
+    return prodDeleted
   }
 
   async updateStock(id, quantity) {

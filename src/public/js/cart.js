@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const delButtons = document.querySelectorAll(".remove-prod-btn");
+  const delButtons = document.querySelectorAll(".remove-prod-btn");
+  if (delButtons) {
     delButtons.forEach((btn) => {
-      btn.addEventListener("click",function (event) {
+      btn.addEventListener("click", function (event) {
         event.preventDefault();
-  
-        const cartId = this.dataset.cartId
-        const productId = this.dataset.productId
+
+        const cartId = this.dataset.cartId;
+        const productId = this.dataset.productId;
         const url = `http://localhost:3000/api/carts/${cartId}/product/${productId}`;
-  
+
         fetch(url, {
           method: "DELETE",
           headers: {
@@ -25,5 +26,5 @@ document.addEventListener("DOMContentLoaded", () => {
           });
       });
     });
-  });
-  
+  }
+});

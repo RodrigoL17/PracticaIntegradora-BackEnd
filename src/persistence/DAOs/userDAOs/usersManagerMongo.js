@@ -35,7 +35,8 @@ export default class UserManager {
 
   async updateStatus(id, isUser, isPremium) {
     try {
-      await userModel.findByIdAndUpdate(id, { isUser: isUser, isPremium: isPremium });
+      const user = await userModel.findByIdAndUpdate(id, { isUser: isUser, isPremium: isPremium }, {new:true});
+      return user
     } catch (error) {
       console.log(error)
     }

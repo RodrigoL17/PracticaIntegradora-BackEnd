@@ -16,12 +16,13 @@ const create = async (product) => {
 };
 
 const update = async (id, product) => {
-  const updatedProduct = await productsDao.updateProduct(id, product);
+  const updatedProduct = await productsDao.update(id, product);
   return updatedProduct;
 };
 
 const remove = async (id) => {
-  return await productsDao.deleteProduct(id);
+  const prodDeleted = await productsDao.remove(id);
+  return prodDeleted
 };
 
 //Falta chekiar donde lo estoy usando
