@@ -5,6 +5,11 @@ import { userDao } from "../persistence/DAOs/factory.js"
     return userC
 }
 
+const getAll =async () => {
+   const users = await userDao.getAll();
+   return users
+}
+
  const getByEmail = async(email) => {
     const user = await userDao.getByEmail(email);
     return user;
@@ -29,4 +34,14 @@ const updateLastLogin = async(id, date) => {
    return user
 }
 
-export default {create, getByEmail, getById, updatePassword, updateStatus, updateLastLogin}
+const deleteById = async(id) => {
+   const user = await userDao.deleteById(id);
+   return user;
+}
+
+const deleteByLastLogin = async(twoDaysAgo) => {
+   const deltedUsers = await userDao.deleteByLastLogin(twoDaysAgo);
+   return deltedUsers
+}
+
+export default {create, getByEmail, getById, updatePassword, updateStatus, updateLastLogin, getAll, deleteById, deleteByLastLogin}

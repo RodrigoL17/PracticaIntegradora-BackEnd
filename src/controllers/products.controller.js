@@ -7,7 +7,7 @@ import {
 import { generateRandomString } from "../utils.js";
 import { transporter } from "../Utilities/NodeMailer/nodemailer.js";
 
-//falta revisar
+
 const getAll = async (req, res) => {
   const { limit = 10, page = 1, sort, ...query } = req.query;
   const products = await prodService.getAll(limit, page, sort, query);
@@ -29,7 +29,7 @@ const getAll = async (req, res) => {
         : null,
     });
   } else {
-    res.json({ status: "error" }); //----> especialmete aca
+    res.json({ status: "error" });
   }
 };
 
